@@ -47,4 +47,6 @@ h6 {
 .toggle-checkbox:checked + .toggle-label {
   background-color: #4a90e2;
 }
-
+video {
+    will-change: transform, opacity;
+}
