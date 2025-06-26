@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>C言語基礎講座</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { primary: "#0066CC", secondary: "#333333" },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+    />
+    <style>
+      :where([class^="ri-"])::before {
+        content: "\f3c2";
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        scroll-behavior: smooth;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Poppins", sans-serif;
+      }
+      code {
+        font-family: "Consolas", "Monaco", "Courier New", monospace;
+      }
+      .code-block {
+        border-left: 4px solid #0066cc;
+        background-color: #f8f8f8;
+        overflow-x: auto;
+      }
+      .sidebar-link.active {
+        color: #0066cc;
+        background-color: rgba(0, 102, 204, 0.1);
+        border-left: 3px solid #0066cc;
+      }
+      .sidebar-link:hover:not(.active) {
+        background-color: rgba(0, 102, 204, 0.05);
+      }
+      @media (max-width: 1023px) {
+        .sidebar {
+          transform: translateX(-100%);
+          transition: transform 0.3s ease;
+        }
+        .sidebar.open {
+          transform: translateX(0);
+        }
+      }
+      .content-section:target {
+        scroll-margin-top: 2rem;
+      }
+    </style>
+  </head>
+  <body class="bg-white text-gray-800">
+    <div class="flex min-h-screen">
+      <!-- Sidebar -->
+      <aside
+        id="sidebar"
+        class="sidebar fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-gray-200 overflow-y-auto z-40 lg:translate-x-0"
+      >
+        <div class="p-4">
+          <div class="flex flex-col items-center justify-center mb-8">
+            <div class="relative w-24 h-24 flex items-center justify-center">
+              <div
+                class="absolute inset-0 bg-gradient-to-br from-primary/80 to-primary rounded-lg shadow-lg"
+              ></div>
+              <span
+                class="relative text-[50px] font-bold text-white font-['Pacifico']"
+                >C</span
+              >
+            </div>
+            <div class="text-2xl font-semibold text-gray-800">C語言</div>
+          </div>
+          <div class="mb-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-3">目次</h2>
+            <div class="space-y-1">
+              <a
+                href="#intro"
+                class="sidebar-link active block px-3 py-2 rounded-md text-sm"
+                >C言語の紹介</a
+              >
+              <a
+                href="#variables"
+                class="sidebar-link block px-3 py-2 rounded-md text-sm"
+                >変数とデータ型</a
+              >
+              <a
+                href="#control-flow"
+                class="sidebar-link block px-3 py-2 rounded-md text-sm"
+                >制御構造</a
+              >
+              <a
+                href="#functions"
+                class="sidebar-link block px-3 py-2 rounded-md text-sm"
+                >関数</a
+              >
+              <a
+                href="#arrays"
+                class="sidebar-link block px-3 py-2 rounded-md text-sm"
+                >配列とポインタ</a
+              >
+              <a
+                href="#structures"
+                class="sidebar-link block px-3 py-2 rounded-md text-sm"
+                >構造体</a
+              >
+              <a
+                href="#file-io"
+                class="sidebar-link block px-3 py-2 rounded-md text-sm"
+                >ファイル入出力</a
+              >
+              <a
+                href="#memory"
+                class="sidebar-link block px-3 py-2 rounded-md text-sm"
+                >メモリ管理</a
+              >
+            </div>
+          </div>
+          <div class="mb-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-3">リソース</h2>
+            <div class="space-y-1">
+              <a
+                href="#"
+                class="sidebar-link block px-3 py-2 rounded-md text-sm"
+                >演習問題</a
+              >
+              <a
+                href="#"
+                class="sidebar-link block px-3 py-2 rounded-md text-sm"
+                >サンプルプロジェクト</a
+              >
+              <a
+                href="#"
+                class="sidebar-link block px-3 py-2 rounded-md text-sm"
+                >参考文献</a
+              >
+            </div>
+          </div>
+          <div>
+            <h2 class="text-lg font-semibold text-gray-800 mb-3">
+              高度なトピック
+            </h2>
+            <div class="space-y-1">
+              <a
+                href="#"
+                class="sidebar-link block px-3 py-2 rounded-md text-sm"
+                >マクロとプリプロセッサ</a
+              >
+              <a
+                href="#"
+                class="sidebar-link block px-3 py-2 rounded-md text-sm"
+                >ビット操作</a
+              >
+              <a
+                href="#"
+                class="sidebar-link block px-3 py-2 rounded-md text-sm"
+                >マルチスレッド</a
+              >
+            </div>
+          </div>
+        </div>
+      </aside>
+      <!-- Main Content -->
+      <main class="flex-1 ml-0 lg:ml-64 p-6 lg:p-8">
+        <div class="max-w-3xl mx-auto">
+          <!-- Introduction Section -->
+          <section id="intro" class="content-section mb-12">
+            <h2 class="text-2xl font-bold text-primary mb-6">C言語の紹介</h2>
+            <p class="mb-4">
+              C言語は1972年にAT&Tベル研究所のデニス・リッチーによって開発された汎用プログラミング言語です。システムプログラミングやアプリケーション開発に広く使用されており、多くの現代プログラミング言語の基礎となっています。
+            </p>
+            <div class="bg-blue-50 p-4 rounded-lg mb-6">
+              <h3 class="text-lg font-semibold text-primary mb-2">
+                C言語の特徴
+              </h3>
+              <ul class="list-disc pl-5 space-y-2">
+                <li>低レベルのメモリ操作が可能</li>
+                <li>シンプルなキーワードセット</li>
+                <li>高速な実行速度</li>
+                <li>ポータビリティ（多くのプラットフォームで動作可能）</li>
+                <li>システムプログラミングに最適</li>
+              </ul>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+              最初のCプログラム
+            </h3>
+            <p class="mb-4">
+              伝統的に、新しいプログラミング言語を学ぶ際の最初のプログラムは「Hello,
+              World!」を表示するものです。以下がC言語での例です：
+            </p>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                #include &lt;stdio.h&gt;<br />
+                <br />
+                int main() {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;printf("Hello, World!\n");<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;return 0;<br />
+                }
+              </code>
+            </div>
+            <p class="mb-4">
+              このシンプルなプログラムは以下の要素で構成されています：
+            </p>
+            <ul class="list-disc pl-5 space-y-2 mb-6">
+              <li>
+                <code>#include &lt;stdio.h&gt;</code> -
+                標準入出力ライブラリをインクルード
+              </li>
+              <li>
+                <code>int main()</code> - プログラムの実行が開始される主要関数
+              </li>
+              <li><code>printf()</code> - 文字列を出力する関数</li>
+              <li>
+                <code>return 0;</code> - プログラムが正常に終了したことを示す
+              </li>
+            </ul>
+          </section>
+          <!-- Variables and Data Types Section -->
+          <section id="variables" class="content-section mb-12">
+            <h2 class="text-2xl font-bold text-primary mb-6">変数とデータ型</h2>
+            <p class="mb-4">
+              C言語では、データを保存するために変数を使用します。各変数には特定のデータ型があり、どのような種類の値を保存できるかを定義します。
+            </p>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+              基本データ型
+            </h3>
+            <div class="overflow-x-auto mb-6">
+              <table class="min-w-full border border-gray-200">
+                <thead>
+                  <tr class="bg-gray-100">
+                    <th class="px-4 py-2 border-b text-left">データ型</th>
+                    <th class="px-4 py-2 border-b text-left">説明</th>
+                    <th class="px-4 py-2 border-b text-left">
+                      サイズ (一般的)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="px-4 py-2 border-b"><code>int</code></td>
+                    <td class="px-4 py-2 border-b">整数</td>
+                    <td class="px-4 py-2 border-b">4バイト</td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-2 border-b"><code>float</code></td>
+                    <td class="px-4 py-2 border-b">単精度浮動小数点</td>
+                    <td class="px-4 py-2 border-b">4バイト</td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-2 border-b"><code>double</code></td>
+                    <td class="px-4 py-2 border-b">倍精度浮動小数点</td>
+                    <td class="px-4 py-2 border-b">8バイト</td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-2 border-b"><code>char</code></td>
+                    <td class="px-4 py-2 border-b">文字</td>
+                    <td class="px-4 py-2 border-b">1バイト</td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-2 border-b"><code>void</code></td>
+                    <td class="px-4 py-2 border-b">値なし</td>
+                    <td class="px-4 py-2 border-b">-</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+              変数の宣言と初期化
+            </h3>
+            <p class="mb-4">
+              C言語では、変数を使用する前に宣言する必要があります。変数の宣言と初期化の例：
+            </p>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                int age = 25; // 整数型<br />
+                float price = 19.99; // 単精度浮動小数点型<br />
+                double pi = 3.14159265359; // 倍精度浮動小数点型<br />
+                char grade = 'A'; // 文字型<br />
+                char name[20] = "田中太郎"; // 文字列（文字の配列）
+              </code>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">型修飾子</h3>
+            <p class="mb-4">
+              C言語では、基本データ型を修飾して、サイズや符号を変更できます：
+            </p>
+            <ul class="list-disc pl-5 space-y-2 mb-6">
+              <li>
+                <code>short</code> - サイズを小さくする（例：<code
+                  >short int</code
+                >）
+              </li>
+              <li>
+                <code>long</code> - サイズを大きくする（例：<code>long int</code
+                >）
+              </li>
+              <li><code>signed</code> - 符号付き（デフォルト）</li>
+              <li><code>unsigned</code> - 符号なし（正の値のみ）</li>
+            </ul>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                unsigned int positive_num = 50000;<br />
+                long long int very_big_num = 9223372036854775807LL;<br />
+                unsigned char byte = 255;
+              </code>
+            </div>
+          </section>
+          <!-- Control Flow Section -->
+          <section id="control-flow" class="content-section mb-12">
+            <h2 class="text-2xl font-bold text-primary mb-6">制御構造</h2>
+            <p class="mb-4">
+              制御構造は、プログラムの実行フローを制御するためのステートメントです。C言語には、条件分岐とループのための様々な制御構造があります。
+            </p>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">条件分岐</h3>
+            <h4 class="text-lg font-medium text-gray-700 mb-2">if-else文</h4>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                int age = 20;<br />
+                <br />
+                if (age >= 20) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;printf("成人です。\n");<br />
+                } else if (age >= 18) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;printf("18歳以上です。\n");<br />
+                } else {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;printf("未成年です。\n");<br />
+                }
+              </code>
+            </div>
+            <h4 class="text-lg font-medium text-gray-700 mb-2">switch文</h4>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                char grade = 'B';<br />
+                <br />
+                switch (grade) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;case 'A':<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("優秀です！\n");<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;case 'B':<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("良好です。\n");<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;case 'C':<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("平均的です。\n");<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;default:<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("評価不明です。\n");<br />
+                }
+              </code>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">ループ</h3>
+            <h4 class="text-lg font-medium text-gray-700 mb-2">for ループ</h4>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                // 1から10までの数字を表示<br />
+                for (int i = 1; i <= 10; i++) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;printf("%d ", i);<br />
+                }<br />
+                printf("\n");
+              </code>
+            </div>
+            <h4 class="text-lg font-medium text-gray-700 mb-2">while ループ</h4>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                int count = 1;<br />
+                <br />
+                while (count <= 5) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;printf("カウント: %d\n", count);<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;count++;<br />
+                }
+              </code>
+            </div>
+            <h4 class="text-lg font-medium text-gray-700 mb-2">
+              do-while ループ
+            </h4>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                int num;<br />
+                <br />
+                do {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;printf("1から10の間の数字を入力してください:
+                ");<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;scanf("%d", &num);<br />
+                } while (num < 1 || num > 10);
+              </code>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+              制御ステートメント
+            </h3>
+            <ul class="list-disc pl-5 space-y-2 mb-6">
+              <li><code>break</code> - ループやswitch文から抜ける</li>
+              <li>
+                <code>continue</code> -
+                ループの現在の反復をスキップして次の反復に進む
+              </li>
+              <li>
+                <code>goto</code> -
+                指定されたラベルに制御を移す（一般的には避けるべき）
+              </li>
+            </ul>
+          </section>
+          <!-- Functions Section -->
+          <section id="functions" class="content-section mb-12">
+            <h2 class="text-2xl font-bold text-primary mb-6">関数</h2>
+            <p class="mb-4">
+              関数は、特定のタスクを実行するためにまとめられたコードのブロックです。関数を使用することで、コードの再利用性と可読性が向上します。
+            </p>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+              関数の定義と呼び出し
+            </h3>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                // 関数の定義<br />
+                int add(int a, int b) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;return a + b;<br />
+                }<br />
+                <br />
+                int main() {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;// 関数の呼び出し<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;int result = add(5, 3);<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;printf("5 + 3 = %d\n", result);<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;return 0;<br />
+                }
+              </code>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+              関数プロトタイプ
+            </h3>
+            <p class="mb-4">
+              関数プロトタイプは、関数の定義の前に関数の宣言を行うことで、コンパイラに関数の存在を知らせます。
+            </p>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                // 関数プロトタイプ<br />
+                int multiply(int x, int y);<br />
+                <br />
+                int main() {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;int result = multiply(4, 5);<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;printf("4 * 5 = %d\n", result);<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;return 0;<br />
+                }<br />
+                <br />
+                // 関数の定義<br />
+                int multiply(int x, int y) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;return x * y;<br />
+                }
+              </code>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+              引数の渡し方
+            </h3>
+            <p class="mb-4">
+              C言語では、引数は「値渡し」がデフォルトです。関数内で引数の値を変更しても、呼び出し元の変数には影響しません。
+            </p>
+            <h4 class="text-lg font-medium text-gray-700 mb-2">値渡し</h4>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                void increment(int num) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;num++; //
+                この変更は呼び出し元には影響しない<br />
+                }<br />
+                <br />
+                int main() {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;int x = 10;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;increment(x);<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;printf("x = %d\n", x); // 出力: x =
+                10<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;return 0;<br />
+                }
+              </code>
+            </div>
+            <h4 class="text-lg font-medium text-gray-700 mb-2">
+              参照渡し（ポインタを使用）
+            </h4>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                void increment_by_reference(int *num) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;(*num)++; //
+                この変更は呼び出し元に影響する<br />
+                }<br />
+                <br />
+                int main() {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;int x = 10;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;increment_by_reference(&x);<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;printf("x = %d\n", x); // 出力: x =
+                11<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;return 0;<br />
+                }
+              </code>
+            </div>
+          </section>
+          <!-- Arrays and Pointers Section -->
+          <section id="arrays" class="content-section mb-12">
+            <h2 class="text-2xl font-bold text-primary mb-6">配列とポインタ</h2>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">配列</h3>
+            <p class="mb-4">
+              配列は、同じデータ型の要素のコレクションです。C言語では、配列のインデックスは0から始まります。
+            </p>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                // 整数の配列を宣言して初期化<br />
+                int numbers[5] = {10, 20, 30, 40, 50};<br />
+                <br />
+                // 配列の要素にアクセス<br />
+                printf("3番目の要素: %d\n", numbers[2]); // 出力: 30<br />
+                <br />
+                // 配列の要素を変更<br />
+                numbers[1] = 25;<br />
+                printf("2番目の要素: %d\n", numbers[1]); // 出力: 25<br />
+                <br />
+                // 多次元配列<br />
+                int matrix[3][3] = {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;{1, 2, 3},<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;{4, 5, 6},<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;{7, 8, 9}<br />
+                };<br />
+                <br />
+                printf("matrix[1][2]: %d\n", matrix[1][2]); // 出力: 6
+              </code>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">ポインタ</h3>
+            <p class="mb-4">
+              ポインタは、メモリアドレスを格納する変数です。C言語でのポインタの使用は強力ですが、注意が必要です。
+            </p>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                int num = 42;<br />
+                int *ptr; // ポインタ変数の宣言<br />
+                <br />
+                ptr = &num; // numのアドレスをptrに格納<br />
+                <br />
+                printf("num の値: %d\n", num); // 出力: 42<br />
+                printf("num のアドレス: %p\n", &num); // 例: 0x7ffeeb7a35bc<br />
+                printf("ptr の値: %p\n", ptr); // 例: 0x7ffeeb7a35bc<br />
+                printf("ptr が指す値: %d\n", *ptr); // 出力: 42<br />
+                <br />
+                // ポインタを使って変数の値を変更<br />
+                *ptr = 100;<br />
+                printf("変更後の num の値: %d\n", num); // 出力: 100
+              </code>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+              配列とポインタの関係
+            </h3>
+            <p class="mb-4">
+              C言語では、配列名は配列の最初の要素へのポインタとして機能します。
+            </p>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                int arr[5] = {10, 20, 30, 40, 50};<br />
+                int *p = arr; // arrは&arr[0]と同じ<br />
+                <br />
+                printf("arr[0]: %d\n", arr[0]); // 出力: 10<br />
+                printf("*p: %d\n", *p); // 出力: 10<br />
+                printf("*(p+1): %d\n", *(p+1)); // 出力: 20<br />
+                printf("p[2]: %d\n", p[2]); // 出力: 30
+              </code>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+              動的メモリ割り当て
+            </h3>
+            <p class="mb-4">
+              C言語では、<code>malloc()</code>、<code>calloc()</code>、<code>realloc()</code>、<code>free()</code>関数を使用して、実行時にメモリを動的に割り当てることができます。
+            </p>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                #include &lt;stdlib.h&gt;<br />
+                <br />
+                // 動的に整数配列を作成<br />
+                int *dynamicArray = (int *)malloc(5 * sizeof(int));<br />
+                <br />
+                if (dynamicArray == NULL) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;printf("メモリ割り当て失敗\n");<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;return 1;<br />
+                }<br />
+                <br />
+                // 配列に値を設定<br />
+                for (int i = 0; i < 5; i++) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;dynamicArray[i] = i * 10;<br />
+                }<br />
+                <br />
+                // 配列の値を表示<br />
+                for (int i = 0; i < 5; i++) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;printf("%d ", dynamicArray[i]); // 出力:
+                0 10 20 30 40<br />
+                }<br />
+                printf("\n");<br />
+                <br />
+                // メモリを解放<br />
+                free(dynamicArray);
+              </code>
+            </div>
+          </section>
+          <!-- Structures Section -->
+          <section id="structures" class="content-section mb-12">
+            <h2 class="text-2xl font-bold text-primary mb-6">構造体</h2>
+            <p class="mb-4">
+              構造体は、異なるデータ型の変数をグループ化するためのユーザー定義のデータ型です。
+            </p>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+              構造体の定義と使用
+            </h3>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                // 構造体の定義<br />
+                struct Student {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;char name[50];<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;int id;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;float gpa;<br />
+                };<br />
+                <br />
+                int main() {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;// 構造体変数の宣言と初期化<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;struct Student s1 = {"佐藤健太", 12345,
+                3.8};<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;// 構造体のメンバーにアクセス<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;printf("名前: %s\n", s1.name);<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;printf("学生ID: %d\n", s1.id);<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;printf("GPA: %.1f\n", s1.gpa);<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;// 構造体のメンバーを変更<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;s1.gpa = 4.0;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;printf("新しいGPA: %.1f\n", s1.gpa);<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;return 0;<br />
+                }
+              </code>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">構造体配列</h3>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                struct Student students[3] = {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;{"佐藤健太", 12345, 3.8},<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;{"鈴木花子", 12346, 3.9},<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;{"田中太郎", 12347, 3.7}<br />
+                };<br />
+                <br />
+                for (int i = 0; i < 3; i++) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;printf("学生 %d: %s, ID: %d, GPA:
+                %.1f\n",<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i+1,
+                students[i].name, students[i].id, students[i].gpa);<br />
+                }
+              </code>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+              構造体ポインタ
+            </h3>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                struct Student s1 = {"佐藤健太", 12345, 3.8};<br />
+                struct Student *ptr = &s1;<br />
+                <br />
+                // ポインタを使って構造体のメンバーにアクセス<br />
+                printf("名前: %s\n", ptr->name); // アロー演算子を使用<br />
+                printf("学生ID: %d\n", (*ptr).id); // ドット演算子を使用<br />
+                printf("GPA: %.1f\n", ptr->gpa);
+              </code>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+              typedef を使用した構造体
+            </h3>
+            <p class="mb-4">
+              <code>typedef</code
+              >を使用すると、構造体に新しい名前を付けることができ、<code>struct</code>キーワードを省略できます。
+            </p>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                typedef struct {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;char title[100];<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;char author[50];<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;int year;<br />
+                } Book;<br />
+                <br />
+                Book myBook = {"C言語プログラミング", "山田一郎", 2023};<br />
+                printf("タイトル: %s\n", myBook.title);<br />
+                printf("著者: %s\n", myBook.author);<br />
+                printf("出版年: %d\n", myBook.year);
+              </code>
+            </div>
+          </section>
+          <!-- File I/O Section -->
+          <section id="file-io" class="content-section mb-12">
+            <h2 class="text-2xl font-bold text-primary mb-6">ファイル入出力</h2>
+            <p class="mb-4">
+              C言語では、<code>stdio.h</code>ライブラリの関数を使用して、ファイルの読み書きを行うことができます。
+            </p>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+              ファイルを開く・閉じる
+            </h3>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                #include &lt;stdio.h&gt;<br />
+                <br />
+                int main() {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;FILE *file;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;// ファイルを書き込みモードで開く<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;file = fopen("example.txt", "w");<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;if (file == NULL) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("ファイルを開けませんでした\n");<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 1;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;// ファイルに書き込む処理...<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;// ファイルを閉じる<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;fclose(file);<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;return 0;<br />
+                }
+              </code>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+              ファイルへの書き込み
+            </h3>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                FILE *file = fopen("example.txt", "w");<br />
+                <br />
+                if (file != NULL) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;fprintf(file,
+                "こんにちは、C言語!\n");<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;fprintf(file,
+                "ファイル入出力のテストです。\n");<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;// 整数と浮動小数点数を書き込む<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;int num = 42;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;float pi = 3.14159;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;fprintf(file, "数値: %d, %.2f\n", num,
+                pi);<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;fclose(file);<br />
+                }
+              </code>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+              ファイルからの読み込み
+            </h3>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                FILE *file = fopen("example.txt", "r");<br />
+                <br />
+                if (file != NULL) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;char buffer[100];<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;// 1行ずつ読み込む<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;while (fgets(buffer, sizeof(buffer),
+                file) != NULL) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("%s",
+                buffer);<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;fclose(file);<br />
+                }
+              </code>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+              バイナリファイルの操作
+            </h3>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                // 構造体を定義<br />
+                typedef struct {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;int id;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;char name[50];<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;float salary;<br />
+                } Employee;<br />
+                <br />
+                // バイナリファイルに書き込み<br />
+                FILE *file = fopen("employees.bin", "wb");<br />
+                <br />
+                if (file != NULL) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;Employee emp1 = {1, "佐藤健太",
+                50000.0};<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;Employee emp2 = {2, "鈴木花子",
+                55000.0};<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;fwrite(&emp1, sizeof(Employee), 1,
+                file);<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;fwrite(&emp2, sizeof(Employee), 1,
+                file);<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;fclose(file);<br />
+                }<br />
+                <br />
+                // バイナリファイルから読み込み<br />
+                file = fopen("employees.bin", "rb");<br />
+                <br />
+                if (file != NULL) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;Employee emp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;while (fread(&emp, sizeof(Employee), 1,
+                file) == 1) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("ID: %d,
+                名前: %s, 給与: %.2f\n", emp.id, emp.name, emp.salary);<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;fclose(file);<br />
+                }
+              </code>
+            </div>
+          </section>
+          <!-- Memory Management Section -->
+          <section id="memory" class="content-section mb-12">
+            <h2 class="text-2xl font-bold text-primary mb-6">メモリ管理</h2>
+            <p class="mb-4">
+              C言語では、メモリ管理が非常に重要です。適切なメモリ管理を行わないと、メモリリークやセグメンテーション違反などの問題が発生する可能性があります。
+            </p>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+              メモリレイアウト
+            </h3>
+            <p class="mb-4">
+              C言語のプログラムは、一般的に以下のメモリセグメントに分かれています：
+            </p>
+            <ul class="list-disc pl-5 space-y-2 mb-6">
+              <li><strong>テキストセグメント</strong>：プログラムのコード</li>
+              <li>
+                <strong>初期化済みデータセグメント</strong
+                >：初期化された静的変数とグローバル変数
+              </li>
+              <li>
+                <strong>未初期化データセグメント（BSS）</strong
+                >：初期化されていない静的変数とグローバル変数
+              </li>
+              <li>
+                <strong>ヒープ</strong
+                >：動的メモリ割り当て（malloc、calloc、realloc）
+              </li>
+              <li><strong>スタック</strong>：関数呼び出し、ローカル変数</li>
+            </ul>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+              動的メモリ割り当て関数
+            </h3>
+            <div class="bg-blue-50 p-4 rounded-lg mb-6">
+              <h4 class="text-lg font-semibold text-primary mb-2">
+                主なメモリ割り当て関数
+              </h4>
+              <ul class="list-disc pl-5 space-y-2">
+                <li>
+                  <code>malloc(size_t size)</code
+                  >：指定されたサイズのメモリブロックを割り当て
+                </li>
+                <li>
+                  <code>calloc(size_t num, size_t size)</code
+                  >：指定された数と大きさの要素のためのメモリを割り当て、0で初期化
+                </li>
+                <li>
+                  <code>realloc(void *ptr, size_t size)</code
+                  >：既存のメモリブロックのサイズを変更
+                </li>
+                <li>
+                  <code>free(void *ptr)</code>：動的に割り当てられたメモリを解放
+                </li>
+              </ul>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+              メモリリークの防止
+            </h3>
+            <p class="mb-4">
+              メモリリークを防ぐためには、動的に割り当てられたメモリを使用し終わったら必ず解放することが重要です。
+            </p>
+            <div class="code-block p-4 rounded-md mb-6">
+              <code>
+                #include &lt;stdlib.h&gt;<br />
+                <br />
+                int main() {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;// メモリを割り当て<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;int *arr = (int *)malloc(10 *
+                sizeof(int));<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;if (arr == NULL) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 1; //
+                メモリ割り当て失敗<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;// メモリを使用<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; i < 10; i++) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arr[i] = i *
+                10;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;// 処理が終わったらメモリを解放<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;free(arr);<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;arr = NULL; //
+                解放後はNULLを設定（ダングリングポインタの防止）<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;return 0;<br />
+                }
+              </code>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+              一般的なメモリ関連の問題
+            </h3>
+            <ul class="list-disc pl-5 space-y-2 mb-6">
+              <li>
+                <strong>メモリリーク</strong
+                >：割り当てられたメモリが解放されない
+              </li>
+              <li>
+                <strong>ダングリングポインタ</strong
+                >：解放されたメモリを指し続けるポインタ
+              </li>
+              <li>
+                <strong>バッファオーバーフロー</strong
+                >：割り当てられたメモリの境界を超えてアクセス
+              </li>
+              <li><strong>二重解放</strong>：同じメモリブロックを複数回解放</li>
+              <li>
+                <strong>メモリ断片化</strong
+                >：空きメモリが小さな断片に分かれてしまう
+              </li>
+            </ul>
+            <div
+              class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-md mb-6"
+            >
+              <h4 class="text-lg font-semibold text-yellow-800 mb-2">注意点</h4>
+              <p class="text-yellow-800">
+                C言語ではメモリ管理は開発者の責任です。適切なメモリ管理を行わないと、プログラムのクラッシュやセキュリティの脆弱性につながる可能性があります。
+              </p>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+    <script id="sidebar-toggle-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        const sidebarToggle = document.getElementById("sidebar-toggle");
+        const sidebar = document.getElementById("sidebar");
+        sidebarToggle.addEventListener("click", function () {
+          sidebar.classList.toggle("open");
+        });
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener("click", function (event) {
+          if (
+            window.innerWidth < 1024 &&
+            !sidebar.contains(event.target) &&
+            !sidebarToggle.contains(event.target) &&
+            sidebar.classList.contains("open")
+          ) {
+            sidebar.classList.remove("open");
+          }
+        });
+      });
+    </script>
+    <script id="sidebar-links-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        const sidebarLinks = document.querySelectorAll(".sidebar-link");
+        // Set active link based on scroll position
+        function setActiveLink() {
+          const scrollPosition = window.scrollY;
+          document.querySelectorAll(".content-section").forEach((section) => {
+            const sectionTop = section.offsetTop - 100;
+            const sectionBottom = sectionTop + section.offsetHeight;
+            if (
+              scrollPosition >= sectionTop &&
+              scrollPosition < sectionBottom
+            ) {
+              const id = section.getAttribute("id");
+              sidebarLinks.forEach((link) => {
+                link.classList.remove("active");
+                if (link.getAttribute("href") === `#${id}`) {
+                  link.classList.add("active");
+                }
+              });
+            }
+          });
+        }
+        // Set active link on click
+        sidebarLinks.forEach((link) => {
+          link.addEventListener("click", function (e) {
+            sidebarLinks.forEach((l) => l.classList.remove("active"));
+            this.classList.add("active");
+            // Close sidebar on mobile after clicking a link
+            if (window.innerWidth < 1024) {
+              document.getElementById("sidebar").classList.remove("open");
+            }
+          });
+        });
+        // Set active link on scroll
+        window.addEventListener("scroll", setActiveLink);
+        // Set active link on page load
+        setActiveLink();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CODE SPACE</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <script src="https://cdn.tailwindcss.com/3.4.16">
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Poppins:wght@500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: "#4A90E2", secondary: "#6c63ff" },
+          borderRadius: {
+            none: "0px",
+            sm: "4px",
+            DEFAULT: "8px",
+            md: "12px",
+            lg: "16px",
+            xl: "20px",
+            "2xl": "24px",
+            "3xl": "32px",
+            full: "9999px",
+            button: "8px",
+          },
+        },
+      },
+    };
+  </script>
+</head>
+
+<body class="bg-gray-900 text-white min-h-screen">
+  <!-- ヘッダー -->
+  <header class="header sticky top-0 z-50 bg-gray-800 shadow-sm">
+    <div class="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-4 flex justify-between items-center">
+      <!-- Logo Section -->
+      <div class="flex items-center">
+        <img src="assets/images/logo.png" alt="Logo" class="h-8 w-auto mr-2" />
+        <h1 class="text-xl font-bold hidden sm:block">CODE SPACE</h1>
+      </div>
+
+      <!-- Navigation and Toggle Section -->
+      <div class="flex items-center space-x-4 sm:space-x-6">
+        <!-- Navigation Links -->
+        <nav class="hidden md:flex space-x-4 lg:space-x-6">
+          <a href="#" class="font-medium text-gray-300 hover:text-primary transition-colors">ホーム</a>
+          <a href="#" class="font-medium text-gray-300 hover:text-primary transition-colors">コース一覧</a>
+          <a href="#" class="font-medium text-gray-300 hover:text-primary transition-colors">学習ガイド</a>
+          <a href="#" class="font-medium text-gray-300 hover:text-primary transition-colors">お問い合わせ</a>
+        </nav>
+
+        <!-- Dark Mode Toggle -->
+        <div class="flex items-center">
+          <div class="relative inline-block w-8 sm:w-10 mr-2 align-middle select-none">
+            <input type="checkbox" id="toggle"
+              class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" />
+            <label for="toggle"
+              class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-600 cursor-pointer"></label>
+          </div>
+          <div class="w-5 sm:w-6 h-5 sm:h-6 flex items-center justify-center">
+            <i class="ri-moon-line text-gray-300"></i>
+          </div>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="md:hidden w-8 h-8 flex items-center justify-center">
+          <i class="ri-menu-line text-xl text-gray-300"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+  <!-- メインビジュアル＆紹介セクション -->
+  <section class="relative py-16 md:py-24 overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700">
+    <div
+      class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,rgba(255,255,255,0.2)_100%)]">
+    </div>
+    <div class="container mx-auto px-responsive relative">
+      <div class="flex flex-col items-center text-center">
+        <div class="w-full max-w-3xl backdrop-blur-sm bg-gray-800/50 rounded-2xl p-8 shadow-2xl">
+          <h2
+            class="text-5xl md:text-6xl font-bold mb-8 leading-tight text-white drop-shadow-lg [text-shadow:_2px_2px_8px_rgb(0_0_0_/_20%)]">
+            初心者でも<span
+              class="text-primary bg-clip-text bg-gradient-to-r from-blue-200 to-blue-100">視覚的</span>に<br />プログラミングを学ぼう
+          </h2>
+          <p class="text-xl md:text-2xl text-gray-300 mb-10 drop-shadow-lg [text-shadow:_1px_1px_4px_rgb(0_0_0_/_20%)]">
+            プログラミングの世界へようこそ。当サイトでは、初心者でも分かりやすく、視覚的に楽しくプログラミング言語を学ぶことができます。
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <button onclick="scrollToCards()"
+              class="bg-primary text-white py-4 px-10 rounded-button font-medium hover:bg-primary/90 transition-all duration-300 whitespace-nowrap cursor-pointer text-lg shadow-[0_8px_16px_rgba(0,0,0,0.2)] hover:shadow-[0_12px_24px_rgba(0,0,0,0.3)] hover:transform hover:-translate-y-1">
+              無料で始める
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- プログラミング言語カードセクション -->
+  <section class="py-16 bg-gray-800">
+    <div class="container mx-auto px-responsive">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold mb-4 text-white">人気のプログラミング言語</h2>
+        <p class="text-gray-300 max-w-2xl mx-auto">
+          あなたのキャリアや目標に合わせて、最適な言語を選びましょう。各言語の基礎から応用まで、段階的に学べるコースをご用意しています。
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <!-- HTML -->
+        <div id="htmlCard" class="card bg-gray-700 rounded-lg shadow-md overflow-hidden hover:shadow-lg cursor-pointer">
+          <div class="p-6 bg-gradient-to-br from-orange-900 to-orange-700">
+            <div class="w-16 h-16 flex items-center justify-center bg-orange-500 text-white rounded-lg mb-4">
+              <i class="ri-html5-line ri-2x"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-white">HTML</h3>
+            <p class="text-gray-300 mb-4">
+              ウェブページの構造を作るマークアップ言語。ウェブ開発の基礎となる技術です。
+            </p>
+            <button
+              class="w-full bg-orange-500 text-white py-2 px-4 rounded-button font-medium hover:bg-orange-600 transition-colors whitespace-nowrap">
+              学習を始める
+            </button>
+          </div>
+        </div>
+        <!-- CSS -->
+        <div id="cssCard" class="card bg-gray-700 rounded-lg shadow-md overflow-hidden hover:shadow-lg cursor-pointer">
+          <div class="p-6 bg-gradient-to-br from-blue-900 to-blue-700">
+            <div class="w-16 h-16 flex items-center justify-center bg-blue-500 text-white rounded-lg mb-4">
+              <i class="ri-css3-line ri-2x"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-white">CSS</h3>
+            <p class="text-gray-300 mb-4">
+              ウェブページのデザインやレイアウトを制御するスタイルシート言語です。
+            </p>
+            <button
+              class="w-full bg-blue-500 text-white py-2 px-4 rounded-button font-medium hover:bg-blue-600 transition-colors whitespace-nowrap">
+              学習を始める
+            </button>
+          </div>
+        </div>
+        <!-- JavaScript -->
+        <div id="javascriptCard"
+          class="card bg-gray-700 rounded-lg shadow-md overflow-hidden hover:shadow-lg cursor-pointer">
+          <div class="p-6 bg-gradient-to-br from-yellow-900 to-yellow-700">
+            <div class="w-16 h-16 flex items-center justify-center bg-yellow-500 text-white rounded-lg mb-4">
+              <i class="ri-javascript-line ri-2x"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-white">JavaScript</h3>
+            <p class="text-gray-300 mb-4">
+              ウェブページに動きや対話性を追加するプログラミング言語です。
+            </p>
+            <button
+              class="w-full bg-yellow-500 text-white py-2 px-4 rounded-button font-medium hover:bg-yellow-600 transition-colors whitespace-nowrap">
+              学習を始める
+            </button>
+          </div>
+        </div>
+        <!-- Python -->
+        <div id="pythonCard"
+          class="card bg-gray-700 rounded-lg shadow-md overflow-hidden hover:shadow-lg cursor-pointer">
+          <div class="p-6 bg-gradient-to-br from-blue-900 to-green-700">
+            <div class="w-16 h-16 flex items-center justify-center bg-blue-600 text-white rounded-lg mb-4">
+              <i class="ri-python-line ri-2x"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-white">Python</h3>
+            <p class="text-gray-300 mb-4">
+              読みやすく書きやすい、初心者に最適な汎用プログラミング言語です。
+            </p>
+            <button
+              class="w-full bg-blue-600 text-white py-2 px-4 rounded-button font-medium hover:bg-blue-700 transition-colors whitespace-nowrap">
+              学習を始める
+            </button>
+          </div>
+        </div>
+        <!-- C -->
+        <div id="cCard" class="card bg-gray-700 rounded-lg shadow-md overflow-hidden hover:shadow-lg cursor-pointer">
+          <div class="p-6 bg-gradient-to-br from-gray-900 to-gray-700">
+            <div class="w-16 h-16 flex items-center justify-center bg-gray-600 text-white rounded-lg mb-4">
+              <i class="ri-code-s-slash-line ri-2x"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-white">C</h3>
+            <p class="text-gray-300 mb-4">
+              システムプログラミングに適した高速で効率的な言語です。
+            </p>
+            <button
+              class="w-full bg-gray-600 text-white py-2 px-4 rounded-button font-medium hover:bg-gray-700 transition-colors whitespace-nowrap">
+              学習を始める
+            </button>
+          </div>
+        </div>
+        <!-- C++ -->
+        <div class="card bg-gray-700 rounded-lg shadow-md overflow-hidden hover:shadow-lg">
+          <div class="p-6 bg-gradient-to-br from-blue-900 to-purple-700">
+            <div class="w-16 h-16 flex items-center justify-center bg-blue-700 text-white rounded-lg mb-4">
+              <i class="ri-code-box-line ri-2x"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-white">C++</h3>
+            <p class="text-gray-300 mb-4">
+              C言語の拡張版で、オブジェクト指向プログラミングをサポートします。
+            </p>
+            <button
+              class="w-full bg-blue-700 text-white py-2 px-4 rounded-button font-medium hover:bg-blue-800 transition-colors whitespace-nowrap">
+              学習を始める
+            </button>
+          </div>
+        </div>
+        <!-- C# -->
+        <div class="card bg-gray-700 rounded-lg shadow-md overflow-hidden hover:shadow-lg">
+          <div class="p-6 bg-gradient-to-br from-purple-900 to-purple-700">
+            <div class="w-16 h-16 flex items-center justify-center bg-purple-600 text-white rounded-lg mb-4">
+              <i class="ri-hashtag-line ri-2x"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-white">C#</h3>
+            <p class="text-gray-300 mb-4">
+              マイクロソフトが開発した汎用性の高いオブジェクト指向言語です。
+            </p>
+            <button
+              class="w-full bg-purple-600 text-white py-2 px-4 rounded-button font-medium hover:bg-purple-700 transition-colors whitespace-nowrap">
+              学習を始める
+            </button>
+          </div>
+        </div>
+        <!-- Java -->
+        <div class="card bg-gray-700 rounded-lg shadow-md overflow-hidden hover:shadow-lg">
+          <div class="p-6 bg-gradient-to-br from-red-900 to-red-700">
+            <div class="w-16 h-16 flex items-center justify-center bg-red-600 text-white rounded-lg mb-4">
+              <i class="ri-java-line ri-2x"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-white">Java</h3>
+            <p class="text-gray-300 mb-4">
+              クロスプラットフォーム対応の堅牢なオブジェクト指向言語です。
+            </p>
+            <button
+              class="w-full bg-red-600 text-white py-2 px-4 rounded-button font-medium hover:bg-red-700 transition-colors whitespace-nowrap">
+              学習を始める
+            </button>
+          </div>
+        </div>
+        <!-- PHP -->
+        <div class="card bg-gray-700 rounded-lg shadow-md overflow-hidden hover:shadow-lg">
+          <div class="p-6 bg-gradient-to-br from-indigo-900 to-indigo-700">
+            <div class="w-16 h-16 flex items-center justify-center bg-indigo-600 text-white rounded-lg mb-4">
+              <i class="ri-php-line ri-2x"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-white">PHP</h3>
+            <p class="text-gray-300 mb-4">
+              ウェブ開発に特化したサーバーサイドスクリプト言語です。
+            </p>
+            <button
+              class="w-full bg-indigo-600 text-white py-2 px-4 rounded-button font-medium hover:bg-indigo-700 transition-colors whitespace-nowrap">
+              学習を始める
+            </button>
+          </div>
+        </div>
+        <!-- TypeScript -->
+        <div class="card bg-gray-700 rounded-lg shadow-md overflow-hidden hover:shadow-lg">
+          <div class="p-6 bg-gradient-to-br from-blue-900 to-blue-700">
+            <div class="w-16 h-16 flex items-center justify-center bg-blue-500 text-white rounded-lg mb-4">
+              <i class="ri-typescript-line ri-2x"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-white">TypeScript</h3>
+            <p class="text-gray-300 mb-4">
+              JavaScriptに型システムを追加した、大規模開発に適した言語です。
+            </p>
+            <button
+              class="w-full bg-blue-500 text-white py-2 px-4 rounded-button font-medium hover:bg-blue-600 transition-colors whitespace-nowrap">
+              学習を始める
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- 学習パスセクション -->
+  <section class="py-16 bg-gray-900">
+    <div class="container mx-auto px-responsive">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold mb-4 text-white">あなたの学習パス</h2>
+        <p class="text-gray-300 max-w-2xl mx-auto">
+          段階的な学習カリキュラムで、確実にスキルアップを実現します
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="bg-gray-800 p-8 rounded-lg shadow-md relative">
+          <div
+            class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold">
+            1
+          </div>
+          <div class="w-16 h-16 flex items-center justify-center bg-primary/10 text-primary rounded-lg mb-4 mx-auto">
+            <i class="ri-book-open-line ri-2x"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2 text-center text-white">基礎学習</h3>
+          <p class="text-gray-300 text-center">
+            プログラミングの基本概念と考え方を学びます
+          </p>
+        </div>
+        <div class="bg-gray-800 p-8 rounded-lg shadow-md relative">
+          <div
+            class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold">
+            2
+          </div>
+          <div class="w-16 h-16 flex items-center justify-center bg-primary/10 text-primary rounded-lg mb-4 mx-auto">
+            <i class="ri-code-line ri-2x"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2 text-center text-white">実践演習</h3>
+          <p class="text-gray-300 text-center">
+            実際のプロジェクトを通じて技術を習得します
+          </p>
+        </div>
+        <div class="bg-gray-800 p-8 rounded-lg shadow-md relative">
+          <div
+            class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold">
+            3
+          </div>
+          <div class="w-16 h-16 flex items-center justify-center bg-primary/10 text-primary rounded-lg mb-4 mx-auto">
+            <i class="ri-team-line ri-2x"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2 text-center text-white">チーム開発</h3>
+          <p class="text-gray-300 text-center">
+            他の学習者と協力してプロジェクトを進めます
+          </p>
+        </div>
+        <div class="bg-gray-800 p-8 rounded-lg shadow-md relative">
+          <div
+            class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold">
+            4
+          </div>
+          <div class="w-16 h-16 flex items-center justify-center bg-primary/10 text-primary rounded-lg mb-4 mx-auto">
+            <i class="ri-medal-line ri-2x"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2 text-center text-white">資格取得</h3>
+          <p class="text-gray-300 text-center">
+            業界認定の資格取得をサポートします
+          </p>
+        </div>
+      </div>
+      <div class="mt-12 text-center">
+        <button
+          class="bg-primary text-white py-3 px-8 rounded-button font-medium hover:bg-primary/90 transition-colors whitespace-nowrap">
+          学習を始める
+        </button>
+      </div>
+    </div>
+  </section>
+  <!-- CTAセクション -->
+  <section class="py-16 bg-gray-800">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-4xl font-bold mb-6 text-white whitespace-nowrap">
+          「学びに終わりはない。それが人生の美しさだ」
+        </h2>
+        <p class="text-xl text-gray-300 italic mb-8">- 継続は力なり -</p>
+      </div>
+    </div>
+  </section>
+  <!-- フッター -->
+  <footer class="bg-gray-900 text-gray-300 py-16 lg:py-20">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <div class="flex items-center mb-4">
+            <span class="text-2xl font-['Pacifico'] text-white mr-2">logo</span>
+            <span class="font-bold">あなたと学ぶプログラミング</span>
+          </div>
+          <p class="text-gray-400 mb-4">
+            初心者から上級者まで、プログラミングを楽しく学べるオンラインプラットフォーム
+          </p>
+          <div class="flex space-x-4">
+            <a href="#"
+              class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-primary transition-colors">
+              <i class="ri-twitter-x-line"></i>
+            </a>
+            <a href="#"
+              class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-primary transition-colors">
+              <i class="ri-facebook-fill"></i>
+            </a>
+            <a href="#"
+              class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-primary transition-colors">
+              <i class="ri-instagram-line"></i>
+            </a>
+            <a href="#"
+              class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-primary transition-colors">
+              <i class="ri-github-fill"></i>
+            </a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-lg font-bold mb-4">コース</h4>
+          <ul class="space-y-2">
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">フロントエンド開発</a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">バックエンド開発</a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">モバイルアプリ開発</a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">データサイエンス</a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">ゲーム開発</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-bold mb-4">サポート</h4>
+          <ul class="space-y-2">
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">よくある質問</a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">お問い合わせ</a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">ヘルプセンター</a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">コミュニティ</a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">フィードバック</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-bold mb-4">ニュースレター</h4>
+          <p class="text-gray-400 mb-4">
+            最新のチュートリアルや特別オファーについての情報を受け取りましょう
+          </p>
+          <form class="flex">
+            <input type="
+              class=" px-4 py-2 w-full rounded-l-button focus:outline-none text-gray-800 border-none" />
+            <button type="submit" class="bg-primary text-white px-4 py-2 rounded-r-button whitespace-nowrap">
+              登録
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+        <p class="text-gray-400">
+          © 2025 あなたと学ぶプログラミング. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+  <script id="darkModeToggle">
+    document.addEventListener("DOMContentLoaded", function () {
+      const toggle = document.getElementById("toggle");
+      const body = document.body;
+      toggle.addEventListener("change", function () {
+        if (this.checked) {
+          body.classList.add("dark-mode");
+        } else {
+          body.classList.remove("dark-mode");
+        }
+      });
+    });
+  </script>
+  <script id="scrollToCards">
+    function scrollToCards() {
+      const cardsSection = document.querySelector(
+        ".grid.grid-cols-1.sm\\:grid-cols-2.lg\\:grid-cols-3.xl\\:grid-cols-4.gap-8"
+      );
+      const offset = 100;
+      const elementPosition = cardsSection.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const cardConfig = {
+        htmlCard: "languages/HTML.html",
+        cssCard: "languages/CSS.html",
+        javascriptCard: "languages/JavaScript.html",
+        pythonCard: "languages/Python.html",
+        cCard: "languages/C.html",
+      };
+
+      Object.entries(cardConfig).forEach(([cardId, path]) => {
+        const card = document.getElementById(cardId);
+        if (card) {
+          card.addEventListener("click", function () {
+            window.open(path, "_blank");
+          });
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

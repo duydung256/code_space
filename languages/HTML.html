@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML学習ページ</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { primary: "#E34F26", secondary: "#EBEBEB" },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+    />
+    <style>
+      :where([class^="ri-"])::before {
+        content: "\f3c2";
+      }
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Poppins", sans-serif;
+      }
+      .code-block {
+        background-color: #f8f8f8;
+        border-left: 4px solid #e34f26;
+        padding: 1rem;
+        margin: 1rem 0;
+        overflow-x: auto;
+        font-family: monospace;
+      }
+      .sidebar-link.active {
+        color: #e34f26;
+        background-color: rgba(227, 79, 38, 0.1);
+        border-left: 3px solid #e34f26;
+      }
+      .sidebar-link:hover {
+        background-color: rgba(227, 79, 38, 0.05);
+      }
+      @media (max-width: 768px) {
+        .sidebar {
+          transform: translateX(-100%);
+          transition: transform 0.3s ease;
+        }
+        .sidebar.open {
+          transform: translateX(0);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-white text-gray-800">
+    <!-- Mobile Header -->
+    <div
+      class="md:hidden flex items-center justify-between p-4 border-b border-gray-200 bg-white sticky top-0 z-50"
+    >
+      <div class="flex items-center">
+        <button
+          id="mobile-menu-button"
+          class="w-10 h-10 flex items-center justify-center text-gray-700 mr-3"
+        >
+          <i class="ri-menu-line ri-lg"></i>
+        </button>
+        <div class="text-primary font-bold text-2xl">HTML</div>
+      </div>
+    </div>
+    <div class="flex flex-col md:flex-row min-h-screen md:pl-[250px]">
+      <!-- Left Sidebar with Logo and TOC -->
+      <div
+        id="sidebar"
+        class="sidebar fixed top-0 left-0 md:w-[250px] w-[280px] h-full bg-white border-r border-gray-200 overflow-y-auto z-40 md:translate-x-0"
+      >
+        <div class="p-6 border-b border-gray-200">
+          <div class="flex flex-col items-center">
+            <div
+              class="w-32 h-32 flex items-center justify-center bg-primary rounded-lg mb-4"
+            >
+              <span class="text-white font-bold text-6xl">&lt;/&gt;</span>
+            </div>
+            <h1 class="text-primary font-bold text-3xl">HTML</h1>
+          </div>
+        </div>
+        <div
+          class="p-4 border-b border-gray-200 flex justify-between items-center"
+        >
+          <h2 class="font-bold text-lg">目次</h2>
+          <button
+            id="close-sidebar"
+            class="md:hidden w-8 h-8 flex items-center justify-center text-gray-500"
+          >
+            <i class="ri-close-line ri-lg"></i>
+          </button>
+        </div>
+        <div class="p-4">
+          <script id="smooth-scroll-script">
+            document.addEventListener("DOMContentLoaded", function () {
+              const sidebarLinks = document.querySelectorAll(".sidebar-link");
+              sidebarLinks.forEach((link) => {
+                link.addEventListener("click", function (e) {
+                  e.preventDefault();
+                  const targetId = this.getAttribute("href").substring(1);
+                  const targetElement = document.getElementById(targetId);
+                  if (targetElement) {
+                    targetElement.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    });
+                    // On mobile, close the sidebar after clicking a link
+                    if (window.innerWidth < 768) {
+                      document
+                        .getElementById("sidebar")
+                        .classList.remove("open");
+                    }
+                  }
+                });
+              });
+            });
+          </script>
+          <div class="mb-6">
+            <h3 class="font-semibold text-sm uppercase text-gray-500 mb-2">
+              HTML 基礎
+            </h3>
+            <ul class="space-y-1">
+              <li>
+                <a
+                  href="#introduction"
+                  class="sidebar-link active block px-3 py-2 text-sm rounded-md"
+                  >HTMLとは？</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#basic-tags"
+                  class="sidebar-link block px-3 py-2 text-sm rounded-md"
+                  >基本的なHTMLタグ</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#attributes"
+                  class="sidebar-link block px-3 py-2 text-sm rounded-md"
+                  >HTML属性</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#semantic-elements"
+                  class="sidebar-link block px-3 py-2 text-sm rounded-md"
+                  >セマンティックHTML</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="mb-6">
+            <h3 class="font-semibold text-sm uppercase text-gray-500 mb-2">
+              HTML 要素
+            </h3>
+            <ul class="space-y-1">
+              <li>
+                <a
+                  href="#forms"
+                  class="sidebar-link block px-3 py-2 text-sm rounded-md"
+                  >フォーム</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="sidebar-link block px-3 py-2 text-sm rounded-md"
+                  >テーブル</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="sidebar-link block px-3 py-2 text-sm rounded-md"
+                  >リスト</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="sidebar-link block px-3 py-2 text-sm rounded-md"
+                  >画像と動画</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="sidebar-link block px-3 py-2 text-sm rounded-md"
+                  >リンク</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="mb-6">
+            <h3 class="font-semibold text-sm uppercase text-gray-500 mb-2">
+              HTML 応用
+            </h3>
+            <ul class="space-y-1">
+              <li>
+                <a
+                  href="#"
+                  class="sidebar-link block px-3 py-2 text-sm rounded-md"
+                  >レスポンシブウェブデザイン</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="sidebar-link block px-3 py-2 text-sm rounded-md"
+                  >HTML5 新機能</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="sidebar-link block px-3 py-2 text-sm rounded-md"
+                  >アクセシビリティ</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="sidebar-link block px-3 py-2 text-sm rounded-md"
+                  >SEO対策</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-semibold text-sm uppercase text-gray-500 mb-2">
+              リソース
+            </h3>
+            <ul class="space-y-1">
+              <li>
+                <a
+                  href="#"
+                  class="sidebar-link block px-3 py-2 text-sm rounded-md"
+                  >チートシート</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="sidebar-link block px-3 py-2 text-sm rounded-md"
+                  >練習問題</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="sidebar-link block px-3 py-2 text-sm rounded-md"
+                  >プロジェクト例</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="sidebar-link block px-3 py-2 text-sm rounded-md"
+                  >よくある質問</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Main Content Area -->
+      <div class="flex-1 p-4 md:p-8 overflow-auto">
+        <div class="max-w-3xl mx-auto">
+          <div class="md:hidden mb-6">
+            <div class="flex justify-center mb-4">
+              <div
+                class="w-24 h-24 flex items-center justify-center bg-primary rounded-lg"
+              >
+                <span class="text-white font-bold text-4xl">&lt;/&gt;</span>
+              </div>
+            </div>
+            <h1 class="text-primary font-bold text-2xl text-center mb-2">
+              HTML
+            </h1>
+            <p class="text-gray-600 text-sm text-center">
+              ウェブの基礎を学ぼう
+            </p>
+          </div>
+          <section id="introduction" class="mb-10">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">HTMLとは？</h2>
+            <p class="mb-4 leading-relaxed">
+              HTMLは、ウェブページを作成するための標準マークアップ言語です。HTMLはHyperText
+              Markup Languageの略で、ウェブページの構造を定義します。
+            </p>
+            <p class="mb-4 leading-relaxed">
+              HTMLはウェブページの骨組みを作り、テキスト、画像、動画、フォームなどのコンテンツを配置する方法を指定します。
+            </p>
+            <div class="bg-gray-50 p-4 rounded-lg my-6 border border-gray-200">
+              <h3 class="text-lg font-semibold mb-2">HTMLの基本構造</h3>
+              <div class="code-block">
+                <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;ページのタイトル&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;これは見出しです&lt;/h1&gt;
+&lt;p&gt;これは段落です。&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre
+                >
+              </div>
+            </div>
+            <div class="flex flex-col md:flex-row gap-4 mt-6">
+              <div
+                class="flex-1 bg-gray-50 p-4 rounded-lg border border-gray-200"
+              >
+                <h4 class="font-semibold text-primary mb-2">HTMLの特徴</h4>
+                <ul class="list-disc pl-5 space-y-2">
+                  <li>テキストベースのマークアップ言語</li>
+                  <li>タグを使用して要素を定義</li>
+                  <li>ブラウザによって解釈・表示される</li>
+                  <li>CSSと組み合わせてスタイルを適用</li>
+                </ul>
+              </div>
+              <div
+                class="flex-1 bg-gray-50 p-4 rounded-lg border border-gray-200"
+              >
+                <h4 class="font-semibold text-primary mb-2">必要なツール</h4>
+                <ul class="list-disc pl-5 space-y-2">
+                  <li>テキストエディタ（VS Code, Sublime Textなど）</li>
+                  <li>ウェブブラウザ（Chrome, Firefox, Safariなど）</li>
+                  <li>基本的なコンピュータスキル</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+          <section id="basic-tags" class="mb-10">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+              Basic HTML Tags
+            </h2>
+            <p class="mb-4 leading-relaxed">
+              HTML tags are used to define the structure of a webpage. Here are
+              the most fundamental HTML tags with detailed explanations and
+              examples:
+            </p>
+            <div class="space-y-8">
+              <!-- Document Structure Tags -->
+              <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">
+                  Document Structure Tags
+                </h3>
+                <div class="space-y-4">
+                  <div class="bg-white p-4 rounded border border-gray-300">
+                    <h4 class="font-mono text-primary">
+                      &lt;!DOCTYPE html&gt;
+                    </h4>
+                    <p class="mt-2 text-gray-600">
+                      Declares that this is an HTML5 document. Must be the first
+                      line of the HTML file.
+                    </p>
+                    <div class="mt-2 code-block">
+                      <pre>&lt;!DOCTYPE html&gt;</pre>
+                    </div>
+                  </div>
+                  <div class="bg-white p-4 rounded border border-gray-300">
+                    <h4 class="font-mono text-primary">
+                      &lt;html&gt;&lt;/html&gt;
+                    </h4>
+                    <p class="mt-2 text-gray-600">
+                      The root element that contains all other HTML elements.
+                      The lang attribute specifies the language.
+                    </p>
+                    <div class="mt-2 code-block">
+                      <pre>&lt;html lang="en"&gt;
+<!-- Other HTML elements go here -->
+&lt;/html&gt;</pre>
+                    </div>
+                  </div>
+                  <div class="bg-white p-4 rounded border border-gray-300">
+                    <h4 class="font-mono text-primary">
+                      &lt;head&gt;&lt;/head&gt;
+                    </h4>
+                    <p class="mt-2 text-gray-600">
+                      Contains metadata about the document, including title,
+                      character encoding, styles, and scripts.
+                    </p>
+                    <div class="mt-2 code-block">
+                      <pre>
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;Page Title&lt;/title&gt;
+&lt;/head&gt;</pre
+                      >
+                    </div>
+                  </div>
+                  <div class="bg-white p-4 rounded border border-gray-300">
+                    <h4 class="font-mono text-primary">
+                      &lt;body&gt;&lt;/body&gt;
+                    </h4>
+                    <p class="mt-2 text-gray-600">
+                      Contains all the visible content of the webpage.
+                    </p>
+                    <div class="mt-2 code-block">
+                      <pre>
+&lt;body&gt;
+&lt;h1&gt;Welcome to my website&lt;/h1&gt;
+&lt;p&gt;This is a paragraph.&lt;/p&gt;
+&lt;/body&gt;</pre
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Text Tags -->
+              <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">
+                  Text Tags
+                </h3>
+                <div class="space-y-4">
+                  <div class="bg-white p-4 rounded border border-gray-300">
+                    <h4 class="font-mono text-primary">
+                      &lt;h1&gt; to &lt;h6&gt;
+                    </h4>
+                    <p class="mt-2 text-gray-600">
+                      Headings from most important (h1) to least important (h6).
+                    </p>
+                    <div class="mt-4 bg-gray-50 p-4 rounded">
+                      <h1 class="text-2xl font-bold mb-2">This is h1</h1>
+                      <h2 class="text-xl font-bold mb-2">This is h2</h2>
+                      <h3 class="text-lg font-bold mb-2">This is h3</h3>
+                      <h4 class="text-base font-bold mb-2">This is h4</h4>
+                      <h5 class="text-sm font-bold mb-2">This is h5</h5>
+                      <h6 class="text-xs font-bold">This is h6</h6>
+                    </div>
+                    <div class="mt-2 code-block">
+                      <pre>
+&lt;h1&gt;Main Heading&lt;/h1&gt;
+&lt;h2&gt;Subheading&lt;/h2&gt;
+&lt;h3&gt;Section Heading&lt;/h3&gt;</pre
+                      >
+                    </div>
+                  </div>
+                  <div class="bg-white p-4 rounded border border-gray-300">
+                    <h4 class="font-mono text-primary">&lt;p&gt;&lt;/p&gt;</h4>
+                    <p class="mt-2 text-gray-600">
+                      Defines a paragraph of text.
+                    </p>
+                    <div class="mt-2 code-block">
+                      <pre>
+&lt;p&gt;This is a paragraph of text. It can contain multiple sentences and will automatically wrap to the next line when needed.&lt;/p&gt;</pre
+                      >
+                    </div>
+                  </div>
+                  <div class="bg-white p-4 rounded border border-gray-300">
+                    <h4 class="font-mono text-primary">&lt;br&gt;</h4>
+                    <p class="mt-2 text-gray-600">
+                      Creates a line break. It is an empty element and doesn't
+                      need a closing tag.
+                    </p>
+                    <div class="mt-2 code-block">
+                      <pre>Line 1&lt;br&gt;Line 2</pre>
+                    </div>
+                  </div>
+                  <div class="bg-white p-4 rounded border border-gray-300">
+                    <h4 class="font-mono text-primary">
+                      &lt;strong&gt; and &lt;em&gt;
+                    </h4>
+                    <p class="mt-2 text-gray-600">
+                      Used for text emphasis. &lt;strong&gt; for strong
+                      importance, &lt;em&gt; for emphasized text.
+                    </p>
+                    <div class="mt-4 bg-gray-50 p-4 rounded">
+                      <p>
+                        This is <strong>strong text</strong> and this is
+                        <em>emphasized text</em>.
+                      </p>
+                    </div>
+                    <div class="mt-2 code-block">
+                      <pre>
+&lt;p&gt;This is &lt;strong&gt;strong text&lt;/strong&gt; and this is &lt;em&gt;emphasized text&lt;/em&gt;.&lt;/p&gt;</pre
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Link and Image Tags -->
+              <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">
+                  Links and Images
+                </h3>
+                <div class="space-y-4">
+                  <div class="bg-white p-4 rounded border border-gray-300">
+                    <h4 class="font-mono text-primary">&lt;a&gt;&lt;/a&gt;</h4>
+                    <p class="mt-2 text-gray-600">
+                      Creates a hyperlink to another webpage or resource.
+                    </p>
+                    <div class="mt-4 bg-gray-50 p-4 rounded">
+                      <a href="#" class="text-primary hover:underline"
+                        >Click here</a
+                      >
+                    </div>
+                    <div class="mt-2 code-block">
+                      <pre>
+&lt;a href="https://example.com"&gt;Visit Example.com&lt;/a&gt;
+&lt;a href="mailto:email@example.com"&gt;Send email&lt;/a&gt;
+&lt;a href="tel:+1234567890"&gt;Call us&lt;/a&gt;</pre
+                      >
+                    </div>
+                  </div>
+                  <div class="bg-white p-4 rounded border border-gray-300">
+                    <h4 class="font-mono text-primary">&lt;img&gt;</h4>
+                    <p class="mt-2 text-gray-600">
+                      Embeds an image. Requires src attribute for the image
+                      source and alt attribute for alternative text.
+                    </p>
+                    <div class="mt-2 code-block">
+                      <pre>
+&lt;img src="image.jpg" alt="Description of image" width="300" height="200"&gt;</pre
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- List Tags -->
+              <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Lists</h3>
+                <div class="space-y-4">
+                  <div class="bg-white p-4 rounded border border-gray-300">
+                    <h4 class="font-mono text-primary">
+                      &lt;ul&gt;, &lt;ol&gt;, and &lt;li&gt;
+                    </h4>
+                    <p class="mt-2 text-gray-600">
+                      Create unordered (bulleted) and ordered (numbered) lists.
+                    </p>
+                    <div class="mt-4 bg-gray-50 p-4 rounded">
+                      <h5 class="font-semibold mb-2">Unordered List:</h5>
+                      <ul class="list-disc pl-5 mb-4">
+                        <li>Item 1</li>
+                        <li>Item 2</li>
+                        <li>Item 3</li>
+                      </ul>
+                      <h5 class="font-semibold mb-2">Ordered List:</h5>
+                      <ol class="list-decimal pl-5">
+                        <li>First item</li>
+                        <li>Second item</li>
+                        <li>Third item</li>
+                      </ol>
+                    </div>
+                    <div class="mt-2 code-block">
+                      <pre>
+&lt;ul&gt;
+&lt;li&gt;Item 1&lt;/li&gt;
+&lt;li&gt;Item 2&lt;/li&gt;
+&lt;li&gt;Item 3&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;First item&lt;/li&gt;
+&lt;li&gt;Second item&lt;/li&gt;
+&lt;li&gt;Third item&lt;/li&gt;
+&lt;/ol&gt;</pre
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="attributes" class="mb-10">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">HTML属性</h2>
+            <p class="mb-4 leading-relaxed">
+              HTML属性は、HTML要素に追加情報を提供します。属性は常に開始タグに指定され、通常は名前と値のペアで構成されます。
+            </p>
+            <div class="bg-gray-50 p-4 rounded-lg my-6 border border-gray-200">
+              <h3 class="text-lg font-semibold mb-2">属性の例</h3>
+              <div class="code-block">
+                <pre>
+&lt;a href="https://www.example.com"&gt;リンクテキスト&lt;/a&gt;
+&lt;img src="image.jpg" alt="画像の説明" width="500" height="300"&gt;</pre
+                >
+              </div>
+            </div>
+            <p class="mb-4 leading-relaxed">
+              上記の例では、<code class="bg-gray-100 px-1 rounded">href</code
+              >、<code class="bg-gray-100 px-1 rounded">src</code>、<code
+                class="bg-gray-100 px-1 rounded"
+                >alt</code
+              >、<code class="bg-gray-100 px-1 rounded">width</code>、<code
+                class="bg-gray-100 px-1 rounded"
+                >height</code
+              >
+              が属性です。
+            </p>
+            <h3 class="text-xl font-semibold text-gray-800 mt-6 mb-3">
+              よく使われる属性
+            </h3>
+            <div class="overflow-x-auto">
+              <table class="w-full border-collapse border border-gray-300 my-4">
+                <thead>
+                  <tr class="bg-gray-100">
+                    <th class="border border-gray-300 p-2 text-left">属性</th>
+                    <th class="border border-gray-300 p-2 text-left">説明</th>
+                    <th class="border border-gray-300 p-2 text-left">使用例</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="border border-gray-300 p-2 font-mono">id</td>
+                    <td class="border border-gray-300 p-2">
+                      要素の一意の識別子
+                    </td>
+                    <td class="border border-gray-300 p-2 font-mono">
+                      &lt;div id="header"&gt;
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="border border-gray-300 p-2 font-mono">class</td>
+                    <td class="border border-gray-300 p-2">
+                      要素のクラス名（CSSスタイリング用）
+                    </td>
+                    <td class="border border-gray-300 p-2 font-mono">
+                      &lt;p class="highlight"&gt;
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="border border-gray-300 p-2 font-mono">style</td>
+                    <td class="border border-gray-300 p-2">
+                      インラインCSSスタイル
+                    </td>
+                    <td class="border border-gray-300 p-2 font-mono">
+                      &lt;p style="color: blue;"&gt;
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="border border-gray-300 p-2 font-mono">title</td>
+                    <td class="border border-gray-300 p-2">
+                      要素に関する追加情報（ツールチップ）
+                    </td>
+                    <td class="border border-gray-300 p-2 font-mono">
+                      &lt;abbr title="World Wide Web"&gt;WWW&lt;/abbr&gt;
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+          <section id="forms" class="mb-10">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">HTMLフォーム</h2>
+            <p class="mb-4 leading-relaxed">
+              HTMLフォームは、ユーザーからデータを収集するために使用されます。フォームには、テキスト入力、チェックボックス、ラジオボタン、送信ボタンなどのさまざまな要素を含めることができます。
+            </p>
+            <div class="bg-gray-50 p-4 rounded-lg my-6 border border-gray-200">
+              <h3 class="text-lg font-semibold mb-2">基本的なフォームの例</h3>
+              <div class="code-block">
+                <pre>
+&lt;form action="/submit-form" method="post"&gt;
+&lt;label for="name"&gt;名前:&lt;/label&gt;
+&lt;input type="text" id="name" name="name" required&gt;
+&lt;label for="email"&gt;メールアドレス:&lt;/label&gt;
+&lt;input type="email" id="email" name="email" required&gt;
+&lt;label for="message"&gt;メッセージ:&lt;/label&gt;
+&lt;textarea id="message" name="message" rows="4" required&gt;&lt;/textarea&gt;
+&lt;input type="submit" value="送信"&gt;
+&lt;/form&gt;</pre
+                >
+              </div>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mt-6 mb-3">
+              フォーム要素の例
+            </h3>
+            <div class="bg-white p-6 rounded-lg border border-gray-300 mb-6">
+              <form class="space-y-4">
+                <div>
+                  <label
+                    for="name"
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                    >名前:</label
+                  >
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                    required
+                  />
+                </div>
+                <div>
+                  <label
+                    for="email"
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                    >メールアドレス:</label
+                  >
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1"
+                    >性別:</label
+                  >
+                  <div class="space-y-2">
+                    <div class="flex items-center">
+                      <div class="relative flex items-center">
+                        <input
+                          type="radio"
+                          id="male"
+                          name="gender"
+                          value="male"
+                          class="opacity-0 absolute h-5 w-5"
+                          checked
+                        />
+                        <div
+                          class="w-5 h-5 border border-gray-300 rounded-full flex items-center justify-center mr-2"
+                        >
+                          <div
+                            class="male-radio-dot hidden w-3 h-3 bg-primary rounded-full"
+                          ></div>
+                        </div>
+                        <label for="male" class="text-sm text-gray-700"
+                          >男性</label
+                        >
+                      </div>
+                    </div>
+                    <div class="flex items-center">
+                      <div class="relative flex items-center">
+                        <input
+                          type="radio"
+                          id="female"
+                          name="gender"
+                          value="female"
+                          class="opacity-0 absolute h-5 w-5"
+                        />
+                        <div
+                          class="w-5 h-5 border border-gray-300 rounded-full flex items-center justify-center mr-2"
+                        >
+                          <div
+                            class="female-radio-dot hidden w-3 h-3 bg-primary rounded-full"
+                          ></div>
+                        </div>
+                        <label for="female" class="text-sm text-gray-700"
+                          >女性</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1"
+                    >興味のある分野:</label
+                  >
+                  <div class="space-y-2">
+                    <div class="flex items-center">
+                      <div class="relative flex items-center">
+                        <input
+                          type="checkbox"
+                          id="html"
+                          name="interests"
+                          value="html"
+                          class="opacity-0 absolute h-5 w-5"
+                        />
+                        <div
+                          class="w-5 h-5 border border-gray-300 rounded flex items-center justify-center mr-2"
+                        >
+                          <div class="html-checkbox-mark hidden text-white">
+                            <i class="ri-check-line ri-sm"></i>
+                          </div>
+                        </div>
+                        <label for="html" class="text-sm text-gray-700"
+                          >HTML</label
+                        >
+                      </div>
+                    </div>
+                    <div class="flex items-center">
+                      <div class="relative flex items-center">
+                        <input
+                          type="checkbox"
+                          id="css"
+                          name="interests"
+                          value="css"
+                          class="opacity-0 absolute h-5 w-5"
+                        />
+                        <div
+                          class="w-5 h-5 border border-gray-300 rounded flex items-center justify-center mr-2"
+                        >
+                          <div class="css-checkbox-mark hidden text-white">
+                            <i class="ri-check-line ri-sm"></i>
+                          </div>
+                        </div>
+                        <label for="css" class="text-sm text-gray-700"
+                          >CSS</label
+                        >
+                      </div>
+                    </div>
+                    <div class="flex items-center">
+                      <div class="relative flex items-center">
+                        <input
+                          type="checkbox"
+                          id="js"
+                          name="interests"
+                          value="js"
+                          class="opacity-0 absolute h-5 w-5"
+                        />
+                        <div
+                          class="w-5 h-5 border border-gray-300 rounded flex items-center justify-center mr-2"
+                        >
+                          <div class="js-checkbox-mark hidden text-white">
+                            <i class="ri-check-line ri-sm"></i>
+                          </div>
+                        </div>
+                        <label for="js" class="text-sm text-gray-700"
+                          >JavaScript</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <label
+                    for="message"
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                    >メッセージ:</label
+                  >
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="4"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                    required
+                  ></textarea>
+                </div>
+                <div class="flex items-center">
+                  <label class="flex items-center">
+                    <div class="relative inline-block w-10 h-6 mr-2">
+                      <input
+                        type="checkbox"
+                        id="newsletter"
+                        class="opacity-0 w-0 h-0"
+                      />
+                      <span
+                        class="slider absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-gray-300 rounded-full transition-all duration-300"
+                      ></span>
+                    </div>
+                    <span class="text-sm text-gray-700"
+                      >ニュースレターを受け取る</span
+                    >
+                  </label>
+                </div>
+                <div>
+                  <button
+                    type="submit"
+                    class="bg-primary text-white px-4 py-2 rounded-button hover:bg-opacity-90 transition-all duration-200 whitespace-nowrap"
+                  >
+                    送信
+                  </button>
+                </div>
+              </form>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mt-6 mb-3">
+              主なフォーム要素
+            </h3>
+            <div class="overflow-x-auto">
+              <table class="w-full border-collapse border border-gray-300 my-4">
+                <thead>
+                  <tr class="bg-gray-100">
+                    <th class="border border-gray-300 p-2 text-left">要素</th>
+                    <th class="border border-gray-300 p-2 text-left">説明</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="border border-gray-300 p-2 font-mono">
+                      &lt;form&gt;
+                    </td>
+                    <td class="border border-gray-300 p-2">フォームを定義</td>
+                  </tr>
+                  <tr>
+                    <td class="border border-gray-300 p-2 font-mono">
+                      &lt;input&gt;
+                    </td>
+                    <td class="border border-gray-300 p-2">
+                      入力フィールドを定義（type属性で種類を指定）
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="border border-gray-300 p-2 font-mono">
+                      &lt;textarea&gt;
+                    </td>
+                    <td class="border border-gray-300 p-2">
+                      複数行のテキスト入力フィールド
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="border border-gray-300 p-2 font-mono">
+                      &lt;label&gt;
+                    </td>
+                    <td class="border border-gray-300 p-2">入力要素のラベル</td>
+                  </tr>
+                  <tr>
+                    <td class="border border-gray-300 p-2 font-mono">
+                      &lt;select&gt;
+                    </td>
+                    <td class="border border-gray-300 p-2">
+                      ドロップダウンリスト
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="border border-gray-300 p-2 font-mono">
+                      &lt;button&gt;
+                    </td>
+                    <td class="border border-gray-300 p-2">
+                      クリック可能なボタン
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="border border-gray-300 p-2 font-mono">
+                      &lt;fieldset&gt;
+                    </td>
+                    <td class="border border-gray-300 p-2">
+                      関連する要素をグループ化
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="border border-gray-300 p-2 font-mono">
+                      &lt;legend&gt;
+                    </td>
+                    <td class="border border-gray-300 p-2">
+                      fieldsetのキャプション
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+          <section id="semantic-elements" class="mb-10">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+              セマンティックHTML
+            </h2>
+            <p class="mb-4 leading-relaxed">
+              セマンティックHTMLとは、内容の意味を明確に伝えるタグを使用することです。これにより、ブラウザ、検索エンジン、開発者がコンテンツの意味を理解しやすくなります。
+            </p>
+            <div class="bg-gray-50 p-4 rounded-lg my-6 border border-gray-200">
+              <h3 class="text-lg font-semibold mb-2">セマンティック要素の例</h3>
+              <div class="code-block">
+                <pre>
+&lt;header&gt;
+&lt;h1&gt;ウェブサイトのタイトル&lt;/h1&gt;
+&lt;nav&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="#"&gt;ホーム&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#"&gt;サービス&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#"&gt;お問い合わせ&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+&lt;article&gt;
+&lt;h2&gt;記事のタイトル&lt;/h2&gt;
+&lt;p&gt;記事の内容...&lt;/p&gt;
+&lt;section&gt;
+&lt;h3&gt;セクションの見出し&lt;/h3&gt;
+&lt;p&gt;セクションの内容...&lt;/p&gt;
+&lt;/section&gt;
+&lt;/article&gt;
+&lt;aside&gt;
+&lt;h3&gt;関連情報&lt;/h3&gt;
+&lt;p&gt;サイドバーの内容...&lt;/p&gt;
+&lt;/aside&gt;
+&lt;/main&gt;
+&lt;footer&gt;
+&lt;p&gt;著作権 © 2025 私のウェブサイト&lt;/p&gt;
+&lt;/footer&gt;</pre
+                >
+              </div>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mt-6 mb-3">
+              主なセマンティック要素
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <h4 class="font-semibold text-primary mb-2">&lt;header&gt;</h4>
+                <p>
+                  ページまたはセクションのヘッダー部分を定義します。通常、ロゴ、見出し、ナビゲーションなどが含まれます。
+                </p>
+              </div>
+              <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <h4 class="font-semibold text-primary mb-2">&lt;nav&gt;</h4>
+                <p>
+                  ナビゲーションリンクのセクションを定義します。サイト内の主要なナビゲーションに使用されます。
+                </p>
+              </div>
+              <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <h4 class="font-semibold text-primary mb-2">&lt;main&gt;</h4>
+                <p>
+                  ドキュメントの主要なコンテンツを定義します。ページごとに一度だけ使用されるべきです。
+                </p>
+              </div>
+              <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <h4 class="font-semibold text-primary mb-2">&lt;article&gt;</h4>
+                <p>
+                  独立したコンテンツを定義します。ブログ記事、ニュース記事、フォーラムの投稿などに適しています。
+                </p>
+              </div>
+              <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <h4 class="font-semibold text-primary mb-2">&lt;section&gt;</h4>
+                <p>
+                  ドキュメント内の独立したセクションを定義します。通常、見出しを含みます。
+                </p>
+              </div>
+              <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <h4 class="font-semibold text-primary mb-2">&lt;aside&gt;</h4>
+                <p>
+                  メインコンテンツに間接的に関連するコンテンツを定義します。サイドバーや広告などに使用されます。
+                </p>
+              </div>
+              <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <h4 class="font-semibold text-primary mb-2">&lt;footer&gt;</h4>
+                <p>
+                  ページまたはセクションのフッター部分を定義します。著作権情報、連絡先、関連リンクなどが含まれます。
+                </p>
+              </div>
+              <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <h4 class="font-semibold text-primary mb-2">
+                  &lt;figure&gt; と &lt;figcaption&gt;
+                </h4>
+                <p>
+                  独立したコンテンツ（画像、図表など）とそのキャプションをグループ化します。
+                </p>
+              </div>
+            </div>
+          </section>
+          <!-- Remove pagination section since all content is on one page -->
+        </div>
+      </div>
+    </div>
+    <script id="download-dialog-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        const downloadBtn = document.getElementById("download-btn");
+        const downloadDialog = document.getElementById("download-dialog");
+        const closeDialog = document.getElementById("close-dialog");
+        const downloadProgress = document.getElementById("download-progress");
+        const progressBar = document.getElementById("progress-bar");
+        const progressText = document.getElementById("progress-text");
+        const formatButtons = document.querySelectorAll(".download-format-btn");
+        downloadBtn.addEventListener("click", () => {
+          downloadDialog.classList.remove("hidden");
+        });
+        closeDialog.addEventListener("click", () => {
+          downloadDialog.classList.add("hidden");
+          downloadProgress.classList.add("hidden");
+          progressBar.style.width = "0%";
+          progressText.textContent = "準備中...";
+        });
+        formatButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const format = button.getAttribute("data-format");
+            downloadProgress.classList.remove("hidden");
+            let progress = 0;
+            const interval = setInterval(() => {
+              progress += 5;
+              progressBar.style.width = `${progress}%`;
+              progressText.textContent = `ダウンロード中... ${progress}%`;
+              if (progress >= 100) {
+                clearInterval(interval);
+                progressText.textContent = "ダウンロード完了！";
+                setTimeout(() => {
+                  downloadDialog.classList.add("hidden");
+                  downloadProgress.classList.add("hidden");
+                  progressBar.style.width = "0%";
+                  progressText.textContent = "準備中...";
+                }, 1000);
+                const filename = `html-tutorial.${format}`;
+                const link = document.createElement("a");
+                link.href = `data:application/octet-stream,dummy`;
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+              }
+            }, 100);
+          });
+        });
+      });
+    </script>
+    <script id="mobile-menu-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const closeSidebarButton = document.getElementById("close-sidebar");
+        const sidebar = document.getElementById("sidebar");
+        mobileMenuButton.addEventListener("click", function () {
+          sidebar.classList.add("open");
+        });
+        closeSidebarButton.addEventListener("click", function () {
+          sidebar.classList.remove("open");
+        });
+      });
+    </script>
+    <script id="sidebar-links-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        const sidebarLinks = document.querySelectorAll(".sidebar-link");
+        sidebarLinks.forEach((link) => {
+          link.addEventListener("click", function () {
+            // Remove active class from all links
+            sidebarLinks.forEach((l) => l.classList.remove("active"));
+            // Add active class to clicked link
+            this.classList.add("active");
+            // On mobile, close the sidebar after clicking a link
+            if (window.innerWidth < 768) {
+              document.getElementById("sidebar").classList.remove("open");
+            }
+          });
+        });
+      });
+    </script>
+    <script id="custom-form-elements-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        // Custom Radio Buttons
+        const radioInputs = document.querySelectorAll('input[type="radio"]');
+        radioInputs.forEach((input) => {
+          input.addEventListener("change", function () {
+            // Hide all dots
+            document
+              .querySelectorAll('[class$="-radio-dot"]')
+              .forEach((dot) => {
+                dot.classList.add("hidden");
+              });
+            // Show the dot for the checked radio
+            if (this.checked) {
+              const dot = document.querySelector(`.${this.id}-radio-dot`);
+              if (dot) dot.classList.remove("hidden");
+            }
+          });
+          // Initialize
+          if (input.checked) {
+            const dot = document.querySelector(`.${input.id}-radio-dot`);
+            if (dot) dot.classList.remove("hidden");
+          }
+        });
+        // Custom Checkboxes
+        const checkboxInputs = document.querySelectorAll(
+          'input[type="checkbox"]:not(#newsletter)'
+        );
+        checkboxInputs.forEach((input) => {
+          input.addEventListener("change", function () {
+            const mark = document.querySelector(`.${this.id}-checkbox-mark`);
+            if (mark) {
+              if (this.checked) {
+                mark.classList.remove("hidden");
+                mark.parentElement.classList.add("bg-primary");
+              } else {
+                mark.classList.add("hidden");
+                mark.parentElement.classList.remove("bg-primary");
+              }
+            }
+          });
+        });
+        // Custom Toggle Switch
+        const toggleSwitch = document.getElementById("newsletter");
+        if (toggleSwitch) {
+          toggleSwitch.addEventListener("change", function () {
+            const slider = this.nextElementSibling;
+            if (this.checked) {
+              slider.classList.add("bg-primary");
+              slider.classList.remove("bg-gray-300");
+              slider.style.setProperty("--tw-translate-x", "16px");
+            } else {
+              slider.classList.remove("bg-primary");
+              slider.classList.add("bg-gray-300");
+              slider.style.setProperty("--tw-translate-x", "0px");
+            }
+          });
+          // Add the dot to the slider
+          const slider = toggleSwitch.nextElementSibling;
+          if (slider) {
+            slider.innerHTML =
+              '<span class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-all duration-300 transform"></span>';
+            slider.style.setProperty("--tw-translate-x", "0px");
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

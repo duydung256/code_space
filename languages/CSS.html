@@ -1,0 +1,1920 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS学習ページ</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config = { theme: { extend: { colors: { primary: '#0000FF', secondary: '#EBEBEB' }, borderRadius: { 'none': '0px', 'sm': '4px', DEFAULT: '8px', 'md': '12px', 'lg': '16px', 'xl': '20px', '2xl': '24px', '3xl': '32px', 'full': '9999px', 'button': '8px' } } } }</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .code-block {
+            background-color: #f8f8f8;
+            border-left: 4px solid #0000FF;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: monospace;
+        }
+
+        .sidebar-link.active {
+            color: #0000FF;
+            background-color: rgba(0, 0, 255, 0.1);
+            border-left: 3px solid #0000FF;
+        }
+
+        .sidebar-link:hover {
+            background-color: rgba(0, 0, 255, 0.05);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+        }
+
+        .slider .dot {
+            transition: transform 0.3s ease;
+        }
+
+        .slider.bg-primary .dot {
+            transform: translateX(16px);
+        }
+
+        .color-box {
+            width: 100%;
+            height: 50px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .property-demo {
+            transition: all 0.3s ease;
+        }
+
+        .range-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 5px;
+            background: #e0e0e0;
+            outline: none;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #0000FF;
+            cursor: pointer;
+        }
+
+        .range-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #0000FF;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-gray-800">
+    <!-- Mobile Header -->
+    <div class="md:hidden flex items-center justify-between p-4 border-b border-gray-200 bg-white sticky top-0 z-50">
+        <div class="flex items-center">
+            <button id="mobile-menu-button" class="w-10 h-10 flex items-center justify-center text-gray-700 mr-3">
+                <i class="ri-menu-line ri-lg"></i>
+            </button>
+            <div class="text-primary font-bold text-2xl">CSS</div>
+        </div>
+    </div>
+    <div class="flex flex-col md:flex-row min-h-screen md:pl-[250px]">
+        <!-- Left Sidebar with Logo and TOC -->
+        <div id="sidebar"
+            class="sidebar fixed top-0 left-0 md:w-[250px] w-[280px] h-full bg-white border-r border-gray-200 overflow-y-auto z-40 md:translate-x-0">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex flex-col items-center">
+                    <div class="w-32 h-32 flex items-center justify-center bg-primary rounded-lg mb-4">
+                        <span class="text-white font-bold text-6xl">&lt;/&gt;</span>
+                    </div>
+                    <h1 class="text-primary font-bold text-3xl">CSS</h1>
+                </div>
+            </div>
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h2 class="font-bold text-lg">目次</h2>
+                <button id="close-sidebar" class="md:hidden w-8 h-8 flex items-center justify-center text-gray-500">
+                    <i class="ri-close-line ri-lg"></i>
+                </button>
+            </div>
+            <div class="p-4">
+                <div class="mb-6">
+                    <h3 class="font-semibold text-sm uppercase text-gray-500 mb-2">CSS 基礎</h3>
+                    <ul class="space-y-1">
+                        <li><a href="#introduction"
+                                class="sidebar-link active block px-3 py-2 text-sm rounded-md">CSSとは？</a></li>
+                        <li><a href="#syntax" class="sidebar-link block px-3 py-2 text-sm rounded-md">CSS構文</a></li>
+                        <li><a href="#selectors" class="sidebar-link block px-3 py-2 text-sm rounded-md">セレクタ</a></li>
+                        <li><a href="#box-model" class="sidebar-link block px-3 py-2 text-sm rounded-md">ボックスモデル</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="mb-6">
+                    <h3 class="font-semibold text-sm uppercase text-gray-500 mb-2">CSS プロパティ</h3>
+                    <ul class="space-y-1">
+                        <li><a href="#colors" class="sidebar-link block px-3 py-2 text-sm rounded-md">色</a></li>
+                        <li><a href="#typography" class="sidebar-link block px-3 py-2 text-sm rounded-md">タイポグラフィ</a>
+                        </li>
+                        <li><a href="#backgrounds" class="sidebar-link block px-3 py-2 text-sm rounded-md">背景</a></li>
+                        <li><a href="#borders" class="sidebar-link block px-3 py-2 text-sm rounded-md">ボーダー</a></li>
+                    </ul>
+                </div>
+                <div class="mb-6">
+                    <h3 class="font-semibold text-sm uppercase text-gray-500 mb-2">CSS レイアウト</h3>
+                    <ul class="space-y-1">
+                        <li><a href="#display" class="sidebar-link block px-3 py-2 text-sm rounded-md">ディスプレイプロパティ</a>
+                        </li>
+                        <li><a href="#flexbox" class="sidebar-link block px-3 py-2 text-sm rounded-md">Flexbox</a></li>
+                        <li><a href="#grid" class="sidebar-link block px-3 py-2 text-sm rounded-md">Grid</a></li>
+                        <li><a href="#positioning" class="sidebar-link block px-3 py-2 text-sm rounded-md">位置指定</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-sm uppercase text-gray-500 mb-2">CSS 応用</h3>
+                    <ul class="space-y-1">
+                        <li><a href="#transitions" class="sidebar-link block px-3 py-2 text-sm rounded-md">トランジション</a>
+                        </li>
+                        <li><a href="#animations" class="sidebar-link block px-3 py-2 text-sm rounded-md">アニメーション</a>
+                        </li>
+                        <li><a href="#responsive" class="sidebar-link block px-3 py-2 text-sm rounded-md">レスポンシブデザイン</a>
+                        </li>
+                        <li><a href="#variables" class="sidebar-link block px-3 py-2 text-sm rounded-md">CSS変数</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Main Content Area -->
+        <div class="flex-1 p-4 md:p-8 overflow-auto">
+            <div class="max-w-3xl mx-auto">
+                <div class="md:hidden mb-6">
+                    <div class="flex justify-center mb-4">
+                        <div class="w-24 h-24 flex items-center justify-center bg-primary rounded-lg">
+                            <span class="text-white font-bold text-4xl">&lt;/&gt;</span>
+                        </div>
+                    </div>
+                    <h1 class="text-primary font-bold text-2xl text-center mb-2">CSS</h1>
+                    <p class="text-gray-600 text-sm text-center">ウェブデザインの基礎を学ぼう</p>
+                </div>
+                <section id="introduction" class="mb-10">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">CSSとは？</h2>
+                    <p class="mb-4 leading-relaxed">CSSは、Cascading Style
+                        Sheetsの略で、HTMLで作成されたウェブページのデザインやレイアウトを指定するための言語です。CSSを使うことで、テキストの色やサイズ、背景色、レイアウト、アニメーションなど、ウェブページの見た目を自由にカスタマイズできます。
+                    </p>
+                    <p class="mb-4 leading-relaxed">
+                        CSSはHTMLと組み合わせて使用され、「コンテンツ（HTML）」と「デザイン（CSS）」を分離することで、効率的なウェブ開発が可能になります。</p>
+                    <div class="bg-gray-50 p-4 rounded-lg my-6 border border-gray-200">
+                        <h3 class="text-lg font-semibold mb-2">CSSの基本構造</h3>
+                        <div class="code-block">
+                            <pre>セレクタ {
+プロパティ: 値;
+プロパティ: 値;
+プロパティ: 値;
+}</pre>
+                        </div>
+                    </div>
+                    <div class="flex flex-col md:flex-row gap-4 mt-6">
+                        <div class="flex-1 bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <h4 class="font-semibold text-primary mb-2">CSSの特徴</h4>
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li>HTMLと組み合わせて使用</li>
+                                <li>カスケーディング（継承と上書き）の仕組み</li>
+                                <li>セレクタでHTML要素を指定</li>
+                                <li>プロパティと値でスタイルを定義</li>
+                            </ul>
+                        </div>
+                        <div class="flex-1 bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <h4 class="font-semibold text-primary mb-2">CSSの適用方法</h4>
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li>インラインスタイル（HTML要素に直接記述）</li>
+                                <li>内部スタイルシート（HTMLファイル内のstyleタグ）</li>
+                                <li>外部スタイルシート（別ファイルのCSSを読み込み）</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                <section id="syntax" class="mb-10">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">CSS構文</h2>
+                    <p class="mb-4 leading-relaxed">
+                        CSS構文は、セレクタとスタイル宣言ブロックで構成されています。セレクタはスタイルを適用するHTML要素を指定し、宣言ブロックにはプロパティと値のペアが含まれます。</p>
+                    <div class="bg-gray-50 p-4 rounded-lg my-6 border border-gray-200">
+                        <h3 class="text-lg font-semibold mb-2">CSS構文の例</h3>
+                        <div class="code-block">
+                            <pre>/* 基本的なセレクタとスタイル宣言 */
+h1 {
+color: blue;
+font-size: 24px;
+margin-bottom: 10px;
+}
+/* クラスセレクタ */
+.highlight {
+background-color: yellow;
+padding: 5px;
+}
+/* IDセレクタ */
+#header {
+background-color: black;
+color: white;
+}</pre>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mt-6 mb-3">CSSの適用方法</h3>
+                    <div class="space-y-6">
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <h4 class="font-semibold text-primary mb-2">1. インラインスタイル</h4>
+                            <p class="mb-2">HTML要素のstyle属性に直接CSSを記述します。</p>
+                            <div class="code-block">
+                                <pre>&lt;p style="color: blue; font-size: 16px;"&gt;これは青色のテキストです。&lt;/p&gt;</pre>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <h4 class="font-semibold text-primary mb-2">2. 内部スタイルシート</h4>
+                            <p class="mb-2">HTMLファイルのhead要素内にstyleタグを使用してCSSを記述します。</p>
+                            <div class="code-block">
+                                <pre>&lt;head&gt;
+&lt;style&gt;
+p {
+color: blue;
+font-size: 16px;
+}
+&lt;/style&gt;
+&lt;/head&gt;</pre>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <h4 class="font-semibold text-primary mb-2">3. 外部スタイルシート</h4>
+                            <p class="mb-2">別ファイル（.css）にCSSを記述し、HTMLファイルからlinkタグで読み込みます。</p>
+                            <div class="code-block">
+                                <pre>&lt;head&gt;
+&lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;/head&gt;</pre>
+                            </div>
+                            <p class="mt-2">styles.cssファイル：</p>
+                            <div class="code-block">
+                                <pre>p {
+color: blue;
+font-size: 16px;
+}</pre>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="selectors" class="mb-10">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">セレクタ</h2>
+                    <p class="mb-4 leading-relaxed">
+                        セレクタは、スタイルを適用するHTML要素を指定するためのパターンです。CSSには様々な種類のセレクタがあり、特定の要素や要素のグループを正確に選択できます。</p>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">基本的なセレクタ</h3>
+                        <div class="space-y-4">
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">要素セレクタ</h4>
+                                <p class="mt-2 text-gray-600">HTMLタグ名を使って要素を選択します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>p {
+color: blue;
+}
+h1 {
+font-size: 24px;
+}</pre>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">クラスセレクタ</h4>
+                                <p class="mt-2 text-gray-600">特定のclass属性を持つ要素を選択します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>.highlight {
+background-color: yellow;
+}
+.btn {
+padding: 10px;
+border-radius: 5px;
+}</pre>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">IDセレクタ</h4>
+                                <p class="mt-2 text-gray-600">特定のid属性を持つ要素を選択します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>#header {
+background-color: black;
+}
+#footer {
+margin-top: 20px;
+}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">結合セレクタ</h3>
+                        <div class="space-y-4">
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">子孫セレクタ</h4>
+                                <p class="mt-2 text-gray-600">特定の要素の子孫である要素を選択します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>div p {
+margin-left: 20px;
+}</pre>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">子セレクタ</h4>
+                                <p class="mt-2 text-gray-600">特定の要素の直接の子要素を選択します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>ul > li {
+list-style-type: square;
+}</pre>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">隣接兄弟セレクタ</h4>
+                                <p class="mt-2 text-gray-600">特定の要素の直後にある兄弟要素を選択します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>h1 + p {
+font-weight: bold;
+}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">疑似クラスと疑似要素</h3>
+                        <div class="space-y-4">
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">疑似クラス</h4>
+                                <p class="mt-2 text-gray-600">要素の特定の状態を選択します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>a:hover {
+text-decoration: underline;
+}
+input:focus {
+border-color: blue;
+}
+li:first-child {
+font-weight: bold;
+}</pre>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">疑似要素</h4>
+                                <p class="mt-2 text-gray-600">要素の特定の部分を選択します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>p::first-line {
+font-weight: bold;
+}
+p::before {
+content: "▶ ";
+}
+p::after {
+content: " ◀";
+}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="box-model" class="mb-10">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">ボックスモデル</h2>
+                    <p class="mb-4 leading-relaxed">
+                        CSSのボックスモデルは、すべてのHTML要素が矩形のボックスとして扱われる概念です。ボックスモデルは、コンテンツ、パディング、ボーダー、マージンの4つの部分で構成されています。</p>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
+                        <div class="flex flex-col md:flex-row items-center gap-6">
+                            <div class="flex-1">
+                                <h3 class="text-xl font-semibold text-gray-800 mb-4">ボックスモデルの構成要素</h3>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start">
+                                        <div class="w-4 h-4 bg-primary rounded-full mt-1 mr-2 flex-shrink-0"></div>
+                                        <div>
+                                            <strong>コンテンツ (Content):</strong> テキストや画像など、要素の実際の内容が表示される領域
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-4 h-4 bg-primary rounded-full mt-1 mr-2 flex-shrink-0"></div>
+                                        <div>
+                                            <strong>パディング (Padding):</strong> コンテンツの周りの透明な領域
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-4 h-4 bg-primary rounded-full mt-1 mr-2 flex-shrink-0"></div>
+                                        <div>
+                                            <strong>ボーダー (Border):</strong> パディングの外側にある境界線
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-4 h-4 bg-primary rounded-full mt-1 mr-2 flex-shrink-0"></div>
+                                        <div>
+                                            <strong>マージン (Margin):</strong> ボーダーの外側にある透明な領域で、他の要素との間隔を作る
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="flex-1 max-w-[300px]">
+                                <div class="relative bg-gray-100 p-6 border-4 border-dashed border-gray-300 rounded-lg">
+                                    <div class="bg-gray-200 p-5 border-4 border-dashed border-gray-400 rounded">
+                                        <div class="bg-gray-300 p-4 border-4 border-dashed border-gray-500 rounded">
+                                            <div
+                                                class="bg-primary bg-opacity-20 p-3 border-2 border-primary rounded text-center">
+                                                <span class="text-primary font-semibold">コンテンツ</span>
+                                            </div>
+                                            <div
+                                                class="absolute top-1/2 left-[15px] transform -translate-y-1/2 -translate-x-full text-xs text-gray-500">
+                                                マージン</div>
+                                            <div
+                                                class="absolute top-1/2 left-[60px] transform -translate-y-1/2 -translate-x-full text-xs text-gray-500">
+                                                ボーダー</div>
+                                            <div
+                                                class="absolute top-1/2 left-[105px] transform -translate-y-1/2 -translate-x-full text-xs text-gray-500">
+                                                パディング</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">ボックスモデルのプロパティ</h3>
+                        <div class="space-y-4">
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">width と height</h4>
+                                <p class="mt-2 text-gray-600">要素のコンテンツ領域の幅と高さを設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>div {
+width: 300px;
+height: 200px;
+}</pre>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">padding</h4>
+                                <p class="mt-2 text-gray-600">コンテンツ領域の周りの余白を設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>div {
+padding: 20px;             /* 四方向すべて同じ値 */
+padding: 10px 20px;        /* 上下 左右 */
+padding: 10px 20px 15px;   /* 上 左右 下 */
+padding: 10px 20px 15px 5px; /* 上 右 下 左 */
+}</pre>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">border</h4>
+                                <p class="mt-2 text-gray-600">要素の境界線を設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>div {
+border: 1px solid black;   /* 幅 スタイル 色 */
+border-width: 2px;
+border-style: dashed;
+border-color: red;
+}</pre>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">margin</h4>
+                                <p class="mt-2 text-gray-600">要素の外側の余白を設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>div {
+margin: 20px;              /* 四方向すべて同じ値 */
+margin: 10px 20px;         /* 上下 左右 */
+margin: 10px 20px 15px;    /* 上 左右 下 */
+margin: 10px 20px 15px 5px;  /* 上 右 下 左 */
+}</pre>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">box-sizing</h4>
+                                <p class="mt-2 text-gray-600">ボックスモデルの計算方法を設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>div {
+box-sizing: content-box;  /* デフォルト: width/heightはコンテンツ領域のみ */
+box-sizing: border-box;   /* width/heightにパディングとボーダーを含む */
+}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">インタラクティブなボックスモデルデモ</h3>
+                        <div class="flex flex-col md:flex-row gap-6">
+                            <div class="flex-1">
+                                <div class="mb-4">
+                                    <label for="padding-slider"
+                                        class="block text-sm font-medium text-gray-700 mb-1">パディング: <span
+                                            id="padding-value">10</span>px</label>
+                                    <input type="range" id="padding-slider" min="0" max="50" value="10"
+                                        class="range-slider">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="border-slider"
+                                        class="block text-sm font-medium text-gray-700 mb-1">ボーダー幅: <span
+                                            id="border-value">2</span>px</label>
+                                    <input type="range" id="border-slider" min="0" max="20" value="2"
+                                        class="range-slider">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="margin-slider"
+                                        class="block text-sm font-medium text-gray-700 mb-1">マージン: <span
+                                            id="margin-value">20</span>px</label>
+                                    <input type="range" id="margin-slider" min="0" max="50" value="20"
+                                        class="range-slider">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="border-style"
+                                        class="block text-sm font-medium text-gray-700 mb-1">ボーダースタイル:</label>
+                                    <div class="relative">
+                                        <button id="border-style-btn"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-button text-left flex items-center justify-between">
+                                            <span id="border-style-text">solid</span>
+                                            <i class="ri-arrow-down-s-line"></i>
+                                        </button>
+                                        <div id="border-style-dropdown"
+                                            class="hidden absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-button shadow-lg">
+                                            <div class="p-1">
+                                                <button data-style="solid"
+                                                    class="w-full px-3 py-2 text-left hover:bg-gray-100 rounded">solid</button>
+                                                <button data-style="dashed"
+                                                    class="w-full px-3 py-2 text-left hover:bg-gray-100 rounded">dashed</button>
+                                                <button data-style="dotted"
+                                                    class="w-full px-3 py-2 text-left hover:bg-gray-100 rounded">dotted</button>
+                                                <button data-style="double"
+                                                    class="w-full px-3 py-2 text-left hover:bg-gray-100 rounded">double</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-1 flex items-center justify-center bg-gray-100 p-4 rounded-lg">
+                                <div id="outer-box" class="bg-gray-200 p-5 relative">
+                                    <div id="border-box" class="bg-gray-300 border-2 border-primary border-solid">
+                                        <div id="content-box" class="bg-white p-4 text-center">
+                                            <span class="text-primary font-semibold">コンテンツ</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="colors" class="mb-10">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">色</h2>
+                    <p class="mb-4 leading-relaxed">
+                        CSSでは、テキスト、背景、ボーダーなど、様々な要素に色を適用できます。色の指定方法には、色名、HEX値、RGB値、HSL値など、複数の方法があります。</p>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">色の指定方法</h3>
+                        <div class="mb-6">
+                            <img src="https://readdy.ai/api/search-image?query=beautiful%20color%20palette%20showcase%20with%20blue%20tones%2C%20modern%20design%20elements%2C%20gradient%20swatches%20arranged%20in%20a%20clean%20grid%20layout%2C%20professional%20color%20theory%20visualization&width=800&height=300&seq=20&orientation=landscape"
+                                alt="Color Palette" class="w-full h-[200px] object-cover rounded-lg mb-4">
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">色名</h4>
+                                <p class="mt-2 text-gray-600">CSSで定義されている色名を使用します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>color: red;
+color: blue;
+color: green;
+color: yellow;</pre>
+                                </div>
+                                <div class="flex flex-wrap gap-2 mt-3">
+                                    <div class="flex flex-col items-center">
+                                        <div class="color-box w-12 h-12" style="background-color: red;"></div>
+                                        <span class="text-xs">red</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="color-box w-12 h-12" style="background-color: blue;"></div>
+                                        <span class="text-xs">blue</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="color-box w-12 h-12" style="background-color: green;"></div>
+                                        <span class="text-xs">green</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="color-box w-12 h-12" style="background-color: yellow;"></div>
+                                        <span class="text-xs">yellow</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">HEX値</h4>
+                                <p class="mt-2 text-gray-600">16進数の色コードを使用します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>color: #FF0000;  /* 赤 */
+color: #0000FF;  /* 青 */
+color: #00FF00;  /* 緑 */
+color: #FFFF00;  /* 黄 */</pre>
+                                </div>
+                                <div class="flex flex-wrap gap-2 mt-3">
+                                    <div class="flex flex-col items-center">
+                                        <div class="color-box w-12 h-12" style="background-color: #FF0000;"></div>
+                                        <span class="text-xs">#FF0000</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="color-box w-12 h-12" style="background-color: #0000FF;"></div>
+                                        <span class="text-xs">#0000FF</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="color-box w-12 h-12" style="background-color: #00FF00;"></div>
+                                        <span class="text-xs">#00FF00</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="color-box w-12 h-12" style="background-color: #FFFF00;"></div>
+                                        <span class="text-xs">#FFFF00</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">RGB値</h4>
+                                <p class="mt-2 text-gray-600">赤、緑、青の値（0〜255）を使用します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>color: rgb(255, 0, 0);    /* 赤 */
+color: rgb(0, 0, 255);    /* 青 */
+color: rgb(0, 255, 0);    /* 緑 */
+color: rgba(255, 0, 0, 0.5);  /* 半透明の赤 */</pre>
+                                </div>
+                                <div class="flex flex-wrap gap-2 mt-3">
+                                    <div class="flex flex-col items-center">
+                                        <div class="color-box w-12 h-12" style="background-color: rgb(255, 0, 0);">
+                                        </div>
+                                        <span class="text-xs">rgb(255,0,0)</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="color-box w-12 h-12" style="background-color: rgb(0, 0, 255);">
+                                        </div>
+                                        <span class="text-xs">rgb(0,0,255)</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="color-box w-12 h-12"
+                                            style="background-color: rgba(255, 0, 0, 0.5);"></div>
+                                        <span class="text-xs">rgba(255,0,0,0.5)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">HSL値</h4>
+                                <p class="mt-2 text-gray-600">色相、彩度、明度を使用します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>color: hsl(0, 100%, 50%);    /* 赤 */
+color: hsl(240, 100%, 50%);  /* 青 */
+color: hsl(120, 100%, 50%);  /* 緑 */
+color: hsla(0, 100%, 50%, 0.5);  /* 半透明の赤 */</pre>
+                                </div>
+                                <div class="flex flex-wrap gap-2 mt-3">
+                                    <div class="flex flex-col items-center">
+                                        <div class="color-box w-12 h-12" style="background-color: hsl(0, 100%, 50%);">
+                                        </div>
+                                        <span class="text-xs">hsl(0,100%,50%)</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="color-box w-12 h-12" style="background-color: hsl(240, 100%, 50%);">
+                                        </div>
+                                        <span class="text-xs">hsl(240,100%,50%)</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="color-box w-12 h-12"
+                                            style="background-color: hsla(0, 100%, 50%, 0.5);"></div>
+                                        <span class="text-xs">hsla(0,100%,50%,0.5)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">色に関するプロパティ</h3>
+                        <div class="space-y-4">
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">color</h4>
+                                <p class="mt-2 text-gray-600">テキストの色を設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>p {
+color: blue;
+}</pre>
+                                </div>
+                                <div class="mt-3 p-3 bg-gray-50 rounded">
+                                    <p style="color: blue;">これは青色のテキストです。</p>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">background-color</h4>
+                                <p class="mt-2 text-gray-600">背景色を設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>div {
+background-color: #f0f0f0;
+}</pre>
+                                </div>
+                                <div class="mt-3 p-3 rounded" style="background-color: #f0f0f0;">
+                                    <p>これはグレーの背景色を持つ要素です。</p>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">border-color</h4>
+                                <p class="mt-2 text-gray-600">ボーダーの色を設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>div {
+border: 2px solid red;
+}</pre>
+                                </div>
+                                <div class="mt-3 p-3 rounded border-2 border-red-500">
+                                    <p>これは赤いボーダーを持つ要素です。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="typography" class="mb-10">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">タイポグラフィ</h2>
+                    <p class="mb-4 leading-relaxed">
+                        CSSを使用して、テキストのフォント、サイズ、スタイル、間隔などを制御できます。適切なタイポグラフィは、ウェブサイトの読みやすさと視覚的な魅力を大きく向上させます。</p>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">フォントプロパティ</h3>
+                        <div class="mb-6">
+                            <img src="https://readdy.ai/api/search-image?query=typography%20showcase%20with%20different%20font%20styles%20and%20sizes%2C%20elegant%20text%20layouts%2C%20modern%20design%20elements%20on%20light%20background%2C%20professional%20typography%20demonstration&width=800&height=300&seq=21&orientation=landscape"
+                                alt="Typography Examples" class="w-full h-[200px] object-cover rounded-lg mb-4">
+                        </div>
+                        <div class="space-y-4">
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">font-family</h4>
+                                <p class="mt-2 text-gray-600">テキストのフォントファミリーを設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>p {
+font-family: Arial, Helvetica, sans-serif;
+}</pre>
+                                </div>
+                                <div class="mt-3 space-y-2">
+                                    <p style="font-family: Arial, Helvetica, sans-serif;">これはArialフォントのテキストです。</p>
+                                    <p style="font-family: 'Times New Roman', Times, serif;">これはTimes New
+                                        Romanフォントのテキストです。</p>
+                                    <p style="font-family: 'Courier New', Courier, monospace;">これはCourier
+                                        Newフォントのテキストです。</p>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">font-size</h4>
+                                <p class="mt-2 text-gray-600">テキストのサイズを設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>h1 {
+font-size: 32px;
+}
+p {
+font-size: 16px;
+}</pre>
+                                </div>
+                                <div class="mt-3 space-y-2">
+                                    <p style="font-size: 12px;">12pxのテキスト</p>
+                                    <p style="font-size: 16px;">16pxのテキスト</p>
+                                    <p style="font-size: 24px;">24pxのテキスト</p>
+                                    <p style="font-size: 36px;">36pxのテキスト</p>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">font-weight</h4>
+                                <p class="mt-2 text-gray-600">テキストの太さを設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>p {
+font-weight: bold;
+}
+span {
+font-weight: 700;
+}</pre>
+                                </div>
+                                <div class="mt-3 space-y-2">
+                                    <p style="font-weight: normal;">通常の太さ (normal / 400)</p>
+                                    <p style="font-weight: bold;">太字 (bold / 700)</p>
+                                    <p style="font-weight: 300;">細字 (300)</p>
+                                    <p style="font-weight: 900;">極太 (900)</p>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">font-style</h4>
+                                <p class="mt-2 text-gray-600">テキストのスタイル（斜体など）を設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>em {
+font-style: italic;
+}</pre>
+                                </div>
+                                <div class="mt-3 space-y-2">
+                                    <p style="font-style: normal;">通常のスタイル (normal)</p>
+                                    <p style="font-style: italic;">斜体 (italic)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">テキストプロパティ</h3>
+                        <div class="space-y-4">
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">text-align</h4>
+                                <p class="mt-2 text-gray-600">テキストの水平方向の配置を設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>p.center {
+text-align: center;
+}</pre>
+                                </div>
+                                <div class="mt-3 space-y-2">
+                                    <p style="text-align: left;">左揃え (left)</p>
+                                    <p style="text-align: center;">中央揃え (center)</p>
+                                    <p style="text-align: right;">右揃え (right)</p>
+                                    <p style="text-align: justify;">両端揃え (justify) -
+                                        このテキストは両端に合わせて配置されます。長い段落の場合、単語間のスペースが調整され、テキストの左右の端が揃います。</p>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">text-decoration</h4>
+                                <p class="mt-2 text-gray-600">テキストの装飾（下線など）を設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>a {
+text-decoration: none;
+}
+h2 {
+text-decoration: underline;
+}</pre>
+                                </div>
+                                <div class="mt-3 space-y-2">
+                                    <p style="text-decoration: none;">装飾なし (none)</p>
+                                    <p style="text-decoration: underline;">下線 (underline)</p>
+                                    <p style="text-decoration: line-through;">取り消し線 (line-through)</p>
+                                    <p style="text-decoration: overline;">上線 (overline)</p>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">line-height</h4>
+                                <p class="mt-2 text-gray-600">行の高さ（行間）を設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>p {
+line-height: 1.5;
+}</pre>
+                                </div>
+                                <div class="mt-3 space-y-4">
+                                    <div style="line-height: 1; border: 1px solid #ddd; padding: 10px;">
+                                        <p>行の高さ:
+                                            1<br>これは行の高さが1に設定されたテキストです。行間が狭く、テキストが詰まって見えます。複数行のテキストを表示すると、読みにくくなる可能性があります。
+                                        </p>
+                                    </div>
+                                    <div style="line-height: 1.5; border: 1px solid #ddd; padding: 10px;">
+                                        <p>行の高さ:
+                                            1.5<br>これは行の高さが1.5に設定されたテキストです。適切な行間があり、読みやすくなっています。ウェブサイトのコンテンツには、この程度の行の高さが推奨されます。
+                                        </p>
+                                    </div>
+                                    <div style="line-height: 2; border: 1px solid #ddd; padding: 10px;">
+                                        <p>行の高さ:
+                                            2<br>これは行の高さが2に設定されたテキストです。行間が広く、余白が多めになっています。特定のデザインでは効果的ですが、一般的なコンテンツには広すぎる場合があります。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">letter-spacing</h4>
+                                <p class="mt-2 text-gray-600">文字間の間隔を設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>h1 {
+letter-spacing: 2px;
+}</pre>
+                                </div>
+                                <div class="mt-3 space-y-2">
+                                    <p style="letter-spacing: normal;">通常の文字間隔 (normal)</p>
+                                    <p style="letter-spacing: 2px;">広い文字間隔 (2px)</p>
+                                    <p style="letter-spacing: -1px;">狭い文字間隔 (-1px)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="backgrounds" class="mb-10">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">背景</h2>
+                    <p class="mb-4 leading-relaxed">
+                        CSSの背景プロパティを使用すると、要素の背景色や背景画像を設定できます。これらのプロパティを組み合わせることで、視覚的に魅力的なデザインを作成できます。</p>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">背景プロパティ</h3>
+                        <div class="mb-6">
+                            <img src="https://readdy.ai/api/search-image?query=modern%20background%20patterns%20and%20textures%20showcase%2C%20blue%20geometric%20shapes%2C%20gradient%20overlays%2C%20professional%20design%20elements%20on%20light%20background&width=800&height=300&seq=22&orientation=landscape"
+                                alt="Background Properties" class="w-full h-[200px] object-cover rounded-lg mb-4">
+                        </div>
+                        <div class="space-y-4">
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">background-color</h4>
+                                <p class="mt-2 text-gray-600">要素の背景色を設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>div {
+background-color: #f0f0f0;
+}</pre>
+                                </div>
+                                <div class="mt-3 grid grid-cols-2 gap-3">
+                                    <div class="p-4 rounded" style="background-color: #e6f7ff;">
+                                        <p class="text-center">#e6f7ff</p>
+                                    </div>
+                                    <div class="p-4 rounded" style="background-color: #f0f0f0;">
+                                        <p class="text-center">#f0f0f0</p>
+                                    </div>
+                                    <div class="p-4 rounded text-white" style="background-color: #0000FF;">
+                                        <p class="text-center">#0000FF</p>
+                                    </div>
+                                    <div class="p-4 rounded text-white" style="background-color: #333333;">
+                                        <p class="text-center">#333333</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">background-image</h4>
+                                <p class="mt-2 text-gray-600">要素の背景画像を設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>div {
+background-image: url('image.jpg');
+}</pre>
+                                </div>
+                                <div class="mt-3 h-40 rounded"
+                                    style="background-image: url('https://readdy.ai/api/search-image?query=abstract%20blue%20gradient%20background%20with%20soft%20waves%20and%20light%20patterns%2C%20modern%20and%20minimal%20design%2C%20high%20quality&width=800&height=400&seq=1&orientation=landscape'); background-size: cover; background-position: center;">
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">background-repeat</h4>
+                                <p class="mt-2 text-gray-600">背景画像の繰り返し方法を設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>div {
+background-image: url('pattern.jpg');
+background-repeat: repeat-x; /* 水平方向のみ繰り返し */
+}</pre>
+                                </div>
+                                <div class="mt-3 grid grid-cols-2 gap-3">
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">repeat（デフォルト）</p>
+                                        <div class="h-32 rounded"
+                                            style="background-image: url('https://readdy.ai/api/search-image?query=small%20blue%20geometric%20pattern%20tile%2C%20seamless%2C%20minimal%20design%2C%20light%20background&width=100&height=100&seq=2&orientation=squarish'); background-repeat: repeat;">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">no-repeat</p>
+                                        <div class="h-32 rounded"
+                                            style="background-image: url('https://readdy.ai/api/search-image?query=small%20blue%20geometric%20pattern%20tile%2C%20seamless%2C%20minimal%20design%2C%20light%20background&width=100&height=100&seq=3&orientation=squarish'); background-repeat: no-repeat;">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">repeat-x</p>
+                                        <div class="h-32 rounded"
+                                            style="background-image: url('https://readdy.ai/api/search-image?query=small%20blue%20geometric%20pattern%20tile%2C%20seamless%2C%20minimal%20design%2C%20light%20background&width=100&height=100&seq=4&orientation=squarish'); background-repeat: repeat-x;">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">repeat-y</p>
+                                        <div class="h-32 rounded"
+                                            style="background-image: url('https://readdy.ai/api/search-image?query=small%20blue%20geometric%20pattern%20tile%2C%20seamless%2C%20minimal%20design%2C%20light%20background&width=100&height=100&seq=5&orientation=squarish'); background-repeat: repeat-y;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">background-position</h4>
+                                <p class="mt-2 text-gray-600">背景画像の位置を設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>div {
+background-image: url('image.jpg');
+background-position: center center;
+}</pre>
+                                </div>
+                                <div class="mt-3 grid grid-cols-3 gap-3">
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">left top</p>
+                                        <div class="h-32 rounded"
+                                            style="background-image: url('https://readdy.ai/api/search-image?query=blue%20abstract%20shape%20on%20white%20background%2C%20modern%20minimal%20design&width=200&height=200&seq=6&orientation=squarish'); background-repeat: no-repeat; background-position: left top;">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">center top</p>
+                                        <div class="h-32 rounded"
+                                            style="background-image: url('https://readdy.ai/api/search-image?query=blue%20abstract%20shape%20on%20white%20background%2C%20modern%20minimal%20design&width=200&height=200&seq=7&orientation=squarish'); background-repeat: no-repeat; background-position: center top;">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">right top</p>
+                                        <div class="h-32 rounded"
+                                            style="background-image: url('https://readdy.ai/api/search-image?query=blue%20abstract%20shape%20on%20white%20background%2C%20modern%20minimal%20design&width=200&height=200&seq=8&orientation=squarish'); background-repeat: no-repeat; background-position: right top;">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">left center</p>
+                                        <div class="h-32 rounded"
+                                            style="background-image: url('https://readdy.ai/api/search-image?query=blue%20abstract%20shape%20on%20white%20background%2C%20modern%20minimal%20design&width=200&height=200&seq=9&orientation=squarish'); background-repeat: no-repeat; background-position: left center;">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">center center</p>
+                                        <div class="h-32 rounded"
+                                            style="background-image: url('https://readdy.ai/api/search-image?query=blue%20abstract%20shape%20on%20white%20background%2C%20modern%20minimal%20design&width=200&height=200&seq=10&orientation=squarish'); background-repeat: no-repeat; background-position: center center;">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">right center</p>
+                                        <div class="h-32 rounded"
+                                            style="background-image: url('https://readdy.ai/api/search-image?query=blue%20abstract%20shape%20on%20white%20background%2C%20modern%20minimal%20design&width=200&height=200&seq=11&orientation=squarish'); background-repeat: no-repeat; background-position: right center;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border border-gray-300">
+                                <h4 class="font-mono text-primary">background-size</h4>
+                                <p class="mt-2 text-gray-600">背景画像のサイズを設定します。</p>
+                                <div class="mt-2 code-block">
+                                    <pre>div {
+background-image: url('image.jpg');
+background-size: cover;
+}</pre>
+                                </div>
+                                <div class="mt-3 grid grid-cols-2 gap-3">
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">auto（デフォルト）</p>
+                                        <div class="h-40 rounded"
+                                            style="background-image: url('https://readdy.ai/api/search-image?query=blue%20abstract%20wave%20pattern%2C%20modern%20design%2C%20high%20quality&width=400&height=300&seq=12&orientation=landscape'); background-repeat: no-repeat; background-size: auto;">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">contain</p>
+                                        <div class="h-40 rounded"
+                                            style="background-image: url('https://readdy.ai/api/search-image?query=blue%20abstract%20wave%20pattern%2C%20modern%20design%2C%20high%20quality&width=400&height=300&seq=13&orientation=landscape'); background-repeat: no-repeat; background-size: contain;">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">cover</p>
+                                        <div class="h-40 rounded"
+                                            style="background-image: url('https://readdy.ai/api/search-image?query=blue%20abstract%20wave%20pattern%2C%20modern%20design%2C%20high%20quality&width=400&height=300&seq=14&orientation=landscape'); background-repeat: no-repeat; background-size: cover;">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">100% 100%</p>
+                                        <div class="h-40 rounded"
+                                            style="background-image: url('https://readdy.ai/api/search-image?query=blue%20abstract%20wave%20pattern%2C%20modern%20design%2C%20high%20quality&width=400&height=300&seq=15&orientation=landscape'); background-repeat: no-repeat; background-size: 100% 100%;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">背景のショートハンドプロパティ</h3>
+                        <p class="mb-4">background プロパティを使用すると、複数の背景プロパティを一度に設定できます。</p>
+                        <div class="code-block">
+                            <pre>div {
+background: #f0f0f0 url('image.jpg') no-repeat center center / cover;
+}</pre>
+                        </div>
+                        <p class="mt-4 mb-2">順序：</p>
+                        <ol class="list-decimal pl-5 mb-4">
+                            <li>background-color</li>
+                            <li>background-image</li>
+                            <li>background-repeat</li>
+                            <li>background-position</li>
+                            <li>/ background-size</li>
+                        </ol>
+                        <div class="h-40 rounded"
+                            style="background: #e6f7ff url('https://readdy.ai/api/search-image?query=blue%20gradient%20with%20abstract%20wave%20patterns%2C%20modern%20and%20clean%20design%2C%20high%20quality&width=800&height=400&seq=16&orientation=landscape') no-repeat center center / cover;">
+                        </div>
+                    </div>
+                </section>
+                <section id="flexbox" class="mb-10">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Flexbox</h2>
+                    <p class="mb-4 leading-relaxed">Flexbox（Flexible Box
+                        Layout）は、一次元のレイアウトモデルで、要素を行または列に配置し、利用可能なスペースを効率的に分配します。Flexboxを使用すると、要素の配置、整列、順序の変更などが簡単に行えます。
+                    </p>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Flexboxの基本概念</h3>
+                        <div class="mb-6">
+                            <img src="https://readdy.ai/api/search-image?query=flexbox%20layout%20visualization%2C%20modern%20web%20design%20grid%20system%2C%20blue%20and%20white%20interface%20elements%20arranged%20in%20flexible%20containers%2C%20professional%20layout%20demonstration&width=800&height=300&seq=23&orientation=landscape"
+                                alt="Flexbox Concepts" class="w-full h-[200px] object-cover rounded-lg mb-4">
+                        </div>
+                        <div class="flex flex-col md:flex-row gap-6">
+                            <div class="flex-1">
+                                <h4 class="font-semibold text-primary mb-2">Flexコンテナとアイテム</h4>
+                                <ul class="list-disc pl-5 space-y-2 mb-4">
+                                    <li><strong>Flexコンテナ</strong>: <code>display: flex</code> または
+                                        <code>display: inline-flex</code> を設定した親要素</li>
+                                    <li><strong>Flexアイテム</strong>: Flexコンテナの直接の子要素</li>
+                                </ul>
+                                <div class="code-block">
+                                    <pre>.container {
+display: flex;
+}</pre>
+                                </div>
+                                <h4 class="font-semibold text-primary mt-4 mb-2">主軸と交差軸</h4>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li><strong>主軸 (Main Axis)</strong>: <code>flex-direction</code> で定義される軸</li>
+                                    <li><strong>交差軸 (Cross Axis)</strong>: 主軸に垂直な軸</li>
+                                </ul>
+                            </div>
+                            <div class="flex-1">
+                                <div class="bg-white p-4 rounded border border-gray-300 h-full">
+                                    <h4 class="font-semibold mb-3">Flexboxの視覚化</h4>
+                                    <div class="border border-dashed border-gray-400 p-3 rounded mb-3">
+                                        <div class="flex gap-2 bg-gray-100 p-3 rounded">
+                                            <div class="bg-primary text-white p-2 rounded">アイテム 1</div>
+                                            <div class="bg-primary text-white p-2 rounded">アイテム 2</div>
+                                            <div class="bg-primary text-white p-2 rounded">アイテム 3</div>
+                                        </div>
+                                        <div class="text-center text-sm mt-2">
+                                            <span class="inline-block bg-gray-200 px-2 py-1 rounded">display:
+                                                flex</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-center">
+                                        <div class="text-center">
+                                            <div class="flex items-center justify-center mb-2">
+                                                <div class="w-5 h-5 flex items-center justify-center">
+                                                    <i class="ri-arrow-right-line"></i>
+                                                </div>
+                                                <span class="ml-1 text-sm">主軸 (row)</span>
+                                            </div>
+                                            <div class="flex items-center justify-center">
+                                                <div class="w-5 h-5 flex items-center justify-center">
+                                                    <i class="ri-arrow-down-line"></i>
+                                                </div>
+                                                <span class="ml-1 text-sm">交差軸</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Flexコンテナのプロパティ</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-mono text-primary mb-2">flex-direction</h4>
+                                <p class="mb-3">主軸の方向を設定します。</p>
+                                <div class="code-block mb-3">
+                                    <pre>.container {
+display: flex;
+flex-direction: row | row-reverse | column | column-reverse;
+}</pre>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">row（デフォルト）</p>
+                                        <div class="flex flex-direction-row bg-gray-100 p-3 rounded">
+                                            <div class="bg-primary text-white p-2 rounded">1</div>
+                                            <div class="bg-primary text-white p-2 rounded">2</div>
+                                            <div class="bg-primary text-white p-2 rounded">3</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">row-reverse</p>
+                                        <div class="flex flex-row-reverse bg-gray-100 p-3 rounded">
+                                            <div class="bg-primary text-white p-2 rounded">1</div>
+                                            <div class="bg-primary text-white p-2 rounded">2</div>
+                                            <div class="bg-primary text-white p-2 rounded">3</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">column</p>
+                                        <div class="flex flex-col bg-gray-100 p-3 rounded">
+                                            <div class="bg-primary text-white p-2 rounded mb-2">1</div>
+                                            <div class="bg-primary text-white p-2 rounded mb-2">2</div>
+                                            <div class="bg-primary text-white p-2 rounded">3</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">column-reverse</p>
+                                        <div class="flex flex-col-reverse bg-gray-100 p-3 rounded">
+                                            <div class="bg-primary text-white p-2 rounded mb-2">1</div>
+                                            <div class="bg-primary text-white p-2 rounded mb-2">2</div>
+                                            <div class="bg-primary text-white p-2 rounded">3</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-mono text-primary mb-2">justify-content</h4>
+                                <p class="mb-3">主軸に沿ってアイテムを配置する方法を設定します。</p>
+                                <div class="code-block mb-3">
+                                    <pre>.container {
+display: flex;
+justify-content: flex-start | flex-end | center | space-between | space-around | space-evenly;
+}</pre>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">flex-start（デフォルト）</p>
+                                        <div class="flex justify-start bg-gray-100 p-3 rounded">
+                                            <div class="bg-primary text-white p-2 rounded">1</div>
+                                            <div class="bg-primary text-white p-2 rounded">2</div>
+                                            <div class="bg-primary text-white p-2 rounded">3</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">flex-end</p>
+                                        <div class="flex justify-end bg-gray-100 p-3 rounded">
+                                            <div class="bg-primary text-white p-2 rounded">1</div>
+                                            <div class="bg-primary text-white p-2 rounded">2</div>
+                                            <div class="bg-primary text-white p-2 rounded">3</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">center</p>
+                                        <div class="flex justify-center bg-gray-100 p-3 rounded">
+                                            <div class="bg-primary text-white p-2 rounded">1</div>
+                                            <div class="bg-primary text-white p-2 rounded">2</div>
+                                            <div class="bg-primary text-white p-2 rounded">3</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">space-between</p>
+                                        <div class="flex justify-between bg-gray-100 p-3 rounded">
+                                            <div class="bg-primary text-white p-2 rounded">1</div>
+                                            <div class="bg-primary text-white p-2 rounded">2</div>
+                                            <div class="bg-primary text-white p-2 rounded">3</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">space-around</p>
+                                        <div class="flex justify-around bg-gray-100 p-3 rounded">
+                                            <div class="bg-primary text-white p-2 rounded">1</div>
+                                            <div class="bg-primary text-white p-2 rounded">2</div>
+                                            <div class="bg-primary text-white p-2 rounded">3</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">space-evenly</p>
+                                        <div class="flex justify-evenly bg-gray-100 p-3 rounded">
+                                            <div class="bg-primary text-white p-2 rounded">1</div>
+                                            <div class="bg-primary text-white p-2 rounded">2</div>
+                                            <div class="bg-primary text-white p-2 rounded">3</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-mono text-primary mb-2">align-items</h4>
+                                <p class="mb-3">交差軸に沿ってアイテムを配置する方法を設定します。</p>
+                                <div class="code-block mb-3">
+                                    <pre>.container {
+display: flex;
+align-items: stretch | flex-start | flex-end | center | baseline;
+}</pre>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">stretch（デフォルト）</p>
+                                        <div class="flex align-items-stretch bg-gray-100 p-3 rounded h-24">
+                                            <div class="bg-primary text-white p-2 rounded">1</div>
+                                            <div class="bg-primary text-white p-2 rounded">2</div>
+                                            <div class="bg-primary text-white p-2 rounded">3</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">flex-start</p>
+                                        <div class="flex items-start bg-gray-100 p-3 rounded h-24">
+                                            <div class="bg-primary text-white p-2 rounded">1</div>
+                                            <div class="bg-primary text-white p-2 rounded">2</div>
+                                            <div class="bg-primary text-white p-2 rounded">3</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">flex-end</p>
+                                        <div class="flex items-end bg-gray-100 p-3 rounded h-24">
+                                            <div class="bg-primary text-white p-2 rounded">1</div>
+                                            <div class="bg-primary text-white p-2 rounded">2</div>
+                                            <div class="bg-primary text-white p-2 rounded">3</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">center</p>
+                                        <div class="flex items-center bg-gray-100 p-3 rounded h-24">
+                                            <div class="bg-primary text-white p-2 rounded">1</div>
+                                            <div class="bg-primary text-white p-2 rounded">2</div>
+                                            <div class="bg-primary text-white p-2 rounded">3</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-mono text-primary mb-2">flex-wrap</h4>
+                                <p class="mb-3">アイテムが一行に収まらない場合の折り返し方法を設定します。</p>
+                                <div class="code-block mb-3">
+                                    <pre>.container {
+display: flex;
+flex-wrap: nowrap | wrap | wrap-reverse;
+}</pre>
+                                </div>
+                                <div class="grid grid-cols-1 gap-4">
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">nowrap（デフォルト）</p>
+                                        <div class="flex flex-nowrap bg-gray-100 p-3 rounded overflow-x-auto">
+                                            <div class="bg-primary text-white p-2 rounded min-w-[100px] text-center">
+                                                アイテム 1</div>
+                                            <div class="bg-primary text-white p-2 rounded min-w-[100px] text-center">
+                                                アイテム 2</div>
+                                            <div class="bg-primary text-white p-2 rounded min-w-[100px] text-center">
+                                                アイテム 3</div>
+                                            <div class="bg-primary text-white p-2 rounded min-w-[100px] text-center">
+                                                アイテム 4</div>
+                                            <div class="bg-primary text-white p-2 rounded min-w-[100px] text-center">
+                                                アイテム 5</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium">wrap</p>
+                                        <div class="flex flex-wrap bg-gray-100 p-3 rounded">
+                                            <div
+                                                class="bg-primary text-white p-2 rounded m-1 min-w-[100px] text-center">
+                                                アイテム 1</div>
+                                            <div
+                                                class="bg-primary text-white p-2 rounded m-1 min-w-[100px] text-center">
+                                                アイテム 2</div>
+                                            <div
+                                                class="bg-primary text-white p-2 rounded m-1 min-w-[100px] text-center">
+                                                アイテム 3</div>
+                                            <div
+                                                class="bg-primary text-white p-2 rounded m-1 min-w-[100px] text-center">
+                                                アイテム 4</div>
+                                            <div
+                                                class="bg-primary text-white p-2 rounded m-1 min-w-[100px] text-center">
+                                                アイテム 5</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Flexアイテムのプロパティ</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-mono text-primary mb-2">flex</h4>
+                                <p class="mb-3">flex-grow、flex-shrink、flex-basisのショートハンドプロパティです。</p>
+                                <div class="code-block mb-3">
+                                    <pre>.item {
+flex: [flex-grow] [flex-shrink] [flex-basis];
+}
+/* 例 */
+.item {
+flex: 1;      /* flex: 1 1 0%; と同じ */
+flex: 2 1 auto;
+}</pre>
+                                </div>
+                                <div class="bg-gray-100 p-3 rounded mb-4">
+                                    <div class="flex">
+                                        <div class="bg-primary text-white p-2 rounded flex-1">flex: 1</div>
+                                        <div class="bg-primary text-white p-2 rounded ml-2 flex-2">flex: 2</div>
+                                        <div class="bg-primary text-white p-2 rounded ml-2 flex-1">flex: 1</div>
+                                    </div>
+                                </div>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li><strong>flex-grow</strong>: 利用可能なスペースをどれだけ占めるかの比率</li>
+                                    <li><strong>flex-shrink</strong>: スペースが足りない場合にどれだけ縮小するかの比率</li>
+                                    <li><strong>flex-basis</strong>: アイテムの初期サイズ</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-mono text-primary mb-2">align-self</h4>
+                                <p class="mb-3">個別のFlexアイテムの交差軸上の配置を上書きします。</p>
+                                <div class="code-block mb-3">
+                                    <pre>.item {
+align-self: auto | flex-start | flex-end | center | baseline | stretch;
+}</pre>
+                                </div>
+                                <div class="bg-gray-100 p-3 rounded h-32 flex items-center">
+                                    <div class="bg-primary text-white p-2 rounded">通常</div>
+                                    <div class="bg-primary text-white p-2 rounded ml-2 self-start">self-start</div>
+                                    <div class="bg-primary text-white p-2 rounded ml-2">通常</div>
+                                    <div class="bg-primary text-white p-2 rounded ml-2 self-end">self-end</div>
+                                    <div class="bg-primary text-white p-2 rounded ml-2">通常</div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-mono text-primary mb-2">order</h4>
+                                <p class="mb-3">Flexアイテムの表示順序を変更します。</p>
+                                <div class="code-block mb-3">
+                                    <pre>.item1 {
+order: 3;
+}
+.item2 {
+order: 1;
+}
+.item3 {
+order: 2;
+}</pre>
+                                </div>
+                                <div class="bg-gray-100 p-3 rounded">
+                                    <div class="flex">
+                                        <div class="bg-primary text-white p-2 rounded order-3">order: 3</div>
+                                        <div class="bg-primary text-white p-2 rounded ml-2 order-1">order: 1</div>
+                                        <div class="bg-primary text-white p-2 rounded ml-2 order-2">order: 2</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="responsive" class="mb-10">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">レスポンシブデザイン</h2>
+                    <p class="mb-4 leading-relaxed">
+                        レスポンシブデザインは、様々な画面サイズやデバイスに対応するウェブデザインのアプローチです。CSSのメディアクエリを使用することで、デバイスの特性に応じてスタイルを変更できます。</p>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">メディアクエリの基本</h3>
+                        <p class="mb-3">メディアクエリは、特定の条件（画面サイズ、デバイスタイプなど）に基づいてCSSを適用するための条件式です。</p>
+                        <div class="code-block mb-4">
+                            <pre>@media screen and (max-width: 768px) {
+/* 画面幅が768px以下の場合に適用されるスタイル */
+.container {
+flex-direction: column;
+}
+}
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+/* 画面幅が769px以上1024px以下の場合に適用されるスタイル */
+.container {
+padding: 20px;
+}
+}</pre>
+                        </div>
+                        <h4 class="font-semibold text-primary mb-2">一般的なブレイクポイント</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full border-collapse border border-gray-300 my-4">
+                                <thead>
+                                    <tr class="bg-gray-100">
+                                        <th class="border border-gray-300 p-2 text-left">デバイス</th>
+                                        <th class="border border-gray-300 p-2 text-left">ブレイクポイント</th>
+                                        <th class="border border-gray-300 p-2 text-left">メディアクエリ例</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="border border-gray-300 p-2">スマートフォン（小）</td>
+                                        <td class="border border-gray-300 p-2">320px - 480px</td>
+                                        <td class="border border-gray-300 p-2 font-mono">@media (max-width: 480px) { ...
+                                            }</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border border-gray-300 p-2">スマートフォン（大）</td>
+                                        <td class="border border-gray-300 p-2">481px - 767px</td>
+                                        <td class="border border-gray-300 p-2 font-mono">@media (min-width: 481px) and
+                                            (max-width: 767px) { ... }</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border border-gray-300 p-2">タブレット</td>
+                                        <td class="border border-gray-300 p-2">768px - 1024px</td>
+                                        <td class="border border-gray-300 p-2 font-mono">@media (min-width: 768px) and
+                                            (max-width: 1024px) { ... }</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border border-gray-300 p-2">デスクトップ</td>
+                                        <td class="border border-gray-300 p-2">1025px以上</td>
+                                        <td class="border border-gray-300 p-2 font-mono">@media (min-width: 1025px) {
+                                            ... }</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">レスポンシブデザインの例</h3>
+                        <div class="mb-6">
+                            <img src="https://readdy.ai/api/search-image?query=responsive%20design%20mockup%20showing%20website%20layout%20on%20different%20devices%2C%20modern%20blue%20interface%2C%20clean%20design%20elements%2C%20professional%20web%20design%20visualization&width=800&height=300&seq=24&orientation=landscape"
+                                alt="Responsive Design" class="w-full h-[200px] object-cover rounded-lg mb-4">
+                        </div>
+                        <div class="code-block mb-4">
+                            <pre>/* 基本スタイル（モバイルファースト） */
+.container {
+display: flex;
+flex-direction: column;
+padding: 10px;
+}
+.card {
+width: 100%;
+margin-bottom: 20px;
+}
+/* タブレット以上のスタイル */
+@media (min-width: 768px) {
+.container {
+flex-direction: row;
+flex-wrap: wrap;
+}
+.card {
+width: calc(50% - 20px);
+margin: 0 10px 20px;
+}
+}
+/* デスクトップのスタイル */
+@media (min-width: 1025px) {
+.card {
+width: calc(33.333% - 20px);
+}
+}</pre>
+                        </div>
+                        <div class="bg-white p-4 rounded border border-gray-300">
+                            <h4 class="font-semibold mb-3">レスポンシブデザインのデモ</h4>
+                            <p class="mb-3">ブラウザのサイズを変更して、カードのレイアウトがどのように変化するか確認してください。</p>
+                            <div class="responsive-demo">
+                                <div class="flex flex-col md:flex-row md:flex-wrap">
+                                    <div
+                                        class="w-full md:w-[calc(50%-20px)] lg:w-[calc(33.333%-20px)] bg-gray-100 p-4 rounded mb-4 md:mx-[10px]">
+                                        <h5 class="font-semibold text-primary mb-2">カード 1</h5>
+                                        <p>レスポンシブデザインのデモカードです。画面サイズに応じてレイアウトが変化します。</p>
+                                    </div>
+                                    <div
+                                        class="w-full md:w-[calc(50%-20px)] lg:w-[calc(33.333%-20px)] bg-gray-100 p-4 rounded mb-4 md:mx-[10px]">
+                                        <h5 class="font-semibold text-primary mb-2">カード 2</h5>
+                                        <p>レスポンシブデザインのデモカードです。画面サイズに応じてレイアウトが変化します。</p>
+                                    </div>
+                                    <div
+                                        class="w-full md:w-[calc(50%-20px)] lg:w-[calc(33.333%-20px)] bg-gray-100 p-4 rounded mb-4 md:mx-[10px]">
+                                        <h5 class="font-semibold text-primary mb-2">カード 3</h5>
+                                        <p>レスポンシブデザインのデモカードです。画面サイズに応じてレイアウトが変化します。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">レスポンシブデザインのベストプラクティス</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-white p-4 rounded border border-gray-300">
+                                    <h4 class="font-semibold text-primary mb-2">モバイルファーストアプローチ</h4>
+                                    <p>まずモバイルデバイス向けのスタイルを定義し、その後大きな画面サイズ向けのスタイルを追加します。</p>
+                                    <div class="code-block mt-2">
+                                        <pre>/* モバイル向けの基本スタイル */
+.element {
+width: 100%;
+}
+/* 大きな画面向けのスタイル */
+@media (min-width: 768px) {
+.element {
+width: 50%;
+}
+}</pre>
+                                    </div>
+                                </div>
+                                <div class="bg-white p-4 rounded border border-gray-300">
+                                    <h4 class="font-semibold text-primary mb-2">フレキシブルな画像</h4>
+                                    <p>画像が親要素の幅を超えないようにします。</p>
+                                    <div class="code-block mt-2">
+                                        <pre>img {
+max-width: 100%;
+height: auto;
+}</pre>
+                                    </div>
+                                </div>
+                                <div class="bg-white p-4 rounded border border-gray-300">
+                                    <h4 class="font-semibold text-primary mb-2">ビューポートメタタグ</h4>
+                                    <p>HTMLのheadセクションにビューポートメタタグを追加して、モバイルデバイスでの表示を制御します。</p>
+                                    <div class="code-block mt-2">
+                                        <pre>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</pre>
+                                    </div>
+                                </div>
+                                <div class="bg-white p-4 rounded border border-gray-300">
+                                    <h4 class="font-semibold text-primary mb-2">相対的な単位の使用</h4>
+                                    <p>固定サイズ（px）ではなく、相対的な単位（%、em、rem、vw、vh）を使用します。</p>
+                                    <div class="code-block mt-2">
+                                        <pre>body {
+font-size: 16px;
+}
+h1 {
+font-size: 2rem;  /* 32px */
+}
+.container {
+width: 90%;
+max-width: 1200px;
+}</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </section>
+                <section id="variables" class="mb-10">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">CSS変数</h2>
+                    <p class="mb-4 leading-relaxed">
+                        CSS変数（カスタムプロパティ）を使用すると、値を一度定義し、スタイルシート全体で再利用できます。これにより、コードの保守性が向上し、テーマの変更が容易になります。</p>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">CSS変数の基本</h3>
+                        <div class="mb-6">
+                            <img src="https://readdy.ai/api/search-image?query=CSS%20variables%20and%20custom%20properties%20visualization%2C%20code%20editor%20interface%20with%20blue%20syntax%20highlighting%2C%20modern%20programming%20concept%20illustration&width=800&height=300&seq=25&orientation=landscape"
+                                alt="CSS Variables" class="w-full h-[200px] object-cover rounded-lg mb-4">
+                        </div>
+                        <p class="mb-3">CSS変数は、<code>--</code>で始まる名前で定義し、<code>var()</code>関数で使用します。</p>
+                        <div class="code-block mb-4">
+                            <pre>:root {
+--primary-color: #0000FF;
+--secondary-color: #6699FF;
+--text-color: #333333;
+--font-size-base: 16px;
+--spacing-unit: 8px;
+}
+.button {
+background-color: var(--primary-color);
+color: white;
+padding: calc(var(--spacing-unit) * 2);
+font-size: var(--font-size-base);
+}
+.button:hover {
+background-color: var(--secondary-color);
+}</pre>
+                        </div>
+                        <h4 class="font-semibold text-primary mb-2">CSS変数のスコープ</h4>
+                        <p class="mb-3">CSS変数は、定義された要素とその子孫に適用されます。<code>:root</code>セレクタで定義すると、ドキュメント全体で使用できます。</p>
+                        <div class="code-block mb-4">
+                            <pre>:root {
+--global-color: blue;
+}
+.container {
+--local-color: red;
+color: var(--global-color);  /* 青色 */
+}
+.container .child {
+color: var(--local-color);   /* 赤色 */
+}
+.other-element {
+color: var(--global-color);  /* 青色 */
+color: var(--local-color);   /* エラー: 変数が定義されていない */
+}</pre>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">CSS変数の活用例</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-semibold text-primary mb-2">テーマの切り替え</h4>
+                                <p class="mb-3">CSS変数を使用すると、ダークモードなどのテーマ切り替えが簡単に実装できます。</p>
+                                <div class="code-block mb-4">
+                                    <pre>:root {
+--bg-color: white;
+--text-color: #333;
+--border-color: #ddd;
+}
+.dark-theme {
+--bg-color: #222;
+--text-color: #eee;
+--border-color: #555;
+}
+body {
+background-color: var(--bg-color);
+color: var(--text-color);
+}
+.card {
+border: 1px solid var(--border-color);
+}</pre>
+                                </div>
+                                <div class="flex space-x-4">
+                                    <div class="flex-1 p-4 rounded"
+                                        style="background-color: white; color: #333; border: 1px solid #ddd;">
+                                        <h5 class="font-semibold mb-2">ライトテーマ</h5>
+                                        <p>ライトテーマのテキストです。背景は白で、テキストは暗い色です。</p>
+                                    </div>
+                                    <div class="flex-1 p-4 rounded"
+                                        style="background-color: #222; color: #eee; border: 1px solid #555;">
+                                        <h5 class="font-semibold mb-2">ダークテーマ</h5>
+                                        <p>ダークテーマのテキストです。背景は暗い色で、テキストは明るい色です。</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-primary mb-2">レスポンシブデザインでの活用</h4>
+                                <p class="mb-3">メディアクエリと組み合わせて、画面サイズに応じて変数の値を変更できます。</p>
+                                <div class="code-block mb-4">
+                                    <pre>:root {
+--container-padding: 15px;
+--heading-size: 24px;
+}
+@media (min-width: 768px) {
+:root {
+--container-padding: 30px;
+--heading-size: 36px;
+}
+}
+.container {
+padding: var(--container-padding);
+}
+h1 {
+font-size: var(--heading-size);
+}</pre>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-primary mb-2">計算と組み合わせる</h4>
+                                <p class="mb-3"><code>calc()</code>関数と組み合わせて、動的な値を計算できます。</p>
+                                <div class="code-block mb-4">
+                                    <pre>:root {
+--spacing-unit: 8px;
+}
+.element {
+padding: var(--spacing-unit);
+margin-bottom: calc(var(--spacing-unit) * 2);
+width: calc(100% - var(--spacing-unit) * 4);
+}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">CSS変数とJavaScriptの連携</h3>
+                        <p class="mb-3">JavaScriptを使用して、CSS変数の値を動的に変更できます。</p>
+                        <div class="code-block mb-4">
+                            <pre>// CSS変数の値を取得
+const rootStyles = getComputedStyle(document.documentElement);
+const primaryColor = rootStyles.getPropertyValue('--primary-color');
+console.log(primaryColor);  // "#0000FF"
+// CSS変数の値を設定
+document.documentElement.style.setProperty('--primary-color', '#FF0000');</pre>
+                        </div>
+                        <div class="bg-white p-4 rounded border border-gray-300">
+                            <h4 class="font-semibold mb-3">テーマカラーの変更デモ</h4>
+                            <div class="mb-4">
+                                <p class="mb-2">カラーを選択してテーマを変更:</p>
+                                <div class="flex space-x-3">
+                                    <button id="theme-blue"
+                                        class="w-8 h-8 rounded-full bg-blue-600 border-2 border-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"></button>
+                                    <button id="theme-green"
+                                        class="w-8 h-8 rounded-full bg-green-600 border-2 border-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"></button>
+                                    <button id="theme-purple"
+                                        class="w-8 h-8 rounded-full bg-purple-600 border-2 border-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"></button>
+                                    <button id="theme-red"
+                                        class="w-8 h-8 rounded-full bg-red-600 border-2 border-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"></button>
+                                </div>
+                            </div>
+                            <div id="theme-preview" class="p-4 rounded"
+                                style="background-color: #f0f0ff; border: 2px solid #0000FF;">
+                                <h5 class="font-semibold text-primary mb-2">テーマプレビュー</h5>
+                                <p>このボックスのスタイルは、選択したテーマカラーに基づいて変更されます。</p>
+                                <button id="theme-button"
+                                    class="mt-3 bg-primary text-white px-4 py-2 rounded-button hover:bg-opacity-90 transition-all duration-200 whitespace-nowrap">テーマボタン</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <script id="smooth-scroll-script">
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebarLinks = document.querySelectorAll('.sidebar-link');
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        // On mobile, close the sidebar after clicking a link
+                        if (window.innerWidth < 768) {
+                            document.getElementById('sidebar').classList.remove('open');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <script id="mobile-menu-script">
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const closeSidebarButton = document.getElementById('close-sidebar');
+            const sidebar = document.getElementById('sidebar');
+            mobileMenuButton.addEventListener('click', function () {
+                sidebar.classList.add('open');
+            });
+            closeSidebarButton.addEventListener('click', function () {
+                sidebar.classList.remove('open');
+            });
+        });
+    </script>
+    <script id="sidebar-links-script">
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebarLinks = document.querySelectorAll('.sidebar-link');
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function () {
+                    // Remove active class from all links
+                    sidebarLinks.forEach(l => l.classList.remove('active'));
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    // On mobile, close the sidebar after clicking a link
+                    if (window.innerWidth < 768) {
+                        document.getElementById('sidebar').classList.remove('open');
+                    }
+                });
+            });
+        });
+    </script>
+    <script id="box-model-demo-script">
+        document.addEventListener('DOMContentLoaded', function () {
+            const paddingSlider = document.getElementById('padding-slider');
+            const borderSlider = document.getElementById('border-slider');
+            const marginSlider = document.getElementById('margin-slider');
+            const paddingValue = document.getElementById('padding-value');
+            const borderValue = document.getElementById('border-value');
+            const marginValue = document.getElementById('margin-value');
+            const contentBox = document.getElementById('content-box');
+            const borderBox = document.getElementById('border-box');
+            const outerBox = document.getElementById('outer-box');
+            const borderStyleBtn = document.getElementById('border-style-btn');
+            const borderStyleDropdown = document.getElementById('border-style-dropdown');
+            const borderStyleText = document.getElementById('border-style-text');
+            if (paddingSlider) {
+                paddingSlider.addEventListener('input', function () {
+                    paddingValue.textContent = this.value;
+                    contentBox.style.padding = `${this.value}px`;
+                });
+            }
+            if (borderSlider) {
+                borderSlider.addEventListener('input', function () {
+                    borderValue.textContent = this.value;
+                    borderBox.style.borderWidth = `${this.value}px`;
+                });
+            }
+            if (marginSlider) {
+                marginSlider.addEventListener('input', function () {
+                    marginValue.textContent = this.value;
+                    outerBox.style.padding = `${this.value}px`;
+                });
+            }
+            if (borderStyleBtn) {
+                borderStyleBtn.addEventListener('click', function () {
+                    borderStyleDropdown.classList.toggle('hidden');
+                });
+                const styleButtons = document.querySelectorAll('[data-style]');
+                styleButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const style = this.getAttribute('data-style');
+                        borderBox.style.borderStyle = style;
+                        borderStyleText.textContent = style;
+                        borderStyleDropdown.classList.add('hidden');
+                    });
+                });
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function (event) {
+                    if (!borderStyleBtn.contains(event.target) && !borderStyleDropdown.contains(event.target)) {
+                        borderStyleDropdown.classList.add('hidden');
+                    }
+                });
+            }
+        });
+    </script>
+    <script id="theme-color-script">
+        document.addEventListener('DOMContentLoaded', function () {
+            const themeBlue = document.getElementById('theme-blue');
+            const themeGreen = document.getElementById('theme-green');
+            const themePurple = document.getElementById('theme-purple');
+            const themeRed = document.getElementById('theme-red');
+            const themePreview = document.getElementById('theme-preview');
+            const themeButton = document.getElementById('theme-button');
+            if (themeBlue && themePreview) {
+                themeBlue.addEventListener('click', function () {
+                    document.documentElement.style.setProperty('--primary-color', '#0000FF');
+                    themePreview.style.backgroundColor = '#f0f0ff';
+                    themePreview.style.borderColor = '#0000FF';
+                });
+                themeGreen.addEventListener('click', function () {
+                    document.documentElement.style.setProperty('--primary-color', '#00AA00');
+                    themePreview.style.backgroundColor = '#f0fff0';
+                    themePreview.style.borderColor = '#00AA00';
+                });
+                themePurple.addEventListener('click', function () {
+                    document.documentElement.style.setProperty('--primary-color', '#8800AA');
+                    themePreview.style.backgroundColor = '#f8f0ff';
+                    themePreview.style.borderColor = '#8800AA';
+                });
+                themeRed.addEventListener('click', function () {
+                    document.documentElement.style.setProperty('--primary-color', '#CC0000');
+                    themePreview.style.backgroundColor = '#fff0f0';
+                    themePreview.style.borderColor = '#CC0000';
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
