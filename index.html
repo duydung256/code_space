@@ -59,7 +59,7 @@
     </div>
   </header>
   <!-- メインビジュアル＆紹介セクション -->
-  <section class="relative py-16 md:py-24 overflow-hidden px-4 sm:px-6 md:px-0">
+  <section class="relative py-16 md:py-24 overflow-hidden px-4 sm:px-6 md:px-8 lg:px-12">
     <!-- Video Background -->
     <video autoplay loop muted preload="auto" playsinline class="absolute inset-0 w-full h-full object-cover">
       <source src="assets/videos/bg.mp4" type="video/mp4">
@@ -69,16 +69,23 @@
     <!-- Content Overlay -->
     <div class="container mx-auto px-responsive relative z-10">
       <div class="flex flex-col items-center text-center">
-        <div class="w-full max-w-3xl bg-gray-800/80 rounded-2xl p-10 ">
+        <div class="w-full max-w-3xl bg-gray-800/80 rounded-2xl p-10">
+          <!-- タイトル -->
           <h2 class="text-5xl md:text-6xl text-yellow-200 font-bold mb-8">
-            初心者でも視覚的にプログラミングを学ぼう
+            <span class="block md:hidden">プログラミングを学ぼう</span> <!-- 小さい画面で表示 -->
+            <span class="hidden md:block">初心者でも視覚的にプログラミングを学ぼう</span> <!-- 大きい画面で表示 -->
           </h2>
-          <p class=" text-xl md:text-2xl text-white mb-10">
-            プログラミングの世界へようこそ。初心者でも楽しく学べる、視覚的な学習体験を提供します。
+
+          <!-- コンテンツ -->
+          <p class="text-xl md:text-2xl text-white mb-10">
+            <span class="block md:hidden">楽しく学べる体験を提供します。</span> <!-- 小さい画面で表示 -->
+            <span class="hidden md:block">プログラミングの世界へようこそ。初心者でも楽しく学べる、視覚的な学習体験を提供します。</span> <!-- 大きい画面で表示 -->
           </p>
+
+          <!-- ボタン -->
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <button onclick="scrollToCards()"
-              class="bg-primary text-white py-6 px-12 rounded-button font-medium text-2xl hover:scale-105 transition-transform duration-300 hover:shadow-[0_0_20px_#4A90E2] hover:scale-105 ">
+              class="bg-primary text-white py-4 px-8 sm:py-6 sm:px-12 rounded-button font-medium text-lg sm:text-2xl hover:scale-105 transition-transform duration-300 hover:shadow-[0_0_20px_#4A90E2]">
               無料で始める
             </button>
           </div>
@@ -87,7 +94,7 @@
     </div>
   </section>
   <!-- プログラミング言語カードセクション -->
-  <section class="py-16 bg-gray-800 px-4 sm:px-6 md:px-0">
+  <section class="py-16 bg-gray-800 px-4 sm:px-6 md:px-8 lg:px-12">
     <div class="container mx-auto">
       <div class="text-center mb-12">
         <h2 class="text-3xl font-bold mb-4 text-white">人気のプログラミング言語</h2>
@@ -262,7 +269,7 @@
     </div>
   </section>
   <!-- 学習パスセクション -->
-  <section class="py-16 bg-gray-900 px-4 sm:px-6 md:px-0">
+  <section class="py-16 bg-gray-900 px-4 sm:px-6 md:px-8 lg:px-12">
     <div class="container mx-auto">
       <div class="text-center mb-12">
         <h2 class="text-3xl font-bold mb-4 text-white">学習パス</h2>
@@ -358,7 +365,7 @@
     </div>
   </section>
   <!-- フッター -->
-  <footer class="bg-gray-900 text-gray-300 py-8 px-4 sm:px-6 md:px-0">
+  <footer class="bg-gray-900 text-gray-300 py-8 px-4 sm:px-6 md:px-8 lg:px-12">
     <div class="container mx-auto">
       <div class="flex justify-between items-center">
         <div class="text-left">
@@ -366,7 +373,7 @@
             <img src="assets/images/logo.png" alt="Logo" class="h-8 w-auto mr-2">
             <span class="font-bold text-white">CODE SPACE</span>
           </div>
-          <p class="text-gray-400">
+          <p class="text-gray-400 hidden md:block">
             初心者から上級者まで、プログラミングを楽しく学べるオンラインプラットフォーム
           </p>
         </div>

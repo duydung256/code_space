@@ -1,457 +1,358 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Python基礎ガイド</title>
-    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: { primary: "#306998", secondary: "#FFD43B" },
-            borderRadius: {
-              none: "0px",
-              sm: "4px",
-              DEFAULT: "8px",
-              md: "12px",
-              lg: "16px",
-              xl: "20px",
-              "2xl": "24px",
-              "3xl": "32px",
-              full: "9999px",
-              button: "8px",
-            },
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python基礎ガイド</title>
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: "#306998", secondary: "#FFD43B" },
+          borderRadius: {
+            none: "0px",
+            sm: "4px",
+            DEFAULT: "8px",
+            md: "12px",
+            lg: "16px",
+            xl: "20px",
+            "2xl": "24px",
+            "3xl": "32px",
+            full: "9999px",
+            button: "8px",
           },
         },
-      };
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
-    />
-    <style>
-      :where([class^="ri-"])::before {
-        content: "\f3c2";
-      }
-      body {
-        font-family: "Inter", sans-serif;
-        scroll-behavior: smooth;
-      }
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        font-family: "Poppins", sans-serif;
-      }
-      code {
-        font-family: "Fira Code", "Consolas", monospace;
-      }
-      .code-block {
-        background-color: #f8f9fa;
-        border-left: 4px solid #306998;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        overflow-x: auto;
-      }
-      .sidebar-link.active {
-        background-color: rgba(48, 105, 152, 0.1);
-        color: #306998;
-        border-left: 3px solid #306998;
-      }
-      .sidebar-link:hover:not(.active) {
-        background-color: rgba(48, 105, 152, 0.05);
-      }
+      },
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" />
+  <style>
+    :where([class^="ri-"])::before {
+      content: "\f3c2";
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: "Poppins", sans-serif;
+    }
+
+    code {
+      font-family: "Fira Code", "Consolas", monospace;
+    }
+
+    .code-block {
+      background-color: #f8f9fa;
+      border-left: 4px solid #306998;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+    }
+
+    .sidebar-link.active {
+      background-color: rgba(48, 105, 152, 0.1);
+      color: #306998;
+      border-left: 3px solid #306998;
+    }
+
+    .sidebar-link:hover:not(.active) {
+      background-color: rgba(48, 105, 152, 0.05);
+    }
+
+    .sidebar {
+      transition: transform 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
       .sidebar {
-        transition: transform 0.3s ease;
+        transform: translateX(-100%);
       }
-      @media (max-width: 768px) {
-        .sidebar {
-          transform: translateX(-100%);
-        }
-        .sidebar.open {
-          transform: translateX(0);
-        }
+
+      .sidebar.open {
+        transform: translateX(0);
       }
-      .section {
-        scroll-margin-top: 2rem;
-      }
-      input[type="checkbox"] {
-        appearance: none;
-        -webkit-appearance: none;
-        width: 1.25rem;
-        height: 1.25rem;
-        border: 2px solid #306998;
-        border-radius: 4px;
-        outline: none;
-        cursor: pointer;
-        position: relative;
-      }
-      input[type="checkbox"]:checked {
-        background-color: #306998;
-      }
-      input[type="checkbox"]:checked::after {
-        content: "";
-        position: absolute;
-        top: 0.2rem;
-        left: 0.4rem;
-        width: 0.3rem;
-        height: 0.6rem;
-        border: solid white;
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
-      }
-    </style>
-  </head>
-  <body class="bg-gray-50 text-gray-800">
-    <!-- Mobile Header -->
-    <header
-      class="md:hidden bg-primary text-white p-4 flex justify-between items-center sticky top-0 z-40 shadow-md"
-    >
-      <button id="menu-toggle" class="w-8 h-8 flex items-center justify-center">
-        <i class="ri-menu-line ri-lg"></i>
-      </button>
-      <h1 class="text-xl font-semibold">Python基礎ガイド</h1>
-      <div class="w-8"></div>
-    </header>
-    <div class="flex min-h-screen">
-      <!-- Sidebar -->
-      <aside
-        id="sidebar"
-        class="sidebar bg-white w-64 fixed h-screen overflow-y-auto shadow-lg z-30 md:translate-x-0"
-      >
-        <div class="p-6 border-b sticky top-0 bg-white z-10 shadow-sm">
-          <div class="flex flex-col items-center gap-2">
-            <div
-              class="bg-primary w-20 h-20 rounded-lg flex items-center justify-center shadow-md"
-            >
-              <i class="ri-python-fill text-white text-4xl"></i>
-            </div>
-            <h2 class="text-2xl font-bold tracking-tight">Python基礎</h2>
+    }
+
+    .section {
+      scroll-margin-top: 2rem;
+    }
+
+    input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 1.25rem;
+      height: 1.25rem;
+      border: 2px solid #306998;
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+      position: relative;
+    }
+
+    input[type="checkbox"]:checked {
+      background-color: #306998;
+    }
+
+    input[type="checkbox"]:checked::after {
+      content: "";
+      position: absolute;
+      top: 0.2rem;
+      left: 0.4rem;
+      width: 0.3rem;
+      height: 0.6rem;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+  <!-- Mobile Header -->
+  <header class="md:hidden bg-primary text-white p-4 flex justify-between items-center sticky top-0 z-40 shadow-md">
+    <button id="menu-toggle" class="w-8 h-8 flex items-center justify-center">
+      <i class="ri-menu-line ri-lg"></i>
+    </button>
+    <h1 class="text-xl font-semibold">Python基礎ガイド</h1>
+    <div class="w-8"></div>
+  </header>
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar bg-white w-64 fixed h-screen overflow-y-auto shadow-lg z-30 md:translate-x-0">
+      <div class="p-6 border-b sticky top-0 bg-white z-10 shadow-sm">
+        <div class="flex flex-col items-center gap-2">
+          <div class="bg-primary w-20 h-20 rounded-lg flex items-center justify-center shadow-md">
+            <i class="ri-python-fill text-white text-4xl"></i>
           </div>
+          <h2 class="text-2xl font-bold tracking-tight">Python基礎</h2>
         </div>
-        <nav class="p-2">
-          <div class="mb-4">
-            <h3 class="text-xs uppercase font-semibold text-gray-500 px-3 mb-2">
-              はじめに
-            </h3>
-            <a
-              href="#introduction"
-              class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium"
-              >Pythonとは</a
-            >
-            <a
-              href="#installation"
-              class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium"
-              >インストール方法</a
-            >
+      </div>
+      <nav class="p-2">
+        <div class="mb-4">
+          <h3 class="text-xs uppercase font-semibold text-gray-500 px-3 mb-2">
+            はじめに
+          </h3>
+          <a href="#introduction" class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium">Pythonとは</a>
+          <a href="#installation" class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium">インストール方法</a>
+        </div>
+        <div class="mb-4">
+          <h3 class="text-xs uppercase font-semibold text-gray-500 px-3 mb-2">
+            基本
+          </h3>
+          <a href="#variables" class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium">変数と定数</a>
+          <a href="#data-types" class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium">データ型</a>
+          <a href="#operators" class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium">演算子</a>
+        </div>
+        <div class="mb-4">
+          <h3 class="text-xs uppercase font-semibold text-gray-500 px-3 mb-2">
+            制御フロー
+          </h3>
+          <a href="#conditionals" class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium">条件分岐</a>
+          <a href="#loops" class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium">ループ</a>
+        </div>
+        <div class="mb-4">
+          <h3 class="text-xs uppercase font-semibold text-gray-500 px-3 mb-2">
+            関数
+          </h3>
+          <a href="#functions" class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium">関数の定義と呼び出し</a>
+          <a href="#parameters" class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium">パラメータと引数</a>
+        </div>
+        <div class="mb-4">
+          <h3 class="text-xs uppercase font-semibold text-gray-500 px-3 mb-2">
+            データ構造
+          </h3>
+          <a href="#lists" class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium">リスト</a>
+          <a href="#dictionaries" class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium">辞書</a>
+          <a href="#tuples" class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium">タプル</a>
+          <a href="#sets" class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium">セット</a>
+        </div>
+        <div class="mb-4">
+          <h3 class="text-xs uppercase font-semibold text-gray-500 px-3 mb-2">
+            オブジェクト指向
+          </h3>
+          <a href="#classes" class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium">クラスとオブジェクト</a>
+          <a href="#inheritance" class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium">継承</a>
+        </div>
+        <div class="mb-4">
+          <h3 class="text-xs uppercase font-semibold text-gray-500 px-3 mb-2">
+            モジュールとパッケージ
+          </h3>
+          <a href="#modules" class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium">モジュールのインポート</a>
+          <a href="#packages" class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium">パッケージの使用</a>
+        </div>
+        <div class="mb-4">
+          <h3 class="text-xs uppercase font-semibold text-gray-500 px-3 mb-2">
+            エラー処理
+          </h3>
+          <a href="#exceptions" class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium">例外処理</a>
+        </div>
+        <div class="mb-4">
+          <h3 class="text-xs uppercase font-semibold text-gray-500 px-3 mb-2">
+            ファイル操作
+          </h3>
+          <a href="#file-io" class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium">ファイルの読み書き</a>
+        </div>
+      </nav>
+    </aside>
+    <!-- Main Content -->
+    <main class="flex-1 md:ml-64 p-6">
+      <div class="max-w-3xl mx-auto">
+        <section id="introduction" class="section mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-primary">Pythonとは</h2>
+          <p class="mb-4">
+            Pythonは、シンプルで読みやすい構文を持つ高水準プログラミング言語です。1991年にグイド・ヴァン・ロッサムによって開発され、現在は世界中で広く使用されています。データ分析、機械学習、ウェブ開発、自動化など、さまざまな分野で活用されています。
+          </p>
+          <div class="bg-white p-6 rounded-lg shadow-sm mb-6">
+            <h3 class="text-xl font-semibold mb-3">Pythonの特徴</h3>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>読みやすく、書きやすい構文</li>
+              <li>豊富なライブラリとフレームワーク</li>
+              <li>クロスプラットフォーム対応（Windows、Mac、Linux）</li>
+              <li>インタプリタ型言語（コンパイル不要）</li>
+              <li>動的型付け</li>
+              <li>自動メモリ管理</li>
+            </ul>
           </div>
-          <div class="mb-4">
-            <h3 class="text-xs uppercase font-semibold text-gray-500 px-3 mb-2">
-              基本
-            </h3>
-            <a
-              href="#variables"
-              class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium"
-              >変数と定数</a
-            >
-            <a
-              href="#data-types"
-              class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium"
-              >データ型</a
-            >
-            <a
-              href="#operators"
-              class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium"
-              >演算子</a
-            >
-          </div>
-          <div class="mb-4">
-            <h3 class="text-xs uppercase font-semibold text-gray-500 px-3 mb-2">
-              制御フロー
-            </h3>
-            <a
-              href="#conditionals"
-              class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium"
-              >条件分岐</a
-            >
-            <a
-              href="#loops"
-              class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium"
-              >ループ</a
-            >
-          </div>
-          <div class="mb-4">
-            <h3 class="text-xs uppercase font-semibold text-gray-500 px-3 mb-2">
-              関数
-            </h3>
-            <a
-              href="#functions"
-              class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium"
-              >関数の定義と呼び出し</a
-            >
-            <a
-              href="#parameters"
-              class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium"
-              >パラメータと引数</a
-            >
-          </div>
-          <div class="mb-4">
-            <h3 class="text-xs uppercase font-semibold text-gray-500 px-3 mb-2">
-              データ構造
-            </h3>
-            <a
-              href="#lists"
-              class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium"
-              >リスト</a
-            >
-            <a
-              href="#dictionaries"
-              class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium"
-              >辞書</a
-            >
-            <a
-              href="#tuples"
-              class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium"
-              >タプル</a
-            >
-            <a
-              href="#sets"
-              class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium"
-              >セット</a
-            >
-          </div>
-          <div class="mb-4">
-            <h3 class="text-xs uppercase font-semibold text-gray-500 px-3 mb-2">
-              オブジェクト指向
-            </h3>
-            <a
-              href="#classes"
-              class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium"
-              >クラスとオブジェクト</a
-            >
-            <a
-              href="#inheritance"
-              class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium"
-              >継承</a
-            >
-          </div>
-          <div class="mb-4">
-            <h3 class="text-xs uppercase font-semibold text-gray-500 px-3 mb-2">
-              モジュールとパッケージ
-            </h3>
-            <a
-              href="#modules"
-              class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium"
-              >モジュールのインポート</a
-            >
-            <a
-              href="#packages"
-              class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium"
-              >パッケージの使用</a
-            >
-          </div>
-          <div class="mb-4">
-            <h3 class="text-xs uppercase font-semibold text-gray-500 px-3 mb-2">
-              エラー処理
-            </h3>
-            <a
-              href="#exceptions"
-              class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium"
-              >例外処理</a
-            >
-          </div>
-          <div class="mb-4">
-            <h3 class="text-xs uppercase font-semibold text-gray-500 px-3 mb-2">
-              ファイル操作
-            </h3>
-            <a
-              href="#file-io"
-              class="sidebar-link block px-3 py-2 rounded-md text-sm font-medium"
-              >ファイルの読み書き</a
-            >
-          </div>
-        </nav>
-      </aside>
-      <!-- Main Content -->
-      <main class="flex-1 md:ml-64 p-6">
-        <div class="max-w-3xl mx-auto">
-          <section id="introduction" class="section mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-primary">Pythonとは</h2>
-            <p class="mb-4">
-              Pythonは、シンプルで読みやすい構文を持つ高水準プログラミング言語です。1991年にグイド・ヴァン・ロッサムによって開発され、現在は世界中で広く使用されています。データ分析、機械学習、ウェブ開発、自動化など、さまざまな分野で活用されています。
-            </p>
-            <div class="bg-white p-6 rounded-lg shadow-sm mb-6">
-              <h3 class="text-xl font-semibold mb-3">Pythonの特徴</h3>
-              <ul class="list-disc pl-6 space-y-2">
-                <li>読みやすく、書きやすい構文</li>
-                <li>豊富なライブラリとフレームワーク</li>
-                <li>クロスプラットフォーム対応（Windows、Mac、Linux）</li>
-                <li>インタプリタ型言語（コンパイル不要）</li>
-                <li>動的型付け</li>
-                <li>自動メモリ管理</li>
-              </ul>
-            </div>
-            <div class="code-block mb-6">
-              <pre><code># Pythonの「Hello, World!」
+          <div class="code-block mb-6">
+            <pre><code># Pythonの「Hello, World!」
 print("こんにちは、世界！")</code></pre>
-            </div>
-            <p>
-              上記のコードは、Pythonでの最も基本的なプログラムの例です。<code>print()</code>関数を使用して、「こんにちは、世界！」というテキストをコンソールに出力します。
-            </p>
-          </section>
-          <section id="installation" class="section mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-primary">
-              インストール方法
-            </h2>
-            <p class="mb-4">
-              Pythonを使い始めるには、まずお使いのコンピュータにPythonをインストールする必要があります。以下に、主要なオペレーティングシステムでのインストール方法を説明します。
-            </p>
-            <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-6">
-              <div class="border-b border-gray-200">
-                <div class="flex">
-                  <button
-                    class="installation-tab px-4 py-3 font-medium text-primary border-b-2 border-primary"
-                    data-target="windows"
-                  >
-                    Windows
-                  </button>
-                  <button
-                    class="installation-tab px-4 py-3 font-medium text-gray-500"
-                    data-target="mac"
-                  >
-                    macOS
-                  </button>
-                  <button
-                    class="installation-tab px-4 py-3 font-medium text-gray-500"
-                    data-target="linux"
-                  >
-                    Linux
-                  </button>
-                </div>
-              </div>
-              <div class="p-6">
-                <div id="windows-content" class="installation-content">
-                  <ol class="list-decimal pl-6 space-y-3">
-                    <li>
-                      <a
-                        href="https://www.python.org/downloads/"
-                        class="text-primary hover:underline"
-                        target="_blank"
-                        >Python公式サイト</a
-                      >にアクセスし、最新バージョンをダウンロードします。
-                    </li>
-                    <li>ダウンロードしたインストーラーを実行します。</li>
-                    <li>
-                      「Add Python to
-                      PATH」オプションにチェックを入れてください。
-                    </li>
-                    <li>
-                      「Install Now」をクリックしてインストールを開始します。
-                    </li>
-                    <li>
-                      インストールが完了したら、コマンドプロンプトを開き、<code
-                        >python --version</code
-                      >を実行してインストールを確認します。
-                    </li>
-                  </ol>
-                </div>
-                <div id="mac-content" class="installation-content hidden">
-                  <ol class="list-decimal pl-6 space-y-3">
-                    <li>
-                      macOSには通常、Pythonがプリインストールされていますが、最新バージョンをインストールすることをお勧めします。
-                    </li>
-                    <li>
-                      <a
-                        href="https://brew.sh/index_ja"
-                        class="text-primary hover:underline"
-                        target="_blank"
-                        >Homebrew</a
-                      >がインストールされていない場合は、まずHomebrewをインストールします。
-                    </li>
-                    <li>
-                      ターミナルを開き、<code>brew install python</code
-                      >を実行します。
-                    </li>
-                    <li>
-                      インストールが完了したら、<code>python3 --version</code
-                      >を実行してインストールを確認します。
-                    </li>
-                  </ol>
-                </div>
-                <div id="linux-content" class="installation-content hidden">
-                  <ol class="list-decimal pl-6 space-y-3">
-                    <li>
-                      多くのLinuxディストリビューションには、Pythonがプリインストールされています。
-                    </li>
-                    <li>
-                      Ubuntuの場合、ターミナルを開き、<code
-                        >sudo apt update</code
-                      >を実行してパッケージリストを更新します。
-                    </li>
-                    <li>
-                      次に、<code>sudo apt install python3 python3-pip</code
-                      >を実行してPythonとpipをインストールします。
-                    </li>
-                    <li>
-                      インストールが完了したら、<code>python3 --version</code
-                      >を実行してインストールを確認します。
-                    </li>
-                  </ol>
-                </div>
+          </div>
+          <p>
+            上記のコードは、Pythonでの最も基本的なプログラムの例です。<code>print()</code>関数を使用して、「こんにちは、世界！」というテキストをコンソールに出力します。
+          </p>
+        </section>
+        <section id="installation" class="section mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-primary">
+            インストール方法
+          </h2>
+          <p class="mb-4">
+            Pythonを使い始めるには、まずお使いのコンピュータにPythonをインストールする必要があります。以下に、主要なオペレーティングシステムでのインストール方法を説明します。
+          </p>
+          <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-6">
+            <div class="border-b border-gray-200">
+              <div class="flex">
+                <button class="installation-tab px-4 py-3 font-medium text-primary border-b-2 border-primary"
+                  data-target="windows">
+                  Windows
+                </button>
+                <button class="installation-tab px-4 py-3 font-medium text-gray-500" data-target="mac">
+                  macOS
+                </button>
+                <button class="installation-tab px-4 py-3 font-medium text-gray-500" data-target="linux">
+                  Linux
+                </button>
               </div>
             </div>
-            <h3 class="text-xl font-semibold mb-3">IDEとコードエディタ</h3>
-            <p class="mb-4">
-              Pythonコードを書くには、適切なコードエディタやIDEを使用することをお勧めします。以下は人気のあるオプションです：
-            </p>
-            <div class="grid md:grid-cols-2 gap-4 mb-6">
-              <div class="bg-white p-4 rounded-lg shadow-sm">
-                <h4 class="font-semibold mb-2">Visual Studio Code</h4>
-                <p class="text-sm">
-                  無料で軽量なコードエディタ。Python拡張機能を追加することで、強力なPython開発環境になります。
-                </p>
+            <div class="p-6">
+              <div id="windows-content" class="installation-content">
+                <ol class="list-decimal pl-6 space-y-3">
+                  <li>
+                    <a href="https://www.python.org/downloads/" class="text-primary hover:underline"
+                      target="_blank">Python公式サイト</a>にアクセスし、最新バージョンをダウンロードします。
+                  </li>
+                  <li>ダウンロードしたインストーラーを実行します。</li>
+                  <li>
+                    「Add Python to
+                    PATH」オプションにチェックを入れてください。
+                  </li>
+                  <li>
+                    「Install Now」をクリックしてインストールを開始します。
+                  </li>
+                  <li>
+                    インストールが完了したら、コマンドプロンプトを開き、<code>python --version</code>を実行してインストールを確認します。
+                  </li>
+                </ol>
               </div>
-              <div class="bg-white p-4 rounded-lg shadow-sm">
-                <h4 class="font-semibold mb-2">PyCharm</h4>
-                <p class="text-sm">
-                  JetBrains社による、Python専用の統合開発環境。無料のCommunity
-                  Editionと有料のProfessional Editionがあります。
-                </p>
+              <div id="mac-content" class="installation-content hidden">
+                <ol class="list-decimal pl-6 space-y-3">
+                  <li>
+                    macOSには通常、Pythonがプリインストールされていますが、最新バージョンをインストールすることをお勧めします。
+                  </li>
+                  <li>
+                    <a href="https://brew.sh/index_ja" class="text-primary hover:underline"
+                      target="_blank">Homebrew</a>がインストールされていない場合は、まずHomebrewをインストールします。
+                  </li>
+                  <li>
+                    ターミナルを開き、<code>brew install python</code>を実行します。
+                  </li>
+                  <li>
+                    インストールが完了したら、<code>python3 --version</code>を実行してインストールを確認します。
+                  </li>
+                </ol>
               </div>
-              <div class="bg-white p-4 rounded-lg shadow-sm">
-                <h4 class="font-semibold mb-2">Jupyter Notebook</h4>
-                <p class="text-sm">
-                  データ分析やデータサイエンスに最適なウェブベースのインタラクティブな環境。
-                </p>
-              </div>
-              <div class="bg-white p-4 rounded-lg shadow-sm">
-                <h4 class="font-semibold mb-2">IDLE</h4>
-                <p class="text-sm">
-                  Python標準のシンプルなIDE。Pythonをインストールすると自動的に含まれています。
-                </p>
+              <div id="linux-content" class="installation-content hidden">
+                <ol class="list-decimal pl-6 space-y-3">
+                  <li>
+                    多くのLinuxディストリビューションには、Pythonがプリインストールされています。
+                  </li>
+                  <li>
+                    Ubuntuの場合、ターミナルを開き、<code>sudo apt update</code>を実行してパッケージリストを更新します。
+                  </li>
+                  <li>
+                    次に、<code>sudo apt install python3 python3-pip</code>を実行してPythonとpipをインストールします。
+                  </li>
+                  <li>
+                    インストールが完了したら、<code>python3 --version</code>を実行してインストールを確認します。
+                  </li>
+                </ol>
               </div>
             </div>
-          </section>
-          <section id="variables" class="section mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-primary">変数と定数</h2>
-            <p class="mb-4">
-              Pythonでは、変数はデータを格納するためのコンテナです。変数名を定義し、値を代入することで使用します。Pythonは動的型付け言語であるため、変数の型を明示的に宣言する必要はありません。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># 変数の宣言と代入
+          </div>
+          <h3 class="text-xl font-semibold mb-3">IDEとコードエディタ</h3>
+          <p class="mb-4">
+            Pythonコードを書くには、適切なコードエディタやIDEを使用することをお勧めします。以下は人気のあるオプションです：
+          </p>
+          <div class="grid md:grid-cols-2 gap-4 mb-6">
+            <div class="bg-white p-4 rounded-lg shadow-sm">
+              <h4 class="font-semibold mb-2">Visual Studio Code</h4>
+              <p class="text-sm">
+                無料で軽量なコードエディタ。Python拡張機能を追加することで、強力なPython開発環境になります。
+              </p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm">
+              <h4 class="font-semibold mb-2">PyCharm</h4>
+              <p class="text-sm">
+                JetBrains社による、Python専用の統合開発環境。無料のCommunity
+                Editionと有料のProfessional Editionがあります。
+              </p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm">
+              <h4 class="font-semibold mb-2">Jupyter Notebook</h4>
+              <p class="text-sm">
+                データ分析やデータサイエンスに最適なウェブベースのインタラクティブな環境。
+              </p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm">
+              <h4 class="font-semibold mb-2">IDLE</h4>
+              <p class="text-sm">
+                Python標準のシンプルなIDE。Pythonをインストールすると自動的に含まれています。
+              </p>
+            </div>
+          </div>
+        </section>
+        <section id="variables" class="section mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-primary">変数と定数</h2>
+          <p class="mb-4">
+            Pythonでは、変数はデータを格納するためのコンテナです。変数名を定義し、値を代入することで使用します。Pythonは動的型付け言語であるため、変数の型を明示的に宣言する必要はありません。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># 変数の宣言と代入
 name = "田中太郎"  # 文字列
 age = 30          # 整数
 height = 175.5    # 浮動小数点数
@@ -459,139 +360,139 @@ is_student = True  # ブール値
 # 変数の使用
 print(f"{name}さんは{age}歳です。身長は{height}cmです。")
 print(f"学生ですか？ {is_student}")</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">変数の命名規則</h3>
-            <ul class="list-disc pl-6 space-y-2 mb-6">
-              <li>
-                変数名は文字（a-z、A-Z）、数字（0-9）、アンダースコア（_）で構成できます。
-              </li>
-              <li>変数名は数字で始めることはできません。</li>
-              <li>
-                変数名は大文字と小文字を区別します（name と Name
-                は異なる変数です）。
-              </li>
-              <li>
-                予約語（if、for、whileなど）は変数名として使用できません。
-              </li>
-            </ul>
-            <h3 class="text-xl font-semibold mb-3">定数</h3>
-            <p class="mb-4">
-              Pythonには、他の言語のような真の定数はありませんが、慣例として、変更されるべきでない値を持つ変数は大文字で命名します。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># 定数の慣例
+          </div>
+          <h3 class="text-xl font-semibold mb-3">変数の命名規則</h3>
+          <ul class="list-disc pl-6 space-y-2 mb-6">
+            <li>
+              変数名は文字（a-z、A-Z）、数字（0-9）、アンダースコア（_）で構成できます。
+            </li>
+            <li>変数名は数字で始めることはできません。</li>
+            <li>
+              変数名は大文字と小文字を区別します（name と Name
+              は異なる変数です）。
+            </li>
+            <li>
+              予約語（if、for、whileなど）は変数名として使用できません。
+            </li>
+          </ul>
+          <h3 class="text-xl font-semibold mb-3">定数</h3>
+          <p class="mb-4">
+            Pythonには、他の言語のような真の定数はありませんが、慣例として、変更されるべきでない値を持つ変数は大文字で命名します。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># 定数の慣例
 PI = 3.14159
 MAX_USERS = 100
 DATABASE_URL = "postgresql://localhost/mydb"
 # 使用例
 circle_area = PI * radius * radius</code></pre>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-              <h3 class="text-xl font-semibold mb-3">
-                複数の変数に同時に値を代入
-              </h3>
-              <p class="mb-4">
-                Pythonでは、複数の変数に一度に値を代入することができます。
-              </p>
-              <div class="code-block">
-                <pre><code># 複数の変数に値を代入
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-xl font-semibold mb-3">
+              複数の変数に同時に値を代入
+            </h3>
+            <p class="mb-4">
+              Pythonでは、複数の変数に一度に値を代入することができます。
+            </p>
+            <div class="code-block">
+              <pre><code># 複数の変数に値を代入
 x, y, z = 1, 2, 3
 # 値の交換
 a = 5
 b = 10
 a, b = b, a  # aは10に、bは5になります</code></pre>
-              </div>
             </div>
-          </section>
-          <section id="data-types" class="section mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-primary">データ型</h2>
-            <p class="mb-4">
-              Pythonには、さまざまな組み込みデータ型があります。主要なデータ型は以下の通りです：
-            </p>
-            <div class="overflow-x-auto mb-6">
-              <table class="min-w-full bg-white rounded-lg shadow-sm">
-                <thead class="bg-gray-100">
-                  <tr>
-                    <th class="py-3 px-4 text-left">データ型</th>
-                    <th class="py-3 px-4 text-left">説明</th>
-                    <th class="py-3 px-4 text-left">例</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium">整数 (int)</td>
-                    <td class="py-3 px-4">正または負の整数</td>
-                    <td class="py-3 px-4">
-                      <code>42</code>, <code>-7</code>, <code>0</code>
-                    </td>
-                  </tr>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium">浮動小数点数 (float)</td>
-                    <td class="py-3 px-4">小数点を含む数値</td>
-                    <td class="py-3 px-4">
-                      <code>3.14</code>, <code>-0.001</code>, <code>2.0</code>
-                    </td>
-                  </tr>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium">文字列 (str)</td>
-                    <td class="py-3 px-4">テキストデータ</td>
-                    <td class="py-3 px-4">
-                      <code>"こんにちは"</code>, <code>'Python'</code>
-                    </td>
-                  </tr>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium">ブール値 (bool)</td>
-                    <td class="py-3 px-4">真または偽</td>
-                    <td class="py-3 px-4">
-                      <code>True</code>, <code>False</code>
-                    </td>
-                  </tr>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium">リスト (list)</td>
-                    <td class="py-3 px-4">
-                      順序付けられた変更可能なコレクション
-                    </td>
-                    <td class="py-3 px-4">
-                      <code>[1, 2, 3]</code>, <code>["a", "b", "c"]</code>
-                    </td>
-                  </tr>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium">タプル (tuple)</td>
-                    <td class="py-3 px-4">
-                      順序付けられた変更不可能なコレクション
-                    </td>
-                    <td class="py-3 px-4">
-                      <code>(1, 2, 3)</code>, <code>("a", "b", "c")</code>
-                    </td>
-                  </tr>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium">辞書 (dict)</td>
-                    <td class="py-3 px-4">キーと値のペアのコレクション</td>
-                    <td class="py-3 px-4">
-                      <code>{"name": "田中", "age": 30}</code>
-                    </td>
-                  </tr>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium">セット (set)</td>
-                    <td class="py-3 px-4">重複のない要素のコレクション</td>
-                    <td class="py-3 px-4">
-                      <code>{1, 2, 3}</code>, <code>set([1, 2, 2, 3])</code>
-                    </td>
-                  </tr>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium">None</td>
-                    <td class="py-3 px-4">値が存在しないことを表す特殊な値</td>
-                    <td class="py-3 px-4"><code>None</code></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">型の確認と変換</h3>
-            <p class="mb-4">
-              変数の型を確認するには<code>type()</code>関数を使用し、型の変換には各型の名前を関数として使用します。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># 型の確認
+          </div>
+        </section>
+        <section id="data-types" class="section mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-primary">データ型</h2>
+          <p class="mb-4">
+            Pythonには、さまざまな組み込みデータ型があります。主要なデータ型は以下の通りです：
+          </p>
+          <div class="overflow-x-auto mb-6">
+            <table class="min-w-full bg-white rounded-lg shadow-sm">
+              <thead class="bg-gray-100">
+                <tr>
+                  <th class="py-3 px-4 text-left">データ型</th>
+                  <th class="py-3 px-4 text-left">説明</th>
+                  <th class="py-3 px-4 text-left">例</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">整数 (int)</td>
+                  <td class="py-3 px-4">正または負の整数</td>
+                  <td class="py-3 px-4">
+                    <code>42</code>, <code>-7</code>, <code>0</code>
+                  </td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">浮動小数点数 (float)</td>
+                  <td class="py-3 px-4">小数点を含む数値</td>
+                  <td class="py-3 px-4">
+                    <code>3.14</code>, <code>-0.001</code>, <code>2.0</code>
+                  </td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">文字列 (str)</td>
+                  <td class="py-3 px-4">テキストデータ</td>
+                  <td class="py-3 px-4">
+                    <code>"こんにちは"</code>, <code>'Python'</code>
+                  </td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">ブール値 (bool)</td>
+                  <td class="py-3 px-4">真または偽</td>
+                  <td class="py-3 px-4">
+                    <code>True</code>, <code>False</code>
+                  </td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">リスト (list)</td>
+                  <td class="py-3 px-4">
+                    順序付けられた変更可能なコレクション
+                  </td>
+                  <td class="py-3 px-4">
+                    <code>[1, 2, 3]</code>, <code>["a", "b", "c"]</code>
+                  </td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">タプル (tuple)</td>
+                  <td class="py-3 px-4">
+                    順序付けられた変更不可能なコレクション
+                  </td>
+                  <td class="py-3 px-4">
+                    <code>(1, 2, 3)</code>, <code>("a", "b", "c")</code>
+                  </td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">辞書 (dict)</td>
+                  <td class="py-3 px-4">キーと値のペアのコレクション</td>
+                  <td class="py-3 px-4">
+                    <code>{"name": "田中", "age": 30}</code>
+                  </td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">セット (set)</td>
+                  <td class="py-3 px-4">重複のない要素のコレクション</td>
+                  <td class="py-3 px-4">
+                    <code>{1, 2, 3}</code>, <code>set([1, 2, 2, 3])</code>
+                  </td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">None</td>
+                  <td class="py-3 px-4">値が存在しないことを表す特殊な値</td>
+                  <td class="py-3 px-4"><code>None</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">型の確認と変換</h3>
+          <p class="mb-4">
+            変数の型を確認するには<code>type()</code>関数を使用し、型の変換には各型の名前を関数として使用します。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># 型の確認
 x = 10
 print(type(x))  # <class 'int'>
 y = "20"
@@ -603,12 +504,12 @@ print(type(z))  # <class 'int'>
 a = float("3.14")  # 文字列を浮動小数点数に変換
 b = str(42)        # 整数を文字列に変換
 c = bool(1)        # 1はTrueに変換される</code></pre>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-              <h3 class="text-xl font-semibold mb-3">文字列の操作</h3>
-              <p class="mb-4">Pythonでは、文字列を様々な方法で操作できます。</p>
-              <div class="code-block">
-                <pre><code># 文字列の連結
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-xl font-semibold mb-3">文字列の操作</h3>
+            <p class="mb-4">Pythonでは、文字列を様々な方法で操作できます。</p>
+            <div class="code-block">
+              <pre><code># 文字列の連結
 first_name = "太郎"
 last_name = "田中"
 full_name = last_name + " " + first_name
@@ -624,115 +525,117 @@ print(text.lower())        # python programming
 print(text.strip())        # Python Programming
 print(text.replace("P", "J"))  # Jython Jrogramming
 print(len(text))           # 24 (空白を含む長さ)</code></pre>
-              </div>
             </div>
-          </section>
-          <section id="operators" class="section mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-primary">演算子</h2>
-            <p class="mb-4">
-              Pythonには、様々な演算子があります。演算子を使用して、変数や値に対して操作を行うことができます。
-            </p>
-            <h3 class="text-xl font-semibold mb-3">算術演算子</h3>
-            <p class="mb-4">数値計算を行うための演算子です。</p>
-            <div class="overflow-x-auto mb-6">
-              <table class="min-w-full bg-white rounded-lg shadow-sm">
-                <thead class="bg-gray-100">
-                  <tr>
-                    <th class="py-3 px-4 text-left">演算子</th>
-                    <th class="py-3 px-4 text-left">説明</th>
-                    <th class="py-3 px-4 text-left">例</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium">+</td>
-                    <td class="py-3 px-4">加算</td>
-                    <td class="py-3 px-4"><code>5 + 3 = 8</code></td>
-                  </tr>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium">-</td>
-                    <td class="py-3 px-4">減算</td>
-                    <td class="py-3 px-4"><code>5 - 3 = 2</code></td>
-                  </tr>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium">*</td>
-                    <td class="py-3 px-4">乗算</td>
-                    <td class="py-3 px-4"><code>5 * 3 = 15</code></td>
-                  </tr>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium">/</td>
-                    <td class="py-3 px-4">除算（結果は常に浮動小数点数）</td>
-                    <td class="py-3 px-4"><code>5 / 3 = 1.6666...</code></td>
-                  </tr>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium">//</td>
-                    <td class="py-3 px-4">整数除算（小数点以下切り捨て）</td>
-                    <td class="py-3 px-4"><code>5 // 3 = 1</code></td>
-                  </tr>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium">%</td>
-                    <td class="py-3 px-4">剰余（除算の余り）</td>
-                    <td class="py-3 px-4"><code>5 % 3 = 2</code></td>
-                  </tr>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium">**</td>
-                    <td class="py-3 px-4">べき乗</td>
-                    <td class="py-3 px-4"><code>5 ** 3 = 125</code></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">比較演算子</h3>
-            <p class="mb-4">
-              値を比較するための演算子です。結果はブール値（TrueまたはFalse）になります。
-            </p>
-            <div class="overflow-x-auto mb-6">
-              <table class="min-w-full bg-white rounded-lg shadow-sm">
-                <thead class="bg-gray-100">
-                  <tr>
-                    <th class="py-3 px-4 text-left">演算子</th>
-                    <th class="py-3 px-4 text-left">説明</th>
-                    <th class="py-3 px-4 text-left">例</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium">==</td>
-                    <td class="py-3 px-4">等しい</td>
-                    <td class="py-3 px-4"><code>x == y</code></td>
-                  </tr>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium">!=</td>
-                    <td class="py-3 px-4">等しくない</td>
-                    <td class="py-3 px-4"><code>x != y</code></td>
-                  </tr>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium">></td>
-                    <td class="py-3 px-4">より大きい</td>
-                    <td class="py-3 px-4"><code>x > y</code></td>
-                  </tr>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium"><</td>
-                    <td class="py-3 px-4">より小さい</td>
-                    <td class="py-3 px-4"><code>x < y</code></td>
-                  </tr>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium">>=</td>
-                    <td class="py-3 px-4">以上</td>
-                    <td class="py-3 px-4"><code>x >= y</code></td>
-                  </tr>
-                  <tr class="border-t">
-                    <td class="py-3 px-4 font-medium"><=</td>
-                    <td class="py-3 px-4">以下</td>
-                    <td class="py-3 px-4"><code>x <= y</code></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">論理演算子</h3>
-            <p class="mb-4">ブール値を組み合わせるための演算子です。</p>
-            <div class="code-block mb-6">
-              <pre><code># 論理演算子
+          </div>
+        </section>
+        <section id="operators" class="section mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-primary">演算子</h2>
+          <p class="mb-4">
+            Pythonには、様々な演算子があります。演算子を使用して、変数や値に対して操作を行うことができます。
+          </p>
+          <h3 class="text-xl font-semibold mb-3">算術演算子</h3>
+          <p class="mb-4">数値計算を行うための演算子です。</p>
+          <div class="overflow-x-auto mb-6">
+            <table class="min-w-full bg-white rounded-lg shadow-sm">
+              <thead class="bg-gray-100">
+                <tr>
+                  <th class="py-3 px-4 text-left">演算子</th>
+                  <th class="py-3 px-4 text-left">説明</th>
+                  <th class="py-3 px-4 text-left">例</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">+</td>
+                  <td class="py-3 px-4">加算</td>
+                  <td class="py-3 px-4"><code>5 + 3 = 8</code></td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">-</td>
+                  <td class="py-3 px-4">減算</td>
+                  <td class="py-3 px-4"><code>5 - 3 = 2</code></td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">*</td>
+                  <td class="py-3 px-4">乗算</td>
+                  <td class="py-3 px-4"><code>5 * 3 = 15</code></td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">/</td>
+                  <td class="py-3 px-4">除算（結果は常に浮動小数点数）</td>
+                  <td class="py-3 px-4"><code>5 / 3 = 1.6666...</code></td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">//</td>
+                  <td class="py-3 px-4">整数除算（小数点以下切り捨て）</td>
+                  <td class="py-3 px-4"><code>5 // 3 = 1</code></td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">%</td>
+                  <td class="py-3 px-4">剰余（除算の余り）</td>
+                  <td class="py-3 px-4"><code>5 % 3 = 2</code></td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">**</td>
+                  <td class="py-3 px-4">べき乗</td>
+                  <td class="py-3 px-4"><code>5 ** 3 = 125</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">比較演算子</h3>
+          <p class="mb-4">
+            値を比較するための演算子です。結果はブール値（TrueまたはFalse）になります。
+          </p>
+          <div class="overflow-x-auto mb-6">
+            <table class="min-w-full bg-white rounded-lg shadow-sm">
+              <thead class="bg-gray-100">
+                <tr>
+                  <th class="py-3 px-4 text-left">演算子</th>
+                  <th class="py-3 px-4 text-left">説明</th>
+                  <th class="py-3 px-4 text-left">例</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">==</td>
+                  <td class="py-3 px-4">等しい</td>
+                  <td class="py-3 px-4"><code>x == y</code></td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">!=</td>
+                  <td class="py-3 px-4">等しくない</td>
+                  <td class="py-3 px-4"><code>x != y</code></td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">></td>
+                  <td class="py-3 px-4">より大きい</td>
+                  <td class="py-3 px-4"><code>x > y</code></td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">
+                    << /td>
+                  <td class="py-3 px-4">より小さい</td>
+                  <td class="py-3 px-4"><code>x < y</code></td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">>=</td>
+                  <td class="py-3 px-4">以上</td>
+                  <td class="py-3 px-4"><code>x >= y</code></td>
+                </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4 font-medium">
+                    <=< /td>
+                  <td class="py-3 px-4">以下</td>
+                  <td class="py-3 px-4"><code>x <= y</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">論理演算子</h3>
+          <p class="mb-4">ブール値を組み合わせるための演算子です。</p>
+          <div class="code-block mb-6">
+            <pre><code># 論理演算子
 x = True
 y = False
 # and: 両方がTrueの場合にTrue
@@ -741,11 +644,11 @@ print(x and y)  # False
 print(x or y)   # True
 # not: 真偽値を反転
 print(not x)    # False</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">代入演算子</h3>
-            <p class="mb-4">変数に値を代入するための演算子です。</p>
-            <div class="code-block mb-6">
-              <pre><code># 基本的な代入
+          </div>
+          <h3 class="text-xl font-semibold mb-3">代入演算子</h3>
+          <p class="mb-4">変数に値を代入するための演算子です。</p>
+          <div class="code-block mb-6">
+            <pre><code># 基本的な代入
 x = 10
 # 複合代入演算子
 x += 5   # x = x + 5 と同じ
@@ -763,57 +666,56 @@ print(x)  # 1.0
 y = 2
 y **= 3  # y = y ** 3 と同じ
 print(y)  # 8</code></pre>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-              <h3 class="text-xl font-semibold mb-3">メンバーシップ演算子</h3>
-              <p class="mb-4">
-                シーケンス（文字列、リスト、タプルなど）内に要素が存在するかどうかを確認するための演算子です。
-              </p>
-              <div class="code-block">
-                <pre><code># in: シーケンス内に要素が存在する場合にTrue
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-xl font-semibold mb-3">メンバーシップ演算子</h3>
+            <p class="mb-4">
+              シーケンス（文字列、リスト、タプルなど）内に要素が存在するかどうかを確認するための演算子です。
+            </p>
+            <div class="code-block">
+              <pre><code># in: シーケンス内に要素が存在する場合にTrue
 fruits = ["りんご", "バナナ", "オレンジ"]
 print("バナナ" in fruits)  # True
 print("ぶどう" in fruits)  # False
 # not in: シーケンス内に要素が存在しない場合にTrue
 print("ぶどう" not in fruits)  # True</code></pre>
-              </div>
             </div>
-          </section>
-          <section id="conditionals" class="section mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-primary">条件分岐</h2>
-            <p class="mb-4">
-              条件分岐を使用すると、特定の条件に基づいてコードの実行を制御できます。Pythonでは、<code>if</code>、<code>elif</code>、<code>else</code>ステートメントを使用して条件分岐を実装します。
-            </p>
-            <h3 class="text-xl font-semibold mb-3">if文</h3>
-            <p class="mb-4">
-              最も基本的な条件分岐は<code>if</code>文です。条件がTrueの場合にのみ、指定されたコードブロックが実行されます。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># 基本的なif文
+          </div>
+        </section>
+        <section id="conditionals" class="section mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-primary">条件分岐</h2>
+          <p class="mb-4">
+            条件分岐を使用すると、特定の条件に基づいてコードの実行を制御できます。Pythonでは、<code>if</code>、<code>elif</code>、<code>else</code>ステートメントを使用して条件分岐を実装します。
+          </p>
+          <h3 class="text-xl font-semibold mb-3">if文</h3>
+          <p class="mb-4">
+            最も基本的な条件分岐は<code>if</code>文です。条件がTrueの場合にのみ、指定されたコードブロックが実行されます。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># 基本的なif文
 age = 20
 if age >= 18:
 print("成人です。")</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">if-else文</h3>
-            <p class="mb-4">
-              <code>if</code
-              >文に<code>else</code>を追加すると、条件がFalseの場合に実行されるコードブロックを指定できます。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># if-else文
+          </div>
+          <h3 class="text-xl font-semibold mb-3">if-else文</h3>
+          <p class="mb-4">
+            <code>if</code>文に<code>else</code>を追加すると、条件がFalseの場合に実行されるコードブロックを指定できます。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># if-else文
 age = 16
 if age >= 18:
 print("成人です。")
 else:
 print("未成年です。")</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">if-elif-else文</h3>
-            <p class="mb-4">
-              複数の条件を確認するには、<code>elif</code>（else if
-              の略）を使用します。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># if-elif-else文
+          </div>
+          <h3 class="text-xl font-semibold mb-3">if-elif-else文</h3>
+          <p class="mb-4">
+            複数の条件を確認するには、<code>elif</code>（else if
+            の略）を使用します。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># if-elif-else文
 score = 85
 if score >= 90:
 grade = "A"
@@ -826,13 +728,13 @@ grade = "D"
 else:
 grade = "F"
 print(f"あなたの成績は{grade}です。")</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">ネストされた条件分岐</h3>
-            <p class="mb-4">
-              条件分岐は、他の条件分岐の内部にネストすることもできます。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># ネストされた条件分岐
+          </div>
+          <h3 class="text-xl font-semibold mb-3">ネストされた条件分岐</h3>
+          <p class="mb-4">
+            条件分岐は、他の条件分岐の内部にネストすることもできます。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># ネストされた条件分岐
 age = 25
 has_license = True
 if age >= 18:
@@ -843,24 +745,24 @@ else:
 print("運転免許を取得してください。")
 else:
 print("未成年です。運転できません。")</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">条件式（三項演算子）</h3>
-            <p class="mb-4">
-              Pythonでは、簡単な条件分岐を1行で書くための条件式（三項演算子）があります。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># 条件式（三項演算子）
+          </div>
+          <h3 class="text-xl font-semibold mb-3">条件式（三項演算子）</h3>
+          <p class="mb-4">
+            Pythonでは、簡単な条件分岐を1行で書くための条件式（三項演算子）があります。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># 条件式（三項演算子）
 age = 20
 status = "成人" if age >= 18 else "未成年"
 print(status)  # 成人</code></pre>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-              <h3 class="text-xl font-semibold mb-3">複数の条件の組み合わせ</h3>
-              <p class="mb-4">
-                論理演算子（<code>and</code>、<code>or</code>、<code>not</code>）を使用して、複数の条件を組み合わせることができます。
-              </p>
-              <div class="code-block">
-                <pre><code># 複数の条件の組み合わせ
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-xl font-semibold mb-3">複数の条件の組み合わせ</h3>
+            <p class="mb-4">
+              論理演算子（<code>and</code>、<code>or</code>、<code>not</code>）を使用して、複数の条件を組み合わせることができます。
+            </p>
+            <div class="code-block">
+              <pre><code># 複数の条件の組み合わせ
 age = 25
 income = 300000
 if age >= 18 and income >= 200000:
@@ -876,21 +778,20 @@ print("ローン申請が可能です。")
 is_holiday = False
 if not is_holiday:
 print("今日は仕事日です。")</code></pre>
-              </div>
             </div>
-          </section>
-          <section id="loops" class="section mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-primary">ループ</h2>
-            <p class="mb-4">
-              ループを使用すると、コードブロックを繰り返し実行できます。Pythonには、主に<code>for</code>ループと<code>while</code>ループの2種類があります。
-            </p>
-            <h3 class="text-xl font-semibold mb-3">forループ</h3>
-            <p class="mb-4">
-              <code>for</code
-              >ループは、シーケンス（リスト、タプル、文字列など）の各要素に対して繰り返し処理を行うために使用されます。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># リストの各要素に対するforループ
+          </div>
+        </section>
+        <section id="loops" class="section mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-primary">ループ</h2>
+          <p class="mb-4">
+            ループを使用すると、コードブロックを繰り返し実行できます。Pythonには、主に<code>for</code>ループと<code>while</code>ループの2種類があります。
+          </p>
+          <h3 class="text-xl font-semibold mb-3">forループ</h3>
+          <p class="mb-4">
+            <code>for</code>ループは、シーケンス（リスト、タプル、文字列など）の各要素に対して繰り返し処理を行うために使用されます。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># リストの各要素に対するforループ
 fruits = ["りんご", "バナナ", "オレンジ"]
 for fruit in fruits:
 print(fruit)
@@ -906,14 +807,13 @@ print(i)
 # ステップ値を指定したrange()
 for i in range(1, 10, 2):  # 1, 3, 5, 7, 9
 print(i)</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">whileループ</h3>
-            <p class="mb-4">
-              <code>while</code
-              >ループは、指定された条件がTrueである限り、コードブロックを繰り返し実行します。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># 基本的なwhileループ
+          </div>
+          <h3 class="text-xl font-semibold mb-3">whileループ</h3>
+          <p class="mb-4">
+            <code>while</code>ループは、指定された条件がTrueである限り、コードブロックを繰り返し実行します。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># 基本的なwhileループ
 count = 0
 while count < 5:
 print(count)
@@ -925,13 +825,13 @@ password = input("パスワードを入力してください: ")
 if password != "secret":
 print("パスワードが違います。もう一度試してください。")
 print("ログインに成功しました！")</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">ループ制御ステートメント</h3>
-            <p class="mb-4">
-              Pythonには、ループの実行を制御するための特別なステートメントがあります。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># break: ループを終了する
+          </div>
+          <h3 class="text-xl font-semibold mb-3">ループ制御ステートメント</h3>
+          <p class="mb-4">
+            Pythonには、ループの実行を制御するための特別なステートメントがあります。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># break: ループを終了する
 for i in range(10):
 if i == 5:
 break
@@ -953,14 +853,14 @@ break
 print(i)
 else:
 print("この文は表示されません。")</code></pre>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-              <h3 class="text-xl font-semibold mb-3">ネストされたループ</h3>
-              <p class="mb-4">
-                ループは他のループの内部にネストすることができます。
-              </p>
-              <div class="code-block">
-                <pre><code># ネストされたループ
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-xl font-semibold mb-3">ネストされたループ</h3>
+            <p class="mb-4">
+              ループは他のループの内部にネストすることができます。
+            </p>
+            <div class="code-block">
+              <pre><code># ネストされたループ
 for i in range(1, 4):
 for j in range(1, 4):
 print(f"{i} x {j} = {i * j}")
@@ -971,34 +871,33 @@ for i in range(1, 10):
 for j in range(1, 10):
 print(f"{i} x {j} = {i * j:2d}", end="  ")
 print()</code></pre>
-              </div>
             </div>
-          </section>
-          <section id="functions" class="section mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-primary">
-              関数の定義と呼び出し
-            </h2>
-            <p class="mb-4">
-              関数は、特定のタスクを実行するためのコードブロックです。関数を使用することで、コードの再利用性が高まり、プログラムの構造が整理されます。
-            </p>
-            <h3 class="text-xl font-semibold mb-3">関数の定義</h3>
-            <p class="mb-4">
-              Pythonでは、<code>def</code>キーワードを使用して関数を定義します。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># 基本的な関数の定義
+          </div>
+        </section>
+        <section id="functions" class="section mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-primary">
+            関数の定義と呼び出し
+          </h2>
+          <p class="mb-4">
+            関数は、特定のタスクを実行するためのコードブロックです。関数を使用することで、コードの再利用性が高まり、プログラムの構造が整理されます。
+          </p>
+          <h3 class="text-xl font-semibold mb-3">関数の定義</h3>
+          <p class="mb-4">
+            Pythonでは、<code>def</code>キーワードを使用して関数を定義します。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># 基本的な関数の定義
 def greet():
 print("こんにちは！")
 # 関数の呼び出し
 greet()  # こんにちは！</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">戻り値を持つ関数</h3>
-            <p class="mb-4">
-              <code>return</code
-              >ステートメントを使用して、関数から値を返すことができます。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># 戻り値を持つ関数
+          </div>
+          <h3 class="text-xl font-semibold mb-3">戻り値を持つ関数</h3>
+          <p class="mb-4">
+            <code>return</code>ステートメントを使用して、関数から値を返すことができます。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># 戻り値を持つ関数
 def add(a, b):
 return a + b
 # 関数の呼び出しと戻り値の使用
@@ -1010,15 +909,15 @@ return min(numbers), max(numbers)
 # 複数の戻り値を受け取る
 min_val, max_val = get_min_max([1, 5, 3, 9, 2])
 print(f"最小値: {min_val}, 最大値: {max_val}")  # 最小値: 1, 最大値: 9</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">
-              ドキュメンテーション文字列（docstring）
-            </h3>
-            <p class="mb-4">
-              関数の目的や使用方法を説明するために、ドキュメンテーション文字列（docstring）を追加することができます。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># ドキュメンテーション文字列を持つ関数
+          </div>
+          <h3 class="text-xl font-semibold mb-3">
+            ドキュメンテーション文字列（docstring）
+          </h3>
+          <p class="mb-4">
+            関数の目的や使用方法を説明するために、ドキュメンテーション文字列（docstring）を追加することができます。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># ドキュメンテーション文字列を持つ関数
 def calculate_area(radius):
 """
 円の面積を計算します。
@@ -1030,14 +929,14 @@ float: 円の面積
 return 3.14159 * radius * radius
 # help関数を使用してdocstringを表示
 help(calculate_area)</code></pre>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-              <h3 class="text-xl font-semibold mb-3">関数のスコープ</h3>
-              <p class="mb-4">
-                変数のスコープは、その変数にアクセスできるコードの範囲を定義します。
-              </p>
-              <div class="code-block">
-                <pre><code># ローカル変数とグローバル変数
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-xl font-semibold mb-3">関数のスコープ</h3>
+            <p class="mb-4">
+              変数のスコープは、その変数にアクセスできるコードの範囲を定義します。
+            </p>
+            <div class="code-block">
+              <pre><code># ローカル変数とグローバル変数
 global_var = "グローバル変数"
 def my_function():
 local_var = "ローカル変数"
@@ -1052,57 +951,57 @@ global global_var
 global_var = "変更されたグローバル変数"
 modify_global()
 print(global_var)  # 変更されたグローバル変数</code></pre>
-              </div>
             </div>
-          </section>
-          <section id="parameters" class="section mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-primary">
-              パラメータと引数
-            </h2>
-            <p class="mb-4">
-              関数は、パラメータを通じてデータを受け取ることができます。関数を呼び出す際に渡される値は引数と呼ばれます。
-            </p>
-            <h3 class="text-xl font-semibold mb-3">位置引数</h3>
-            <p class="mb-4">
-              最も基本的な引数の渡し方は、関数定義での順序に従って値を渡す方法です。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># 位置引数
+          </div>
+        </section>
+        <section id="parameters" class="section mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-primary">
+            パラメータと引数
+          </h2>
+          <p class="mb-4">
+            関数は、パラメータを通じてデータを受け取ることができます。関数を呼び出す際に渡される値は引数と呼ばれます。
+          </p>
+          <h3 class="text-xl font-semibold mb-3">位置引数</h3>
+          <p class="mb-4">
+            最も基本的な引数の渡し方は、関数定義での順序に従って値を渡す方法です。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># 位置引数
 def greet(name, message):
 print(f"{name}さん、{message}")
 # 位置に基づいて引数を渡す
 greet("田中", "おはようございます！")  # 田中さん、おはようございます！</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">キーワード引数</h3>
-            <p class="mb-4">
-              引数の名前を明示的に指定することで、順序に関係なく引数を渡すことができます。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># キーワード引数
+          </div>
+          <h3 class="text-xl font-semibold mb-3">キーワード引数</h3>
+          <p class="mb-4">
+            引数の名前を明示的に指定することで、順序に関係なく引数を渡すことができます。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># キーワード引数
 def greet(name, message):
 print(f"{name}さん、{message}")
 # 名前を指定して引数を渡す
 greet(message="こんにちは！", name="佐藤")  # 佐藤さん、こんにちは！</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">デフォルト引数</h3>
-            <p class="mb-4">
-              パラメータにデフォルト値を設定することで、引数が省略された場合にデフォルト値が使用されます。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># デフォルト引数
+          </div>
+          <h3 class="text-xl font-semibold mb-3">デフォルト引数</h3>
+          <p class="mb-4">
+            パラメータにデフォルト値を設定することで、引数が省略された場合にデフォルト値が使用されます。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># デフォルト引数
 def greet(name, message="こんにちは！"):
 print(f"{name}さん、{message}")
 # messageを省略
 greet("山田")  # 山田さん、こんにちは！
 # messageを指定
 greet("鈴木", "おやすみなさい！")  # 鈴木さん、おやすみなさい！</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">可変長引数</h3>
-            <p class="mb-4">
-              任意の数の引数を受け取るには、<code>*args</code>（位置引数）と<code>**kwargs</code>（キーワード引数）を使用します。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># 可変長位置引数 (*args)
+          </div>
+          <h3 class="text-xl font-semibold mb-3">可変長引数</h3>
+          <p class="mb-4">
+            任意の数の引数を受け取るには、<code>*args</code>（位置引数）と<code>**kwargs</code>（キーワード引数）を使用します。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># 可変長位置引数 (*args)
 def sum_all(*numbers):
 total = 0
 for num in numbers:
@@ -1120,12 +1019,12 @@ print_info(name="高橋", age=30, city="東京")
 # name: 高橋
 # age: 30
 # city: 東京</code></pre>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-              <h3 class="text-xl font-semibold mb-3">引数の順序</h3>
-              <p class="mb-4">関数定義での引数の順序には規則があります。</p>
-              <div class="code-block">
-                <pre><code># 引数の順序: 通常の引数 -> デフォルト引数 -> 可変長位置引数 -> 可変長キーワード引数
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-xl font-semibold mb-3">引数の順序</h3>
+            <p class="mb-4">関数定義での引数の順序には規則があります。</p>
+            <div class="code-block">
+              <pre><code># 引数の順序: 通常の引数 -> デフォルト引数 -> 可変長位置引数 -> 可変長キーワード引数
 def example_function(arg1, arg2, arg3=None, *args, **kwargs):
 print(f"arg1: {arg1}")
 print(f"arg2: {arg2}")
@@ -1139,19 +1038,19 @@ example_function(1, 2, 3, 4, 5, 6, name="John", age=25)
 # arg3: 3
 # args: (4, 5, 6)
 # kwargs: {'name': 'John', 'age': 25}</code></pre>
-              </div>
             </div>
-          </section>
-          <section id="lists" class="section mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-primary">リスト</h2>
-            <p class="mb-4">
-              リストは、順序付けられた変更可能な要素のコレクションです。角括弧
-              <code>[]</code>
-              で囲まれ、カンマで区切られた要素のリストとして表されます。
-            </p>
-            <h3 class="text-xl font-semibold mb-3">リストの作成</h3>
-            <div class="code-block mb-6">
-              <pre><code># 空のリスト
+          </div>
+        </section>
+        <section id="lists" class="section mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-primary">リスト</h2>
+          <p class="mb-4">
+            リストは、順序付けられた変更可能な要素のコレクションです。角括弧
+            <code>[]</code>
+            で囲まれ、カンマで区切られた要素のリストとして表されます。
+          </p>
+          <h3 class="text-xl font-semibold mb-3">リストの作成</h3>
+          <div class="code-block mb-6">
+            <pre><code># 空のリスト
 empty_list = []
 # 要素を持つリスト
 fruits = ["りんご", "バナナ", "オレンジ"]
@@ -1159,10 +1058,10 @@ numbers = [1, 2, 3, 4, 5]
 mixed = [1, "こんにちは", 3.14, True]
 # list()関数を使用したリストの作成
 chars = list("Python")  # ['P', 'y', 't', 'h', 'o', 'n']</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">リストへのアクセス</h3>
-            <div class="code-block mb-6">
-              <pre><code># インデックスを使用した要素へのアクセス
+          </div>
+          <h3 class="text-xl font-semibold mb-3">リストへのアクセス</h3>
+          <div class="code-block mb-6">
+            <pre><code># インデックスを使用した要素へのアクセス
 fruits = ["りんご", "バナナ", "オレンジ", "ぶどう", "メロン"]
 print(fruits[0])   # りんご（最初の要素）
 print(fruits[2])   # オレンジ
@@ -1174,10 +1073,10 @@ print(fruits[:3])     # ['りんご', 'バナナ', 'オレンジ']
 print(fruits[2:])     # ['オレンジ', 'ぶどう', 'メロン']
 print(fruits[::2])    # ['りんご', 'オレンジ', 'メロン']（1つおきに取得）
 print(fruits[::-1])   # ['メロン', 'ぶどう', 'オレンジ', 'バナナ', 'りんご']（逆順）</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">リストの変更</h3>
-            <div class="code-block mb-6">
-              <pre><code># 要素の変更
+          </div>
+          <h3 class="text-xl font-semibold mb-3">リストの変更</h3>
+          <div class="code-block mb-6">
+            <pre><code># 要素の変更
 fruits = ["りんご", "バナナ", "オレンジ"]
 fruits[1] = "キウイ"
 print(fruits)  # ['りんご', 'キウイ', 'オレンジ']
@@ -1193,10 +1092,10 @@ print(fruits)  # ['りんご', 'イチゴ', 'キウイ', 'オレンジ', 'ぶど
 # +演算子を使用したリストの結合
 combined = fruits + ["マンゴー", "パパイヤ"]
 print(combined)</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">要素の削除</h3>
-            <div class="code-block mb-6">
-              <pre><code># 要素の削除
+          </div>
+          <h3 class="text-xl font-semibold mb-3">要素の削除</h3>
+          <div class="code-block mb-6">
+            <pre><code># 要素の削除
 fruits = ["りんご", "バナナ", "オレンジ", "ぶどう", "メロン"]
 # インデックスを指定して削除
 del fruits[1]
@@ -1215,10 +1114,10 @@ print(fruits)   # ['オレンジ']
 # リストのクリア
 fruits.clear()
 print(fruits)   # []</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">リストの操作</h3>
-            <div class="code-block mb-6">
-              <pre><code># リストの長さ
+          </div>
+          <h3 class="text-xl font-semibold mb-3">リストの操作</h3>
+          <div class="code-block mb-6">
+            <pre><code># リストの長さ
 fruits = ["りんご", "バナナ", "オレンジ", "ぶどう", "メロン"]
 print(len(fruits))  # 5
 # 要素の検索
@@ -1236,14 +1135,14 @@ print(fruits)  # ['りんご', 'メロン', 'バナナ', 'キウイ', 'オレン
 fruits_copy = fruits.copy()
 # または
 fruits_copy = fruits[:]</code></pre>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-              <h3 class="text-xl font-semibold mb-3">リスト内包表記</h3>
-              <p class="mb-4">
-                リスト内包表記は、既存のリストから新しいリストを作成するための簡潔な方法です。
-              </p>
-              <div class="code-block">
-                <pre><code># 基本的なリスト内包表記
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-xl font-semibold mb-3">リスト内包表記</h3>
+            <p class="mb-4">
+              リスト内包表記は、既存のリストから新しいリストを作成するための簡潔な方法です。
+            </p>
+            <div class="code-block">
+              <pre><code># 基本的なリスト内包表記
 squares = [x**2 for x in range(1, 6)]
 print(squares)  # [1, 4, 9, 16, 25]
 # 条件付きリスト内包表記
@@ -1253,19 +1152,19 @@ print(even_squares)  # [4, 16, 36, 64, 100]
 matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 flattened = [num for row in matrix for num in row]
 print(flattened)  # [1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
-              </div>
             </div>
-          </section>
-          <section id="dictionaries" class="section mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-primary">辞書</h2>
-            <p class="mb-4">
-              辞書は、キーと値のペアのコレクションです。中括弧
-              <code>{}</code> で囲まれ、キーと値はコロン
-              <code>:</code> で区切られます。
-            </p>
-            <h3 class="text-xl font-semibold mb-3">辞書の作成</h3>
-            <div class="code-block mb-6">
-              <pre><code># 空の辞書
+          </div>
+        </section>
+        <section id="dictionaries" class="section mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-primary">辞書</h2>
+          <p class="mb-4">
+            辞書は、キーと値のペアのコレクションです。中括弧
+            <code>{}</code> で囲まれ、キーと値はコロン
+            <code>:</code> で区切られます。
+          </p>
+          <h3 class="text-xl font-semibold mb-3">辞書の作成</h3>
+          <div class="code-block mb-6">
+            <pre><code># 空の辞書
 empty_dict = {}
 # 要素を持つ辞書
 person = {
@@ -1278,10 +1177,10 @@ person = dict(name="田中太郎", age=30, city="東京")
 # タプルのリストから辞書を作成
 items = [("name", "田中太郎"), ("age", 30), ("city", "東京")]
 person = dict(items)</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">辞書へのアクセス</h3>
-            <div class="code-block mb-6">
-              <pre><code># キーを使用した値へのアクセス
+          </div>
+          <h3 class="text-xl font-semibold mb-3">辞書へのアクセス</h3>
+          <div class="code-block mb-6">
+            <pre><code># キーを使用した値へのアクセス
 person = {"name": "田中太郎", "age": 30, "city": "東京"}
 print(person["name"])  # 田中太郎
 print(person["age"])   # 30
@@ -1292,10 +1191,10 @@ print(person.get("email", "メールアドレスなし"))  # メールアドレ�
 # キーの存在確認
 print("name" in person)  # True
 print("email" in person)  # False</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">辞書の変更</h3>
-            <div class="code-block mb-6">
-              <pre><code># 値の変更
+          </div>
+          <h3 class="text-xl font-semibold mb-3">辞書の変更</h3>
+          <div class="code-block mb-6">
+            <pre><code># 値の変更
 person = {"name": "田中太郎", "age": 30, "city": "東京"}
 person["age"] = 31
 print(person)  # {'name': '田中太郎', 'age': 31, 'city': '東京'}
@@ -1305,10 +1204,10 @@ print(person)  # {'name': '田中太郎', 'age': 31, 'city': '東京', 'email': 
 # update()メソッドを使用した複数の更新
 person.update({"age": 32, "phone": "090-1234-5678"})
 print(person)  # {'name': '田中太郎', 'age': 32, 'city': '東京', 'email': 'tanaka@example.com', 'phone': '090-1234-5678'}</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">要素の削除</h3>
-            <div class="code-block mb-6">
-              <pre><code># キーを指定して削除
+          </div>
+          <h3 class="text-xl font-semibold mb-3">要素の削除</h3>
+          <div class="code-block mb-6">
+            <pre><code># キーを指定して削除
 person = {"name": "田中太郎", "age": 30, "city": "東京", "email": "tanaka@example.com"}
 del person["email"]
 print(person)  # {'name': '田中太郎', 'age': 30, 'city': '東京'}
@@ -1323,10 +1222,10 @@ print(person)     # {'name': '田中太郎'}
 # 辞書のクリア
 person.clear()
 print(person)   # {}</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">辞書の操作</h3>
-            <div class="code-block mb-6">
-              <pre><code># 辞書の長さ
+          </div>
+          <h3 class="text-xl font-semibold mb-3">辞書の操作</h3>
+          <div class="code-block mb-6">
+            <pre><code># 辞書の長さ
 person = {"name": "田中太郎", "age": 30, "city": "東京"}
 print(len(person))  # 3
 # キー、値、アイテム（キーと値のペア）の取得
@@ -1337,14 +1236,14 @@ print(person.items())   # dict_items([('name', '田中太郎'), ('age', 30), ('c
 person_copy = person.copy()
 # または
 person_copy = dict(person)</code></pre>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-              <h3 class="text-xl font-semibold mb-3">辞書内包表記</h3>
-              <p class="mb-4">
-                辞書内包表記は、既存のデータから新しい辞書を作成するための簡潔な方法です。
-              </p>
-              <div class="code-block">
-                <pre><code># 基本的な辞書内包表記
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-xl font-semibold mb-3">辞書内包表記</h3>
+            <p class="mb-4">
+              辞書内包表記は、既存のデータから新しい辞書を作成するための簡潔な方法です。
+            </p>
+            <div class="code-block">
+              <pre><code># 基本的な辞書内包表記
 squares = {x: x**2 for x in range(1, 6)}
 print(squares)  # {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
 # 条件付き辞書内包表記
@@ -1354,19 +1253,19 @@ print(even_squares)  # {2: 4, 4: 16, 6: 36, 8: 64, 10: 100}
 prices = {"りんご": 100, "バナナ": 80, "オレンジ": 120}
 doubled_prices = {fruit: price * 2 for fruit, price in prices.items()}
 print(doubled_prices)  # {'りんご': 200, 'バナナ': 160, 'オレンジ': 240}</code></pre>
-              </div>
             </div>
-          </section>
-          <section id="tuples" class="section mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-primary">タプル</h2>
-            <p class="mb-4">
-              タプルは、順序付けられた変更不可能な要素のコレクションです。丸括弧
-              <code>()</code>
-              で囲まれ、カンマで区切られた要素のリストとして表されます。
-            </p>
-            <h3 class="text-xl font-semibold mb-3">タプルの作成</h3>
-            <div class="code-block mb-6">
-              <pre><code># 空のタプル
+          </div>
+        </section>
+        <section id="tuples" class="section mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-primary">タプル</h2>
+          <p class="mb-4">
+            タプルは、順序付けられた変更不可能な要素のコレクションです。丸括弧
+            <code>()</code>
+            で囲まれ、カンマで区切られた要素のリストとして表されます。
+          </p>
+          <h3 class="text-xl font-semibold mb-3">タプルの作成</h3>
+          <div class="code-block mb-6">
+            <pre><code># 空のタプル
 empty_tuple = ()
 # 要素を持つタプル
 fruits = ("りんご", "バナナ", "オレンジ")
@@ -1378,10 +1277,10 @@ coordinates = 10, 20, 30
 single_item = ("りんご",)  # または "りんご",
 # tuple()関数を使用したタプルの作成
 chars = tuple("Python")  # ('P', 'y', 't', 'h', 'o', 'n')</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">タプルへのアクセス</h3>
-            <div class="code-block mb-6">
-              <pre><code># インデックスを使用した要素へのアクセス
+          </div>
+          <h3 class="text-xl font-semibold mb-3">タプルへのアクセス</h3>
+          <div class="code-block mb-6">
+            <pre><code># インデックスを使用した要素へのアクセス
 fruits = ("りんご", "バナナ", "オレンジ", "ぶどう", "メロン")
 print(fruits[0])   # りんご（最初の要素）
 print(fruits[2])   # オレンジ
@@ -1393,10 +1292,10 @@ print(fruits[:3])     # ('りんご', 'バナナ', 'オレンジ')
 print(fruits[2:])     # ('オレンジ', 'ぶどう', 'メロン')
 print(fruits[::2])    # ('りんご', 'オレンジ', 'メロン')（1つおきに取得）
 print(fruits[::-1])   # ('メロン', 'ぶどう', 'オレンジ', 'バナナ', 'りんご')（逆順）</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">タプルの操作</h3>
-            <div class="code-block mb-6">
-              <pre><code># タプルの長さ
+          </div>
+          <h3 class="text-xl font-semibold mb-3">タプルの操作</h3>
+          <div class="code-block mb-6">
+            <pre><code># タプルの長さ
 fruits = ("りんご", "バナナ", "オレンジ", "ぶどう", "メロン")
 print(len(fruits))  # 5
 # 要素の検索
@@ -1411,10 +1310,10 @@ print(combined)  # ('りんご', 'バナナ', 'オレンジ', 'りんご', 'メ�
 # タプルの繰り返し
 repeated = fruits * 2
 print(repeated)  # ('りんご', 'バナナ', 'オレンジ', 'りんご', 'メロン', 'りんご', 'バナナ', 'オレンジ', 'りんご', 'メロン')</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">タプルのアンパック</h3>
-            <div class="code-block mb-6">
-              <pre><code># タプルのアンパック
+          </div>
+          <h3 class="text-xl font-semibold mb-3">タプルのアンパック</h3>
+          <div class="code-block mb-6">
+            <pre><code># タプルのアンパック
 coordinates = (10, 20, 30)
 x, y, z = coordinates
 print(x)  # 10
@@ -1431,36 +1330,36 @@ print(rest)   # [2, 3, 4, 5]
 *beginning, last = (1, 2, 3, 4, 5)
 print(beginning)  # [1, 2, 3, 4]
 print(last)       # 5</code></pre>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-              <h3 class="text-xl font-semibold mb-3">タプルとリストの違い</h3>
-              <p class="mb-4">
-                タプルとリストの主な違いは、タプルが変更不可能（イミュータブル）であるのに対し、リストは変更可能（ミュータブル）であることです。
-              </p>
-              <ul class="list-disc pl-6 space-y-2">
-                <li>タプルは作成後に要素を変更、追加、削除できません。</li>
-                <li>
-                  タプルはハッシュ可能なため、辞書のキーとして使用できます（リストは使用できません）。
-                </li>
-                <li>
-                  タプルはリストよりもメモリ効率が良く、アクセス速度が速いです。
-                </li>
-                <li>
-                  タプルは関連するデータをグループ化するのに適しています（例：座標、名前と年齢のペアなど）。
-                </li>
-              </ul>
-            </div>
-          </section>
-          <section id="sets" class="section mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-primary">セット</h2>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-xl font-semibold mb-3">タプルとリストの違い</h3>
             <p class="mb-4">
-              セットは、重複のない要素のコレクションです。中括弧
-              <code>{}</code>
-              で囲まれ、カンマで区切られた要素のリストとして表されます。
+              タプルとリストの主な違いは、タプルが変更不可能（イミュータブル）であるのに対し、リストは変更可能（ミュータブル）であることです。
             </p>
-            <h3 class="text-xl font-semibold mb-3">セットの作成</h3>
-            <div class="code-block mb-6">
-              <pre><code># 空のセット（{}は空の辞書になるため、set()を使用）
+            <ul class="list-disc pl-6 space-y-2">
+              <li>タプルは作成後に要素を変更、追加、削除できません。</li>
+              <li>
+                タプルはハッシュ可能なため、辞書のキーとして使用できます（リストは使用できません）。
+              </li>
+              <li>
+                タプルはリストよりもメモリ効率が良く、アクセス速度が速いです。
+              </li>
+              <li>
+                タプルは関連するデータをグループ化するのに適しています（例：座標、名前と年齢のペアなど）。
+              </li>
+            </ul>
+          </div>
+        </section>
+        <section id="sets" class="section mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-primary">セット</h2>
+          <p class="mb-4">
+            セットは、重複のない要素のコレクションです。中括弧
+            <code>{}</code>
+            で囲まれ、カンマで区切られた要素のリストとして表されます。
+          </p>
+          <h3 class="text-xl font-semibold mb-3">セットの作成</h3>
+          <div class="code-block mb-6">
+            <pre><code># 空のセット（{}は空の辞書になるため、set()を使用）
 empty_set = set()
 # 要素を持つセット
 fruits = {"りんご", "バナナ", "オレンジ"}
@@ -1472,10 +1371,10 @@ chars = set("Python")  # {'P', 'y', 't', 'h', 'o', 'n'}
 fruits_list = ["りんご", "バナナ", "オレンジ", "りんご", "バナナ"]
 fruits_set = set(fruits_list)
 print(fruits_set)  # {'りんご', 'バナナ', 'オレンジ'}</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">セットの操作</h3>
-            <div class="code-block mb-6">
-              <pre><code># 要素の追加
+          </div>
+          <h3 class="text-xl font-semibold mb-3">セットの操作</h3>
+          <div class="code-block mb-6">
+            <pre><code># 要素の追加
 fruits = {"りんご", "バナナ", "オレンジ"}
 fruits.add("ぶどう")
 print(fruits)  # {'りんご', 'バナナ', 'オレンジ', 'ぶどう'}
@@ -1494,10 +1393,10 @@ print(fruits)   # 例：{'オレンジ', 'ぶどう', 'メロン', 'イチゴ'}
 # セットのクリア
 fruits.clear()
 print(fruits)   # set()</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">セット演算</h3>
-            <div class="code-block mb-6">
-              <pre><code># セット演算
+          </div>
+          <h3 class="text-xl font-semibold mb-3">セット演算</h3>
+          <div class="code-block mb-6">
+            <pre><code># セット演算
 set1 = {1, 2, 3, 4, 5}
 set2 = {4, 5, 6, 7, 8}
 # 和集合（union）: 両方のセットのすべての要素
@@ -1512,10 +1411,10 @@ print(difference)  # {1, 2, 3}
 # 対称差（symmetric difference）: どちらか一方のセットにのみ存在する要素
 symmetric_difference = set1 ^ set2  # または set1.symmetric_difference(set2)
 print(symmetric_difference)  # {1, 2, 3, 6, 7, 8}</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">セットの比較</h3>
-            <div class="code-block mb-6">
-              <pre><code># 部分集合と上位集合の確認
+          </div>
+          <h3 class="text-xl font-semibold mb-3">セットの比較</h3>
+          <div class="code-block mb-6">
+            <pre><code># 部分集合と上位集合の確認
 set1 = {1, 2, 3}
 set2 = {1, 2, 3, 4, 5}
 # set1がset2の部分集合かどうか
@@ -1531,14 +1430,14 @@ print(set2 > set1)            # True
 # 互いに素（共通要素がない）かどうか
 set3 = {6, 7, 8}
 print(set1.isdisjoint(set3))  # True</code></pre>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-              <h3 class="text-xl font-semibold mb-3">セット内包表記</h3>
-              <p class="mb-4">
-                セット内包表記は、既存のデータから新しいセットを作成するための簡潔な方法です。
-              </p>
-              <div class="code-block">
-                <pre><code># 基本的なセット内包表記
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-xl font-semibold mb-3">セット内包表記</h3>
+            <p class="mb-4">
+              セット内包表記は、既存のデータから新しいセットを作成するための簡潔な方法です。
+            </p>
+            <div class="code-block">
+              <pre><code># 基本的なセット内包表記
 squares = {x**2 for x in range(1, 6)}
 print(squares)  # {1, 4, 9, 16, 25}
 # 条件付きセット内包表記
@@ -1548,19 +1447,19 @@ print(even_squares)  # {4, 16, 36, 64, 100}
 text = "Pythonはとても楽しいプログラミング言語です"
 unique_chars = {char for char in text}
 print(unique_chars)  # {'P', 'y', 't', 'h', 'o', 'n', 'は', 'と', 'て', 'も', '楽', 'し', 'い', 'プ', 'ロ', 'グ', 'ラ', 'ミ', 'ン', 'グ', '言', '語', 'で', 'す'}</code></pre>
-              </div>
             </div>
-          </section>
-          <section id="classes" class="section mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-primary">
-              クラスとオブジェクト
-            </h2>
-            <p class="mb-4">
-              Pythonはオブジェクト指向プログラミング言語であり、クラスとオブジェクトの概念をサポートしています。クラスは、オブジェクトの設計図またはテンプレートであり、オブジェクトはクラスのインスタンスです。
-            </p>
-            <h3 class="text-xl font-semibold mb-3">クラスの定義</h3>
-            <div class="code-block mb-6">
-              <pre><code># 基本的なクラスの定義
+          </div>
+        </section>
+        <section id="classes" class="section mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-primary">
+            クラスとオブジェクト
+          </h2>
+          <p class="mb-4">
+            Pythonはオブジェクト指向プログラミング言語であり、クラスとオブジェクトの概念をサポートしています。クラスは、オブジェクトの設計図またはテンプレートであり、オブジェクトはクラスのインスタンスです。
+          </p>
+          <h3 class="text-xl font-semibold mb-3">クラスの定義</h3>
+          <div class="code-block mb-6">
+            <pre><code># 基本的なクラスの定義
 class Person:
 # クラス変数（すべてのインスタンスで共有）
 species = "Homo sapiens"
@@ -1575,10 +1474,10 @@ return f"こんにちは、私は{self.name}です。{self.age}歳です。"
 def celebrate_birthday(self):
 self.age += 1
 return f"{self.name}は{self.age}歳になりました！"</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">オブジェクトの作成と使用</h3>
-            <div class="code-block mb-6">
-              <pre><code># オブジェクト（インスタンス）の作成
+          </div>
+          <h3 class="text-xl font-semibold mb-3">オブジェクトの作成と使用</h3>
+          <div class="code-block mb-6">
+            <pre><code># オブジェクト（インスタンス）の作成
 person1 = Person("田中太郎", 30)
 person2 = Person("佐藤花子", 25)
 # インスタンス変数へのアクセス
@@ -1591,13 +1490,13 @@ print(Person.species)   # Homo sapiens
 print(person1.greet())  # こんにちは、私は田中太郎です。30歳です。
 print(person2.celebrate_birthday())  # 佐藤花子は26歳になりました！
 print(person2.age)  # 26</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">特殊メソッド</h3>
-            <p class="mb-4">
-              Pythonには、特定の操作や動作をカスタマイズするための特殊メソッド（マジックメソッドまたはダンダーメソッド）があります。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code>class Book:
+          </div>
+          <h3 class="text-xl font-semibold mb-3">特殊メソッド</h3>
+          <p class="mb-4">
+            Pythonには、特定の操作や動作をカスタマイズするための特殊メソッド（マジックメソッドまたはダンダーメソッド）があります。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code>class Book:
 def __init__(self, title, author, pages):
 self.title = title
 self.author = author
@@ -1631,13 +1530,13 @@ print(repr(book2))     # Book('Pythonデータ分析', '鈴木一郎', 450)
 print(len(book1))      # 300
 print(book1 == book3)  # True
 print(book1 < book2)   # True</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">プロパティ</h3>
-            <p class="mb-4">
-              プロパティを使用すると、メソッドをあたかも属性のように扱うことができます。これにより、属性へのアクセスを制御できます。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code>class Circle:
+          </div>
+          <h3 class="text-xl font-semibold mb-3">プロパティ</h3>
+          <p class="mb-4">
+            プロパティを使用すると、メソッドをあたかも属性のように扱うことができます。これにより、属性へのアクセスを制御できます。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code>class Circle:
 def __init__(self, radius):
 self._radius = radius  # プライベート属性の慣例
 # radiusプロパティのゲッター
@@ -1672,16 +1571,16 @@ try:
 circle.radius = -2
 except ValueError as e:
 print(e)  # 半径は正の数でなければなりません</code></pre>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-              <h3 class="text-xl font-semibold mb-3">
-                静的メソッドとクラスメソッド
-              </h3>
-              <p class="mb-4">
-                Pythonでは、インスタンスメソッド以外に、静的メソッドとクラスメソッドを定義できます。
-              </p>
-              <div class="code-block">
-                <pre><code>class MathUtils:
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-xl font-semibold mb-3">
+              静的メソッドとクラスメソッド
+            </h3>
+            <p class="mb-4">
+              Pythonでは、インスタンスメソッド以外に、静的メソッドとクラスメソッドを定義できます。
+            </p>
+            <div class="code-block">
+              <pre><code>class MathUtils:
 # クラス変数
 pi = 3.14159
 # 静的メソッド（インスタンスやクラスへの参照を受け取らない）
@@ -1703,17 +1602,17 @@ print(MathUtils.circle_area(5))    # 78.53975
 # インスタンスメソッドの使用
 math = MathUtils(10)
 print(math.double())  # 20</code></pre>
-              </div>
             </div>
-          </section>
-          <section id="inheritance" class="section mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-primary">継承</h2>
-            <p class="mb-4">
-              継承は、既存のクラス（親クラスまたは基底クラス）の属性やメソッドを新しいクラス（子クラスまたは派生クラス）が継承する機能です。これにより、コードの再利用性が高まります。
-            </p>
-            <h3 class="text-xl font-semibold mb-3">基本的な継承</h3>
-            <div class="code-block mb-6">
-              <pre><code># 親クラス
+          </div>
+        </section>
+        <section id="inheritance" class="section mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-primary">継承</h2>
+          <p class="mb-4">
+            継承は、既存のクラス（親クラスまたは基底クラス）の属性やメソッドを新しいクラス（子クラスまたは派生クラス）が継承する機能です。これにより、コードの再利用性が高まります。
+          </p>
+          <h3 class="text-xl font-semibold mb-3">基本的な継承</h3>
+          <div class="code-block mb-6">
+            <pre><code># 親クラス
 class Animal:
 def __init__(self, name):
 self.name = name
@@ -1738,14 +1637,13 @@ print(cat.introduce())     # 私はタマというCatです。
 print(animal.speak())      # 何か音を出す
 print(dog.speak())         # ワンワン！
 print(cat.speak())         # ニャー！</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">super()関数</h3>
-            <p class="mb-4">
-              <code>super()</code
-              >関数を使用すると、親クラスのメソッドを呼び出すことができます。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code>class Person:
+          </div>
+          <h3 class="text-xl font-semibold mb-3">super()関数</h3>
+          <p class="mb-4">
+            <code>super()</code>関数を使用すると、親クラスのメソッドを呼び出すことができます。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code>class Person:
 def __init__(self, name, age):
 self.name = name
 self.age = age
@@ -1765,13 +1663,13 @@ person = Person("田中太郎", 30)
 student = Student("佐藤花子", 20, "S12345")
 print(person.introduce())   # 私は田中太郎です。30歳です。
 print(student.introduce())  # 私は佐藤花子です。20歳です。 学生番号はS12345です。</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">多重継承</h3>
-            <p class="mb-4">
-              Pythonでは、クラスが複数の親クラスから継承することができます（多重継承）。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code>class Flyable:
+          </div>
+          <h3 class="text-xl font-semibold mb-3">多重継承</h3>
+          <p class="mb-4">
+            Pythonでは、クラスが複数の親クラスから継承することができます（多重継承）。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code>class Flyable:
 def fly(self):
 return "飛んでいます！"
 class Swimmable:
@@ -1786,13 +1684,13 @@ print(duck.introduce())  # 私はドナルドというDuckです。
 print(duck.speak())      # ガーガー！
 print(duck.fly())        # 飛んでいます！
 print(duck.swim())       # 泳いでいます！</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">メソッド解決順序（MRO）</h3>
-            <p class="mb-4">
-              多重継承の場合、Pythonはメソッド解決順序（MRO）を使用して、どのメソッドを呼び出すかを決定します。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code>class A:
+          </div>
+          <h3 class="text-xl font-semibold mb-3">メソッド解決順序（MRO）</h3>
+          <p class="mb-4">
+            多重継承の場合、Pythonはメソッド解決順序（MRO）を使用して、どのメソッドを呼び出すかを決定します。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code>class A:
 def method(self):
 return "A"
 class B(A):
@@ -1808,14 +1706,14 @@ print(D.__mro__)  # (<class '__main__.D'>, <class '__main__.B'>, <class '__main_
 # メソッドの呼び出し
 d = D()
 print(d.method())  # B（Bが最初に見つかるため）</code></pre>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-              <h3 class="text-xl font-semibold mb-3">抽象基底クラス</h3>
-              <p class="mb-4">
-                抽象基底クラス（ABC）を使用すると、サブクラスが特定のメソッドを実装することを強制できます。
-              </p>
-              <div class="code-block">
-                <pre><code>from abc import ABC, abstractmethod
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-xl font-semibold mb-3">抽象基底クラス</h3>
+            <p class="mb-4">
+              抽象基底クラス（ABC）を使用すると、サブクラスが特定のメソッドを実装することを強制できます。
+            </p>
+            <div class="code-block">
+              <pre><code>from abc import ABC, abstractmethod
 class Shape(ABC):
 @abstractmethod
 def area(self):
@@ -1846,21 +1744,21 @@ print(f"長方形の面積: {rectangle.area()}")        # 長方形の面積: 15
 print(f"長方形の周囲の長さ: {rectangle.perimeter()}")  # 長方形の周囲の長さ: 16
 print(f"円の面積: {circle.area()}")              # 円の面積: 50.26544
 print(f"円の周囲の長さ: {circle.perimeter()}")      # 円の周囲の長さ: 25.13272</code></pre>
-              </div>
             </div>
-          </section>
-          <section id="modules" class="section mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-primary">
-              モジュールのインポート
-            </h2>
-            <p class="mb-4">
-              モジュールは、Pythonコードを整理するための方法です。モジュールは、関数、クラス、変数などを含むPythonファイル（.py）です。
-            </p>
-            <h3 class="text-xl font-semibold mb-3">
-              モジュールのインポート方法
-            </h3>
-            <div class="code-block mb-6">
-              <pre><code># モジュール全体をインポート
+          </div>
+        </section>
+        <section id="modules" class="section mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-primary">
+            モジュールのインポート
+          </h2>
+          <p class="mb-4">
+            モジュールは、Pythonコードを整理するための方法です。モジュールは、関数、クラス、変数などを含むPythonファイル（.py）です。
+          </p>
+          <h3 class="text-xl font-semibold mb-3">
+            モジュールのインポート方法
+          </h3>
+          <div class="code-block mb-6">
+            <pre><code># モジュール全体をインポート
 import math
 # モジュールの関数を使用
 print(math.sqrt(16))  # 4.0
@@ -1876,15 +1774,15 @@ print(pi)             # 3.141592653589793
 from math import *
 print(sqrt(16))       # 4.0
 print(sin(0))         # 0.0</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">
-              標準ライブラリのモジュール
-            </h3>
-            <p class="mb-4">
-              Pythonには、多くの標準ライブラリモジュールが含まれています。以下は、よく使用される標準ライブラリの例です。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># math: 数学関数
+          </div>
+          <h3 class="text-xl font-semibold mb-3">
+            標準ライブラリのモジュール
+          </h3>
+          <p class="mb-4">
+            Pythonには、多くの標準ライブラリモジュールが含まれています。以下は、よく使用される標準ライブラリの例です。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># math: 数学関数
 import math
 print(math.sqrt(16))    # 4.0
 print(math.factorial(5))  # 120
@@ -1905,15 +1803,15 @@ print(os.listdir())  # ディレクトリの内容を一覧表示
 import sys
 print(sys.version)  # Pythonのバージョン
 print(sys.platform)  # 実行プラットフォーム</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">
-              自作モジュールの作成と使用
-            </h3>
-            <p class="mb-4">
-              独自のモジュールを作成するには、Pythonファイル（.py）を作成し、そこに関数、クラス、変数を定義します。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># mymodule.py（自作モジュール）
+          </div>
+          <h3 class="text-xl font-semibold mb-3">
+            自作モジュールの作成と使用
+          </h3>
+          <p class="mb-4">
+            独自のモジュールを作成するには、Pythonファイル（.py）を作成し、そこに関数、クラス、変数を定義します。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># mymodule.py（自作モジュール）
 def greet(name):
 return f"こんにちは、{name}さん！"
 def add(a, b):
@@ -1931,18 +1829,16 @@ print(mymodule.add(5, 3))     # 8
 print(mymodule.PI)            # 3.14159
 person = mymodule.Person("佐藤")
 print(person.say_hello())     # 佐藤がこんにちはと言っています。</code></pre>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-              <h3 class="text-xl font-semibold mb-3">
-                if __name__ == "__main__"の使用
-              </h3>
-              <p class="mb-4">
-                モジュールが直接実行されたときにのみ特定のコードを実行するには、<code
-                  >if __name__ == "__main__"</code
-                >構文を使用します。
-              </p>
-              <div class="code-block">
-                <pre><code># mymodule.py
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-xl font-semibold mb-3">
+              if __name__ == "__main__"の使用
+            </h3>
+            <p class="mb-4">
+              モジュールが直接実行されたときにのみ特定のコードを実行するには、<code>if __name__ == "__main__"</code>構文を使用します。
+            </p>
+            <div class="code-block">
+              <pre><code># mymodule.py
 def greet(name):
 return f"こんにちは、{name}さん！"
 def add(a, b):
@@ -1954,22 +1850,22 @@ print(greet("テスト"))
 print(add(10, 20))
 else:
 print("mymoduleが別のファイルからインポートされました。")</code></pre>
-              </div>
             </div>
-          </section>
-          <section id="packages" class="section mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-primary">
-              パッケージの使用
-            </h2>
-            <p class="mb-4">
-              パッケージは、関連するモジュールをグループ化するためのディレクトリです。パッケージを使用すると、大規模なプロジェクトのコードを整理しやすくなります。
-            </p>
-            <h3 class="text-xl font-semibold mb-3">パッケージの構造</h3>
-            <p class="mb-4">
-              パッケージは、<code>__init__.py</code>ファイルを含むディレクトリです。このファイルは空でもかまいませんが、パッケージが初期化されるときに実行されるコードを含めることができます。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># パッケージの構造例
+          </div>
+        </section>
+        <section id="packages" class="section mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-primary">
+            パッケージの使用
+          </h2>
+          <p class="mb-4">
+            パッケージは、関連するモジュールをグループ化するためのディレクトリです。パッケージを使用すると、大規模なプロジェクトのコードを整理しやすくなります。
+          </p>
+          <h3 class="text-xl font-semibold mb-3">パッケージの構造</h3>
+          <p class="mb-4">
+            パッケージは、<code>__init__.py</code>ファイルを含むディレクトリです。このファイルは空でもかまいませんが、パッケージが初期化されるときに実行されるコードを含めることができます。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># パッケージの構造例
 mypackage/
 __init__.py
 module1.py
@@ -1978,10 +1874,10 @@ subpackage/
 __init__.py
 module3.py
 module4.py</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">パッケージのインポート</h3>
-            <div class="code-block mb-6">
-              <pre><code># パッケージ全体をインポート
+          </div>
+          <h3 class="text-xl font-semibold mb-3">パッケージのインポート</h3>
+          <div class="code-block mb-6">
+            <pre><code># パッケージ全体をインポート
 import mypackage
 # パッケージ内のモジュールをインポート
 import mypackage.module1
@@ -1999,14 +1895,13 @@ print(mypackage.subpackage.module3.some_function())
 # サブパッケージのモジュールから特定の要素をインポート
 from mypackage.subpackage.module4 import some_function
 print(some_function())</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">__init__.pyファイル</h3>
-            <p class="mb-4">
-              <code>__init__.py</code
-              >ファイルは、ディレクトリをPythonパッケージとして識別するために使用されます。また、パッケージのインポート時に初期化コードを実行するためにも使用できます。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># mypackage/__init__.py
+          </div>
+          <h3 class="text-xl font-semibold mb-3">__init__.pyファイル</h3>
+          <p class="mb-4">
+            <code>__init__.py</code>ファイルは、ディレクトリをPythonパッケージとして識別するために使用されます。また、パッケージのインポート時に初期化コードを実行するためにも使用できます。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># mypackage/__init__.py
 print("mypackageがインポートされました")
 # パッケージレベルの変数
 package_variable = "パッケージ変数"
@@ -2018,29 +1913,29 @@ from . import subpackage
 # 特定の関数をパッケージレベルで公開
 from .module1 import some_function as module1_function
 from .module2 import some_function as module2_function</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">相対インポート</h3>
-            <p class="mb-4">
-              パッケージ内のモジュールから他のモジュールをインポートする場合、相対インポートを使用できます。
-            </p>
-            <div class="code-block mb-6">
-              <pre><code># mypackage/module2.py
+          </div>
+          <h3 class="text-xl font-semibold mb-3">相対インポート</h3>
+          <p class="mb-4">
+            パッケージ内のモジュールから他のモジュールをインポートする場合、相対インポートを使用できます。
+          </p>
+          <div class="code-block mb-6">
+            <pre><code># mypackage/module2.py
 # 同じパッケージ内のmodule1からインポート
 from . import module1
 from .module1 import some_function
 # 親パッケージからインポート（サブパッケージ内のモジュールの場合）
 from .. import module1
 from ..module1 import some_function</code></pre>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-              <h3 class="text-xl font-semibold mb-3">
-                サードパーティのパッケージ
-              </h3>
-              <p class="mb-4">
-                Pythonには、多くのサードパーティのパッケージがあります。これらは、<code>pip</code>を使用してインストールできます。
-              </p>
-              <div class="code-block">
-                <pre><code># pipを使用してパッケージをインストール
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-xl font-semibold mb-3">
+              サードパーティのパッケージ
+            </h3>
+            <p class="mb-4">
+              Pythonには、多くのサードパーティのパッケージがあります。これらは、<code>pip</code>を使用してインストールできます。
+            </p>
+            <div class="code-block">
+              <pre><code># pipを使用してパッケージをインストール
 # コマンドライン: pip install numpy
 # NumPyの使用例
 import numpy as np
@@ -2062,17 +1957,17 @@ print(matrix.T)  # 転置
 # [[1 4 7]
 #  [2 5 8]
 #  [3 6 9]]</code></pre>
-              </div>
             </div>
-          </section>
-          <section id="exceptions" class="section mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-primary">例外処理</h2>
-            <p class="mb-4">
-              例外処理は、プログラムの実行中に発生するエラーを適切に処理するための仕組みです。Pythonでは、<code>try</code>、<code>except</code>、<code>else</code>、<code>finally</code>ブロックを使用して例外を処理します。
-            </p>
-            <h3 class="text-xl font-semibold mb-3">基本的な例外処理</h3>
-            <div class="code-block mb-6">
-              <pre><code># 基本的なtry-except
+          </div>
+        </section>
+        <section id="exceptions" class="section mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-primary">例外処理</h2>
+          <p class="mb-4">
+            例外処理は、プログラムの実行中に発生するエラーを適切に処理するための仕組みです。Pythonでは、<code>try</code>、<code>except</code>、<code>else</code>、<code>finally</code>ブロックを使用して例外を処理します。
+          </p>
+          <h3 class="text-xl font-semibold mb-3">基本的な例外処理</h3>
+          <div class="code-block mb-6">
+            <pre><code># 基本的なtry-except
 try:
 # エラーが発生する可能性のあるコード
 num = int(input("数値を入力してください: "))
@@ -2081,10 +1976,10 @@ print(f"結果: {result}")
 except:
 # エラーが発生した場合に実行されるコード
 print("エラーが発生しました。")</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">特定の例外の処理</h3>
-            <div class="code-block mb-6">
-              <pre><code># 特定の例外を処理する
+          </div>
+          <h3 class="text-xl font-semibold mb-3">特定の例外の処理</h3>
+          <div class="code-block mb-6">
+            <pre><code># 特定の例外を処理する
 try:
 num = int(input("数値を入力してください: "))
 result = 10 / num
@@ -2098,10 +1993,10 @@ print("ゼロで除算することはできません。")
 except:
 # その他のエラー
 print("予期しないエラーが発生しました。")</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">else節とfinally節</h3>
-            <div class="code-block mb-6">
-              <pre><code># else節とfinally節
+          </div>
+          <h3 class="text-xl font-semibold mb-3">else節とfinally節</h3>
+          <div class="code-block mb-6">
+            <pre><code># else節とfinally節
 try:
 num = int(input("数値を入力してください: "))
 result = 10 / num
@@ -2115,10 +2010,10 @@ print(f"結果: {result}")
 finally:
 # エラーの有無にかかわらず常に実行される
 print("処理が完了しました。")</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">例外の情報の取得</h3>
-            <div class="code-block mb-6">
-              <pre><code># 例外オブジェクトの取得
+          </div>
+          <h3 class="text-xl font-semibold mb-3">例外の情報の取得</h3>
+          <div class="code-block mb-6">
+            <pre><code># 例外オブジェクトの取得
 try:
 num = int(input("数値を入力してください: "))
 result = 10 / num
@@ -2128,10 +2023,10 @@ except ZeroDivisionError as e:
 print(f"ZeroDivisionError: {e}")
 except Exception as e:
 print(f"予期しないエラー: {e}")</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">例外の発生</h3>
-            <div class="code-block mb-6">
-              <pre><code># raise文を使用して例外を発生させる
+          </div>
+          <h3 class="text-xl font-semibold mb-3">例外の発生</h3>
+          <div class="code-block mb-6">
+            <pre><code># raise文を使用して例外を発生させる
 def divide(a, b):
 if b == 0:
 raise ZeroDivisionError("ゼロで除算することはできません。")
@@ -2140,10 +2035,10 @@ try:
 result = divide(10, 0)
 except ZeroDivisionError as e:
 print(e)  # ゼロで除算することはできません。</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">カスタム例外</h3>
-            <div class="code-block mb-6">
-              <pre><code># カスタム例外の定義
+          </div>
+          <h3 class="text-xl font-semibold mb-3">カスタム例外</h3>
+          <div class="code-block mb-6">
+            <pre><code># カスタム例外の定義
 class InvalidAgeError(Exception):
 """年齢が無効な場合に発生する例外"""
 pass
@@ -2161,17 +2056,16 @@ except ValueError:
 print("有効な数値を入力してください。")
 except InvalidAgeError as e:
 print(f"無効な年齢: {e}")</code></pre>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-              <h3 class="text-xl font-semibold mb-3">
-                with文（コンテキストマネージャ）
-              </h3>
-              <p class="mb-4">
-                <code>with</code
-                >文は、リソースの取得と解放を自動的に処理するために使用されます。主にファイル操作で使用されますが、他のリソース管理にも使用できます。
-              </p>
-              <div class="code-block">
-                <pre><code># ファイルを開いて閉じる（伝統的な方法）
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-xl font-semibold mb-3">
+              with文（コンテキストマネージャ）
+            </h3>
+            <p class="mb-4">
+              <code>with</code>文は、リソースの取得と解放を自動的に処理するために使用されます。主にファイル操作で使用されますが、他のリソース管理にも使用できます。
+            </p>
+            <div class="code-block">
+              <pre><code># ファイルを開いて閉じる（伝統的な方法）
 file = open("example.txt", "w")
 try:
 file.write("こんにちは、世界！")
@@ -2185,19 +2079,19 @@ file.write("こんにちは、世界！")
 with open("input.txt", "r") as input_file, open("output.txt", "w") as output_file:
 data = input_file.read()
 output_file.write(data.upper())</code></pre>
-              </div>
             </div>
-          </section>
-          <section id="file-io" class="section mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-primary">
-              ファイルの読み書き
-            </h2>
-            <p class="mb-4">
-              Pythonでは、ファイルの読み書きを簡単に行うことができます。ファイル操作は、<code>open()</code>関数を使用して行います。
-            </p>
-            <h3 class="text-xl font-semibold mb-3">ファイルを開く</h3>
-            <div class="code-block mb-6">
-              <pre><code># ファイルを開く
+          </div>
+        </section>
+        <section id="file-io" class="section mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-primary">
+            ファイルの読み書き
+          </h2>
+          <p class="mb-4">
+            Pythonでは、ファイルの読み書きを簡単に行うことができます。ファイル操作は、<code>open()</code>関数を使用して行います。
+          </p>
+          <h3 class="text-xl font-semibold mb-3">ファイルを開く</h3>
+          <div class="code-block mb-6">
+            <pre><code># ファイルを開く
 # モード: 'r'（読み取り）、'w'（書き込み）、'a'（追加）、'b'（バイナリモード）
 file = open("example.txt", "r")
 # ファイルを使用した後は必ず閉じる
@@ -2206,10 +2100,10 @@ file.close()
 with open("example.txt", "r") as file:
 # ファイルを使用するコード
 pass</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">ファイルの読み取り</h3>
-            <div class="code-block mb-6">
-              <pre><code># ファイル全体を一度に読み取る
+          </div>
+          <h3 class="text-xl font-semibold mb-3">ファイルの読み取り</h3>
+          <div class="code-block mb-6">
+            <pre><code># ファイル全体を一度に読み取る
 with open("example.txt", "r") as file:
 content = file.read()
 print(content)
@@ -2228,10 +2122,10 @@ print(line, end="")
 with open("example.txt", "r") as file:
 for line in file:
 print(line, end="")</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">ファイルへの書き込み</h3>
-            <div class="code-block mb-6">
-              <pre><code># ファイルに書き込む（既存の内容は上書きされる）
+          </div>
+          <h3 class="text-xl font-semibold mb-3">ファイルへの書き込み</h3>
+          <div class="code-block mb-6">
+            <pre><code># ファイルに書き込む（既存の内容は上書きされる）
 with open("example.txt", "w") as file:
 file.write("こんにちは、世界！\n")
 file.write("Pythonでファイル操作を学んでいます。\n")
@@ -2242,10 +2136,10 @@ file.writelines(lines)
 # ファイルに追加する（既存の内容は保持される）
 with open("example.txt", "a") as file:
 file.write("この行は追加されます。\n")</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">ファイル位置の操作</h3>
-            <div class="code-block mb-6">
-              <pre><code># ファイル位置の取得と設定
+          </div>
+          <h3 class="text-xl font-semibold mb-3">ファイル位置の操作</h3>
+          <div class="code-block mb-6">
+            <pre><code># ファイル位置の取得と設定
 with open("example.txt", "r") as file:
 # 現在の位置を取得
 position = file.tell()
@@ -2261,10 +2155,10 @@ file.seek(0)
 # 再度読み取り
 content = file.read(5)
 print(content)</code></pre>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">バイナリファイルの操作</h3>
-            <div class="code-block mb-6">
-              <pre><code># バイナリモードでファイルを開く
+          </div>
+          <h3 class="text-xl font-semibold mb-3">バイナリファイルの操作</h3>
+          <div class="code-block mb-6">
+            <pre><code># バイナリモードでファイルを開く
 with open("example.bin", "wb") as file:
 # バイト列を書き込む
 file.write(b"\x48\x65\x6C\x6C\x6F")  # "Hello"のASCIIコード
@@ -2272,14 +2166,14 @@ file.write(b"\x48\x65\x6C\x6C\x6F")  # "Hello"のASCIIコード
 with open("example.bin", "rb") as file:
 data = file.read()
 print(data)  # b'Hello'</code></pre>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-              <h3 class="text-xl font-semibold mb-3">CSVファイルの操作</h3>
-              <p class="mb-4">
-                CSVファイルは、<code>csv</code>モジュールを使用して簡単に操作できます。
-              </p>
-              <div class="code-block">
-                <pre><code>import csv
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-xl font-semibold mb-3">CSVファイルの操作</h3>
+            <p class="mb-4">
+              CSVファイルは、<code>csv</code>モジュールを使用して簡単に操作できます。
+            </p>
+            <div class="code-block">
+              <pre><code>import csv
 # CSVファイルの書き込み
 with open("data.csv", "w", newline="") as file:
 writer = csv.writer(file)
@@ -2297,105 +2191,106 @@ with open("data.csv", "r") as file:
 reader = csv.DictReader(file)
 for row in reader:
 print(f"{row['名前']}は{row['年齢']}歳で{row['都市']}に住んでいます。")</code></pre>
-              </div>
             </div>
-          </section>
-        </div>
-      </main>
-    </div>
-    <script id="sidebar-toggle">
-      document.addEventListener("DOMContentLoaded", function () {
-        const menuToggle = document.getElementById("menu-toggle");
-        const sidebar = document.getElementById("sidebar");
-        menuToggle.addEventListener("click", function () {
-          sidebar.classList.toggle("open");
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script id="sidebar-toggle">
+    document.addEventListener("DOMContentLoaded", function () {
+      const menuToggle = document.getElementById("menu-toggle");
+      const sidebar = document.getElementById("sidebar");
+      menuToggle.addEventListener("click", function () {
+        sidebar.classList.toggle("open");
+      });
+      // Close sidebar when clicking outside on mobile
+      document.addEventListener("click", function (event) {
+        const isClickInsideSidebar = sidebar.contains(event.target);
+        const isClickOnMenuToggle = menuToggle.contains(event.target);
+        if (
+          !isClickInsideSidebar &&
+          !isClickOnMenuToggle &&
+          window.innerWidth < 768 &&
+          sidebar.classList.contains("open")
+        ) {
+          sidebar.classList.remove("open");
+        }
+      });
+    });
+  </script>
+  <script id="sidebar-active-link">
+    document.addEventListener("DOMContentLoaded", function () {
+      const sidebarLinks = document.querySelectorAll(".sidebar-link");
+      const sections = document.querySelectorAll(".section");
+      // Set active link based on scroll position
+      function setActiveLink() {
+        let currentSection = "";
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          if (window.scrollY >= sectionTop - 200) {
+            currentSection = section.getAttribute("id");
+          }
         });
-        // Close sidebar when clicking outside on mobile
-        document.addEventListener("click", function (event) {
-          const isClickInsideSidebar = sidebar.contains(event.target);
-          const isClickOnMenuToggle = menuToggle.contains(event.target);
-          if (
-            !isClickInsideSidebar &&
-            !isClickOnMenuToggle &&
-            window.innerWidth < 768 &&
-            sidebar.classList.contains("open")
-          ) {
-            sidebar.classList.remove("open");
+        sidebarLinks.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href") === `#${currentSection}`) {
+            link.classList.add("active");
+          }
+        });
+      }
+      // Initial call to set active link
+      setActiveLink();
+      // Set active link on scroll
+      window.addEventListener("scroll", setActiveLink);
+      // Smooth scroll to section when clicking on sidebar link
+      sidebarLinks.forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute("href").substring(1);
+          const targetSection = document.getElementById(targetId);
+          if (targetSection) {
+            // Close sidebar on mobile
+            if (window.innerWidth < 768) {
+              document.getElementById("sidebar").classList.remove("open");
+            }
+            // Smooth scroll to target section
+            targetSection.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
           }
         });
       });
-    </script>
-    <script id="sidebar-active-link">
-      document.addEventListener("DOMContentLoaded", function () {
-        const sidebarLinks = document.querySelectorAll(".sidebar-link");
-        const sections = document.querySelectorAll(".section");
-        // Set active link based on scroll position
-        function setActiveLink() {
-          let currentSection = "";
-          sections.forEach((section) => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (window.scrollY >= sectionTop - 200) {
-              currentSection = section.getAttribute("id");
-            }
+    });
+  </script>
+  <script id="installation-tabs">
+    document.addEventListener("DOMContentLoaded", function () {
+      const tabs = document.querySelectorAll(".installation-tab");
+      const contents = document.querySelectorAll(".installation-content");
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", function () {
+          const target = this.getAttribute("data-target");
+          // Hide all contents
+          contents.forEach((content) => {
+            content.classList.add("hidden");
           });
-          sidebarLinks.forEach((link) => {
-            link.classList.remove("active");
-            if (link.getAttribute("href") === `#${currentSection}`) {
-              link.classList.add("active");
-            }
+          // Show target content
+          document
+            .getElementById(`${target}-content`)
+            .classList.remove("hidden");
+          // Update active tab
+          tabs.forEach((t) => {
+            t.classList.remove("text-primary", "border-primary");
+            t.classList.add("text-gray-500");
           });
-        }
-        // Initial call to set active link
-        setActiveLink();
-        // Set active link on scroll
-        window.addEventListener("scroll", setActiveLink);
-        // Smooth scroll to section when clicking on sidebar link
-        sidebarLinks.forEach((link) => {
-          link.addEventListener("click", function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute("href").substring(1);
-            const targetSection = document.getElementById(targetId);
-            if (targetSection) {
-              // Close sidebar on mobile
-              if (window.innerWidth < 768) {
-                document.getElementById("sidebar").classList.remove("open");
-              }
-              // Smooth scroll to target section
-              targetSection.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-              });
-            }
-          });
+          this.classList.remove("text-gray-500");
+          this.classList.add("text-primary", "border-b-2", "border-primary");
         });
       });
-    </script>
-    <script id="installation-tabs">
-      document.addEventListener("DOMContentLoaded", function () {
-        const tabs = document.querySelectorAll(".installation-tab");
-        const contents = document.querySelectorAll(".installation-content");
-        tabs.forEach((tab) => {
-          tab.addEventListener("click", function () {
-            const target = this.getAttribute("data-target");
-            // Hide all contents
-            contents.forEach((content) => {
-              content.classList.add("hidden");
-            });
-            // Show target content
-            document
-              .getElementById(`${target}-content`)
-              .classList.remove("hidden");
-            // Update active tab
-            tabs.forEach((t) => {
-              t.classList.remove("text-primary", "border-primary");
-              t.classList.add("text-gray-500");
-            });
-            this.classList.remove("text-gray-500");
-            this.classList.add("text-primary", "border-b-2", "border-primary");
-          });
-        });
-      });
-    </script>
-  </body>
+    });
+  </script>
+</body>
+
 </html>
