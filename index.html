@@ -14,8 +14,9 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Poppins:wght@500;600;700&display=swap"
     rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="styles/style.css" />
   <script>
     tailwind.config = {
       theme: {
@@ -39,34 +40,26 @@
   </script>
 </head>
 
-<body class="bg-gray-900 text-white min-h-screen">
-  <!-- ヘッダー -->
-  <header class="header sticky top-0 z-50 bg-gray-800 shadow-sm">
-    <div class="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-4 flex justify-between items-center">
-      <!-- Logo Section -->
-      <div class="flex items-center">
-        <img src="assets/images/logo.png" alt="Logo" class="h-8 w-auto mr-2" />
-        <h1 class="text-xl font-bold">CODE SPACE</h1>
-      </div>
+<body class="bg-gray-900 text-white min-h-screen ">
 
-      <!-- Navigation and Toggle Section -->
-      <div class="flex items-center space-x-4 sm:space-x-6">
-        <!-- Navigation Links -->
-        <nav class="hidden md:flex space-x-4 lg:space-x-6">
-          <a href="#" class="font-medium text-gray-300 hover:text-primary transition-colors">ホーム</a>
-          <a href="#" class="font-medium text-gray-300 hover:text-primary transition-colors">コース一覧</a>
-          <a href="#" class="font-medium text-gray-300 hover:text-primary transition-colors">学習ガイド</a>
-          <a href="#" class="font-medium text-gray-300 hover:text-primary transition-colors">お問い合わせ</a>
-        </nav>
-        <!-- Mobile Menu Button -->
-        <button class="md:hidden w-8 h-8 flex items-center justify-center">
-          <i class="ri-menu-line text-xl text-gray-300"></i>
-        </button>
+  <!-- ヘッダー -->
+  <header class="header sticky top-0 z-50 bg-gray-800 shadow-sm px-4 sm:px-6 md:px-0">
+    <div class="container mx-auto">
+      <div class="px-4 sm:px-6 md:px-0 py-4 flex justify-between items-center">
+        <!-- Logo Section -->
+        <div class="flex items-center">
+          <img src="assets/images/logo.png" alt="Logo" class="h-8 w-auto mr-2" />
+          <h1 class="text-xl font-bold">CODE SPACE</h1>
+        </div>
+
+        <!-- Navigation and Toggle Section -->
+        <div class="flex items-center space-x-4 sm:space-x-6">
+        </div>
       </div>
     </div>
   </header>
   <!-- メインビジュアル＆紹介セクション -->
-  <section class="relative py-16 md:py-24 overflow-hidden">
+  <section class="relative py-16 md:py-24 overflow-hidden px-4 sm:px-6 md:px-0">
     <!-- Video Background -->
     <video autoplay loop muted preload="auto" playsinline class="absolute inset-0 w-full h-full object-cover">
       <source src="assets/videos/bg.mp4" type="video/mp4">
@@ -76,18 +69,16 @@
     <!-- Content Overlay -->
     <div class="container mx-auto px-responsive relative z-10">
       <div class="flex flex-col items-center text-center">
-        <div class="w-full max-w-3xl backdrop-blur-sm bg-gray-800/50 rounded-2xl p-8 shadow-2xl">
-          <h2
-            class="text-5xl md:text-6xl font-bold mb-8 leading-tight text-white drop-shadow-lg [text-shadow:_2px_2px_8px_rgb(0_0_0_/_20%)]">
-            初心者でも<span
-              class="text-primary bg-clip-text bg-gradient-to-r from-blue-200 to-blue-100">視覚的</span>に<br />プログラミングを学ぼう
+        <div class="w-full max-w-3xl bg-gray-800/80 rounded-2xl p-10 ">
+          <h2 class="text-5xl md:text-6xl text-yellow-200 font-bold mb-8">
+            初心者でも視覚的にプログラミングを学ぼう
           </h2>
-          <p class="text-xl md:text-2xl text-gray-300 mb-10 drop-shadow-lg [text-shadow:_1px_1px_4px_rgb(0_0_0_/_20%)]">
-            プログラミングの世界へようこそ。当サイトでは、初心者でも分かりやすく、視覚的に楽しくプログラミング言語を学ぶことができます。
+          <p class=" text-xl md:text-2xl text-white mb-10">
+            プログラミングの世界へようこそ。初心者でも楽しく学べる、視覚的な学習体験を提供します。
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <button onclick="scrollToCards()"
-              class="bg-primary text-white py-4 px-10 rounded-button font-medium hover:bg-primary/90 transition-all duration-300 whitespace-nowrap cursor-pointer text-lg shadow-[0_8px_16px_rgba(0,0,0,0.2)] hover:shadow-[0_12px_24px_rgba(0,0,0,0.3)] hover:transform hover:-translate-y-1">
+              class="bg-primary text-white py-6 px-12 rounded-button font-medium text-2xl hover:scale-105 transition-transform duration-300 hover:shadow-[0_0_20px_#4A90E2] hover:scale-105 ">
               無料で始める
             </button>
           </div>
@@ -96,12 +87,12 @@
     </div>
   </section>
   <!-- プログラミング言語カードセクション -->
-  <section class="py-16 bg-gray-800">
-    <div class="container mx-auto px-responsive">
+  <section class="py-16 bg-gray-800 px-4 sm:px-6 md:px-0">
+    <div class="container mx-auto">
       <div class="text-center mb-12">
         <h2 class="text-3xl font-bold mb-4 text-white">人気のプログラミング言語</h2>
         <p class="text-gray-300 max-w-2xl mx-auto">
-          あなたのキャリアや目標に合わせて、最適な言語を選びましょう。各言語の基礎から応用まで、段階的に学べるコースをご用意しています。
+          あなたの目標に合った言語を選び、基礎から応用まで学びましょう。
         </p>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
@@ -142,7 +133,7 @@
           class="card bg-gray-700 rounded-lg shadow-md overflow-hidden hover:shadow-lg cursor-pointer">
           <div class="p-6 bg-gradient-to-br from-yellow-900 to-yellow-700">
             <div class="w-16 h-16 flex items-center justify-center bg-yellow-500 text-white rounded-lg mb-4">
-              <i class="ri-javascript-line ri-2x"></i>
+              <i class="fab fa-js fa-2x"></i>
             </div>
             <h3 class="text-xl font-bold mb-2 text-white">JavaScript</h3>
             <p class="text-gray-300 mb-4">
@@ -159,7 +150,7 @@
           class="card bg-gray-700 rounded-lg shadow-md overflow-hidden hover:shadow-lg cursor-pointer">
           <div class="p-6 bg-gradient-to-br from-blue-900 to-green-700">
             <div class="w-16 h-16 flex items-center justify-center bg-blue-600 text-white rounded-lg mb-4">
-              <i class="ri-python-line ri-2x"></i>
+              <i class="fab fa-python fa-2x"></i>
             </div>
             <h3 class="text-xl font-bold mb-2 text-white">Python</h3>
             <p class="text-gray-300 mb-4">
@@ -175,7 +166,7 @@
         <div id="cCard" class="card bg-gray-700 rounded-lg shadow-md overflow-hidden hover:shadow-lg cursor-pointer">
           <div class="p-6 bg-gradient-to-br from-gray-900 to-gray-700">
             <div class="w-16 h-16 flex items-center justify-center bg-gray-600 text-white rounded-lg mb-4">
-              <i class="ri-code-s-slash-line ri-2x"></i>
+              <i class="fab fa-cuttlefish fa-2x"></i>
             </div>
             <h3 class="text-xl font-bold mb-2 text-white">C</h3>
             <p class="text-gray-300 mb-4">
@@ -191,7 +182,7 @@
         <div class="card bg-gray-700 rounded-lg shadow-md overflow-hidden hover:shadow-lg">
           <div class="p-6 bg-gradient-to-br from-blue-900 to-purple-700">
             <div class="w-16 h-16 flex items-center justify-center bg-blue-700 text-white rounded-lg mb-4">
-              <i class="ri-code-box-line ri-2x"></i>
+              <i class="fab fa-cuttlefish fa-2x"></i>
             </div>
             <h3 class="text-xl font-bold mb-2 text-white">C++</h3>
             <p class="text-gray-300 mb-4">
@@ -207,7 +198,7 @@
         <div class="card bg-gray-700 rounded-lg shadow-md overflow-hidden hover:shadow-lg">
           <div class="p-6 bg-gradient-to-br from-purple-900 to-purple-700">
             <div class="w-16 h-16 flex items-center justify-center bg-purple-600 text-white rounded-lg mb-4">
-              <i class="ri-hashtag-line ri-2x"></i>
+              <i class="fab fa-cuttlefish fa-2x"></i>
             </div>
             <h3 class="text-xl font-bold mb-2 text-white">C#</h3>
             <p class="text-gray-300 mb-4">
@@ -239,7 +230,7 @@
         <div class="card bg-gray-700 rounded-lg shadow-md overflow-hidden hover:shadow-lg">
           <div class="p-6 bg-gradient-to-br from-indigo-900 to-indigo-700">
             <div class="w-16 h-16 flex items-center justify-center bg-indigo-600 text-white rounded-lg mb-4">
-              <i class="ri-php-line ri-2x"></i>
+              <i class="fab fa-php fa-2x"></i>
             </div>
             <h3 class="text-xl font-bold mb-2 text-white">PHP</h3>
             <p class="text-gray-300 mb-4">
@@ -255,7 +246,7 @@
         <div class="card bg-gray-700 rounded-lg shadow-md overflow-hidden hover:shadow-lg">
           <div class="p-6 bg-gradient-to-br from-blue-900 to-blue-700">
             <div class="w-16 h-16 flex items-center justify-center bg-blue-500 text-white rounded-lg mb-4">
-              <i class="ri-typescript-line ri-2x"></i>
+              <i class="fab fa-js fa-2x"></i>
             </div>
             <h3 class="text-xl font-bold mb-2 text-white">TypeScript</h3>
             <p class="text-gray-300 mb-4">
@@ -271,226 +262,142 @@
     </div>
   </section>
   <!-- 学習パスセクション -->
-  <section class="py-16 bg-gray-900">
-    <div class="container mx-auto px-responsive">
+  <section class="py-16 bg-gray-900 px-4 sm:px-6 md:px-0">
+    <div class="container mx-auto">
       <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold mb-4 text-white">あなたの学習パス</h2>
+        <h2 class="text-3xl font-bold mb-4 text-white">学習パス</h2>
         <p class="text-gray-300 max-w-2xl mx-auto">
           段階的な学習カリキュラムで、確実にスキルアップを実現します
         </p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-        <div class="bg-gray-800 p-8 rounded-lg shadow-md relative">
+        <div
+          class="bg-gray-800 p-8 rounded-lg shadow-md relative hover:scale-105 hover:bg-gradient-to-br hover:from-primary hover:to-secondary transition-transform duration-300">
           <div
-            class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold">
+            class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold animate-pulse">
             1
           </div>
-          <div class="w-16 h-16 flex items-center justify-center bg-primary/10 text-primary rounded-lg mb-4 mx-auto">
+          <div
+            class="w-16 h-16 flex items-center justify-center bg-primary/10 text-primary rounded-lg mb-4 mx-auto hover:shadow-[0_0_20px_#4A90E2] transition-shadow duration-300">
             <i class="ri-book-open-line ri-2x"></i>
           </div>
-          <h3 class="text-xl font-bold mb-2 text-center text-white">基礎学習</h3>
-          <p class="text-gray-300 text-center">
+          <h3 class="text-xl font-bold mb-2 text-center text-white hover:text-primary transition-colors duration-300">
+            基礎学習
+          </h3>
+          <p class="text-gray-300 text-center hover:text-white transition-colors duration-300">
             プログラミングの基本概念と考え方を学びます
           </p>
         </div>
-        <div class="bg-gray-800 p-8 rounded-lg shadow-md relative">
+        <div
+          class="bg-gray-800 p-8 rounded-lg shadow-md relative hover:scale-105 hover:bg-gradient-to-br hover:from-primary hover:to-secondary transition-transform duration-300">
           <div
-            class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold">
+            class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold animate-pulse">
             2
           </div>
-          <div class="w-16 h-16 flex items-center justify-center bg-primary/10 text-primary rounded-lg mb-4 mx-auto">
+          <div
+            class="w-16 h-16 flex items-center justify-center bg-primary/10 text-primary rounded-lg mb-4 mx-auto hover:shadow-[0_0_20px_#4A90E2] transition-shadow duration-300">
             <i class="ri-code-line ri-2x"></i>
           </div>
-          <h3 class="text-xl font-bold mb-2 text-center text-white">実践演習</h3>
-          <p class="text-gray-300 text-center">
+          <h3 class="text-xl font-bold mb-2 text-center text-white hover:text-primary transition-colors duration-300">
+            実践演習
+          </h3>
+          <p class="text-gray-300 text-center hover:text-white transition-colors duration-300">
             実際のプロジェクトを通じて技術を習得します
           </p>
         </div>
-        <div class="bg-gray-800 p-8 rounded-lg shadow-md relative">
+        <div
+          class="bg-gray-800 p-8 rounded-lg shadow-md relative hover:scale-105 hover:bg-gradient-to-br hover:from-primary hover:to-secondary transition-transform duration-300">
           <div
-            class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold">
+            class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold animate-pulse">
             3
           </div>
-          <div class="w-16 h-16 flex items-center justify-center bg-primary/10 text-primary rounded-lg mb-4 mx-auto">
+          <div
+            class="w-16 h-16 flex items-center justify-center bg-primary/10 text-primary rounded-lg mb-4 mx-auto hover:shadow-[0_0_20px_#4A90E2] transition-shadow duration-300">
             <i class="ri-team-line ri-2x"></i>
           </div>
-          <h3 class="text-xl font-bold mb-2 text-center text-white">チーム開発</h3>
-          <p class="text-gray-300 text-center">
+          <h3 class="text-xl font-bold mb-2 text-center text-white hover:text-primary transition-colors duration-300">
+            チーム開発
+          </h3>
+          <p class="text-gray-300 text-center hover:text-white transition-colors duration-300">
             他の学習者と協力してプロジェクトを進めます
           </p>
         </div>
-        <div class="bg-gray-800 p-8 rounded-lg shadow-md relative">
+        <div
+          class="bg-gray-800 p-8 rounded-lg shadow-md relative hover:scale-105 hover:bg-gradient-to-br hover:from-primary hover:to-secondary transition-transform duration-300">
           <div
-            class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold">
+            class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold animate-pulse">
             4
           </div>
-          <div class="w-16 h-16 flex items-center justify-center bg-primary/10 text-primary rounded-lg mb-4 mx-auto">
+          <div
+            class="w-16 h-16 flex items-center justify-center bg-primary/10 text-primary rounded-lg mb-4 mx-auto hover:shadow-[0_0_20px_#4A90E2] transition-shadow duration-300">
             <i class="ri-medal-line ri-2x"></i>
           </div>
-          <h3 class="text-xl font-bold mb-2 text-center text-white">資格取得</h3>
-          <p class="text-gray-300 text-center">
+          <h3 class="text-xl font-bold mb-2 text-center text-white hover:text-primary transition-colors duration-300">
+            資格取得
+          </h3>
+          <p class="text-gray-300 text-center hover:text-white transition-colors duration-300">
             業界認定の資格取得をサポートします
           </p>
         </div>
       </div>
-      <div class="mt-12 text-center">
-        <button
-          class="bg-primary text-white py-3 px-8 rounded-button font-medium hover:bg-primary/90 transition-colors whitespace-nowrap">
-          学習を始める
-        </button>
-      </div>
+
     </div>
   </section>
   <!-- CTAセクション -->
-  <section class="py-16 bg-gray-800">
-    <div class="container mx-auto px-4">
-      <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-4xl font-bold mb-6 text-white whitespace-nowrap">
-          「学びに終わりはない。それが人生の美しさだ」
+  <section class="py-16 bg-gray-800 px-4 sm:px-6 md:px-0">
+    <div class="container mx-auto">
+      <div class="text-center">
+        <h2
+          class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-white whitespace-normal animate-fade-in max-w-2xl mx-auto">
+          「成功は準備と努力の結果である」
         </h2>
-        <p class="text-xl text-gray-300 italic mb-8">- 継続は力なり -</p>
+        <p class="text-lg sm:text-xl text-gray-300 italic mb-8 animate-fade-in-delay max-w-xl mx-auto">
+          - 努力は必ず報われる -
+        </p>
       </div>
     </div>
   </section>
   <!-- フッター -->
-  <footer class="bg-gray-900 text-gray-300 py-16 lg:py-20">
-    <div class="container mx-auto px-4">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-        <div>
-          <div class="flex items-center mb-4">
-            <span class="text-2xl font-['Pacifico'] text-white mr-2">logo</span>
-            <span class="font-bold">あなたと学ぶプログラミング</span>
+  <footer class="bg-gray-900 text-gray-300 py-8 px-4 sm:px-6 md:px-0">
+    <div class="container mx-auto">
+      <div class="flex justify-between items-center">
+        <div class="text-left">
+          <div class="flex items-center">
+            <img src="assets/images/logo.png" alt="Logo" class="h-8 w-auto mr-2">
+            <span class="font-bold text-white">CODE SPACE</span>
           </div>
-          <p class="text-gray-400 mb-4">
+          <p class="text-gray-400">
             初心者から上級者まで、プログラミングを楽しく学べるオンラインプラットフォーム
           </p>
-          <div class="flex space-x-4">
-            <a href="#"
-              class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-primary transition-colors">
-              <i class="ri-twitter-x-line"></i>
-            </a>
-            <a href="#"
-              class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-primary transition-colors">
-              <i class="ri-facebook-fill"></i>
-            </a>
-            <a href="#"
-              class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-primary transition-colors">
-              <i class="ri-instagram-line"></i>
-            </a>
-            <a href="#"
-              class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-primary transition-colors">
-              <i class="ri-github-fill"></i>
-            </a>
-          </div>
         </div>
-        <div>
-          <h4 class="text-lg font-bold mb-4">コース</h4>
-          <ul class="space-y-2">
-            <li>
-              <a href="#" class="text-gray-400 hover:text-white transition-colors">フロントエンド開発</a>
-            </li>
-            <li>
-              <a href="#" class="text-gray-400 hover:text-white transition-colors">バックエンド開発</a>
-            </li>
-            <li>
-              <a href="#" class="text-gray-400 hover:text-white transition-colors">モバイルアプリ開発</a>
-            </li>
-            <li>
-              <a href="#" class="text-gray-400 hover:text-white transition-colors">データサイエンス</a>
-            </li>
-            <li>
-              <a href="#" class="text-gray-400 hover:text-white transition-colors">ゲーム開発</a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="text-lg font-bold mb-4">サポート</h4>
-          <ul class="space-y-2">
-            <li>
-              <a href="#" class="text-gray-400 hover:text-white transition-colors">よくある質問</a>
-            </li>
-            <li>
-              <a href="#" class="text-gray-400 hover:text-white transition-colors">お問い合わせ</a>
-            </li>
-            <li>
-              <a href="#" class="text-gray-400 hover:text-white transition-colors">ヘルプセンター</a>
-            </li>
-            <li>
-              <a href="#" class="text-gray-400 hover:text-white transition-colors">コミュニティ</a>
-            </li>
-            <li>
-              <a href="#" class="text-gray-400 hover:text-white transition-colors">フィードバック</a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="text-lg font-bold mb-4">ニュースレター</h4>
-          <p class="text-gray-400 mb-4">
-            最新のチュートリアルや特別オファーについての情報を受け取りましょう
-          </p>
-          <form class="flex">
-            <input type="
-              class=" px-4 py-2 w-full rounded-l-button focus:outline-none text-gray-800 border-none" />
-            <button type="submit" class="bg-primary text-white px-4 py-2 rounded-r-button whitespace-nowrap">
-              登録
-            </button>
-          </form>
+        <div class="flex space-x-4">
+          <a href="#"
+            class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-primary transition-colors">
+            <i class="ri-twitter-x-line"></i>
+          </a>
+          <a href="#"
+            class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-primary transition-colors">
+            <i class="ri-facebook-fill"></i>
+          </a>
+          <a href="#"
+            class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-primary transition-colors">
+            <i class="ri-instagram-line"></i>
+          </a>
+          <a href="#"
+            class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-primary transition-colors">
+            <i class="ri-github-fill"></i>
+          </a>
         </div>
       </div>
-      <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+      <div class="border-t border-gray-700 mt-4 pt-4 text-center">
         <p class="text-gray-400">
           © 2025 あなたと学ぶプログラミング. All rights reserved.
         </p>
       </div>
     </div>
   </footer>
-  <script id="darkModeToggle">
-    document.addEventListener("DOMContentLoaded", function () {
-      const toggle = document.getElementById("toggle");
-      const body = document.body;
-      toggle.addEventListener("change", function () {
-        if (this.checked) {
-          body.classList.add("dark-mode");
-        } else {
-          body.classList.remove("dark-mode");
-        }
-      });
-    });
-  </script>
-  <script id="scrollToCards">
-    function scrollToCards() {
-      const cardsSection = document.querySelector(
-        ".grid.grid-cols-1.sm\\:grid-cols-2.lg\\:grid-cols-3.xl\\:grid-cols-4.gap-8"
-      );
-      const offset = 100;
-      const elementPosition = cardsSection.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
-  </script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const cardConfig = {
-        htmlCard: "languages/HTML.html",
-        cssCard: "languages/CSS.html",
-        javascriptCard: "languages/JavaScript.html",
-        pythonCard: "languages/Python.html",
-        cCard: "languages/C.html",
-      };
 
-      Object.entries(cardConfig).forEach(([cardId, path]) => {
-        const card = document.getElementById(cardId);
-        if (card) {
-          card.addEventListener("click", function () {
-            window.open(path, "_blank");
-          });
-        }
-      });
-    });
-  </script>
+  <script src="scripts/main.js"></script>
 </body>
 
 </html>

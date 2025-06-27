@@ -1,20 +1,10 @@
-// Dark mode toggle
-function initDarkMode() {
-    const toggle = document.getElementById("toggle");
-    const body = document.body;
-    
-    toggle.addEventListener("change", function() {
-        body.classList.toggle("dark-mode", this.checked);
-    });
-}
-
 // Smooth scroll
 function scrollToCards() {
     const cardsSection = document.querySelector(".grid.grid-cols-1.sm\\:grid-cols-2.lg\\:grid-cols-3.xl\\:grid-cols-4.gap-8");
     const offset = 100;
     const elementPosition = cardsSection.getBoundingClientRect().top;
     const offsetPosition = elementPosition + window.pageYOffset - offset;
-    
+
     window.scrollTo({
         top: offsetPosition,
         behavior: "smooth"
@@ -41,6 +31,5 @@ function initCardNavigation() {
 
 // Initialize all features
 document.addEventListener("DOMContentLoaded", function() {
-    initDarkMode();
     initCardNavigation();
 });
